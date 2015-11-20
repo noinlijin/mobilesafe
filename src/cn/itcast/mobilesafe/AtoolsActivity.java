@@ -35,13 +35,13 @@ public class AtoolsActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_atools);
 		ll_atools_numberquery = (LinearLayout) findViewById(R.id.ll_atools_numberquery);
 		ll_atools_numberquery.setOnClickListener(this);
-//		s.equals("haha");  //Òì³£
+//		s.equals("haha");  //å¼‚å¸¸
 		ll_atools_commonnumquery = (LinearLayout) findViewById(R.id.ll_atools_commonnumquery);
 		ll_atools_commonnumquery.setOnClickListener(this);
 
 		ll_atools_sms_backup = (LinearLayout) findViewById(R.id.ll_atools_sms_backup);
 		ll_atools_sms_backup.setOnClickListener(this);
-//³£ÓÃ ºÅÂë²éÑ¯
+//å¸¸ç”¨ å·ç æŸ¥è¯¢
 		ll_atools_sms_restore = (LinearLayout) findViewById(R.id.ll_atools_sms_restore);
 		ll_atools_sms_restore.setOnClickListener(this);
 	}
@@ -49,25 +49,25 @@ public class AtoolsActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {
-		case R.id.ll_atools_numberquery:
-			// ¶¨Ïòµ½ºÅÂë¹éÊôµØ²éÑ¯µÄ½çÃæ.
-			intent = new Intent(this, NumberQueryActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.ll_atools_commonnumquery:
-			// ¶¨Ïòµ½ºÅÂë¹éÊôµØ²éÑ¯µÄ½çÃæ.
-			intent = new Intent(this, CommnumActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.ll_atools_sms_backup:
-			backUpSmsTask();
+			case R.id.ll_atools_numberquery:
+				// å®šå‘åˆ°å·ç å½’å±åœ°æŸ¥è¯¢çš„ç•Œé¢.
+				intent = new Intent(this, NumberQueryActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.ll_atools_commonnumquery:
+				// å®šå‘åˆ°å·ç å½’å±åœ°æŸ¥è¯¢çš„ç•Œé¢.
+				intent = new Intent(this, CommnumActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.ll_atools_sms_backup:
+				backUpSmsTask();
 
-			break;
-		case R.id.ll_atools_sms_restore:
+				break;
+			case R.id.ll_atools_sms_restore:
 
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 
 	}
@@ -78,7 +78,7 @@ public class AtoolsActivity extends Activity implements OnClickListener {
 
 			@Override
 			protected Void doInBackground(Void... params) {
-				// ¶ÁÈ¡¶ÌĞÅµÄËùÓĞµÄÄÚÈİ,±¸·İµ½SDµÄÎÄ¼şÉÏ.
+				// è¯»å–çŸ­ä¿¡çš„æ‰€æœ‰çš„å†…å®¹,å¤‡ä»½åˆ°SDçš„æ–‡ä»¶ä¸Š.
 				try {
 					Uri uri = Uri.parse("content://sms/");
 					Cursor cursor = getContentResolver().query(uri,
@@ -97,25 +97,25 @@ public class AtoolsActivity extends Activity implements OnClickListener {
 					int total = 0;
 					while (cursor.moveToNext()) {
 						serializer.startTag(null, "sms");
-						
+
 						serializer.startTag(null, "address");
 						serializer.text(cursor.getString(0));
 						serializer.endTag(null, "address");
-						
+
 						serializer.startTag(null, "date ");
 						serializer.text(cursor.getString(1));
 						serializer.endTag(null, "date");
-						
-						
+
+
 						serializer.startTag(null, "type");
 						serializer.text(cursor.getString(2));
 						serializer.endTag(null, "type");
-						
-						
+
+
 						serializer.startTag(null, "body");
 						serializer.text(new String(Base64.encode(cursor.getString(3).getBytes(), 0)));
 						serializer.endTag(null, "body");
-						
+
 						serializer.endTag(null, "sms");
 						total ++;
 						pd.setProgress(total);
@@ -135,8 +135,8 @@ public class AtoolsActivity extends Activity implements OnClickListener {
 			@Override
 			protected void onPreExecute() {
 				pd = new ProgressDialog(AtoolsActivity.this);
-				pd.setTitle("ÌáÊ¾");
-				pd.setMessage("ÕıÔÚ±¸·İ¶ÌĞÅ");
+				pd.setTitle("æç¤º");
+				pd.setMessage("æ­£åœ¨å¤‡ä»½çŸ­ä¿¡");
 				pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				pd.show();
 				super.onPreExecute();
@@ -145,7 +145,7 @@ public class AtoolsActivity extends Activity implements OnClickListener {
 			@Override
 			protected void onPostExecute(Void result) {
 				pd.dismiss();
-				Toast.makeText(getApplicationContext(), "±¸·İÍê±Ï", 0).show();
+				Toast.makeText(getApplicationContext(), "å¤‡ä»½å®Œæ¯•", 0).show();
 				super.onPostExecute(result);
 			}
 

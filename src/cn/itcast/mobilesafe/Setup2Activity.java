@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 /**
- * ÊÖ»ú·ÀµÁÉèÖÃÏòµ¼2
+ * æ‰‹æœºé˜²ç›—è®¾ç½®å‘å¯¼2
  * @author superboy
  *
  */
@@ -41,14 +41,14 @@ public class Setup2Activity extends BaseSetupActivity {
 	}
 
 	/**
-	 * °ó¶¨sim¿¨µÄµã»÷ÊÂ¼ş
+	 * ç»‘å®šsimå¡çš„ç‚¹å‡»äº‹ä»¶
 	 */
 	public void bind(View view) {
 		Editor editor = sp.edit();
 		if (TextUtils.isEmpty(sp.getString("sim", ""))) {
-			//»ñÈ¡sim¿¨´®ºÅ
+			//è·å–simå¡ä¸²å·
 			TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-			String sim = tm.getSimSerialNumber();//sim¿¨Î¨Ò»
+			String sim = tm.getSimSerialNumber();//simå¡å”¯ä¸€
 			editor.putString("sim", sim);
 			editor.commit();
 			iv_setup2_status.setImageResource(R.drawable.lock);

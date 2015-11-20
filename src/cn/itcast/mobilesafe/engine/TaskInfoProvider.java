@@ -21,25 +21,25 @@ public class TaskInfoProvider {
 		PackageManager pm = context.getPackageManager();
 		for(RunningAppProcessInfo info : infos){
 			TaskInfo taskInfo = new TaskInfo();
-			String packname = info.processName;//½ø³ÌÃû==°üÃû£¿£¿
-			
+			String packname = info.processName;//è¿›ç¨‹å==åŒ…åï¼Ÿï¼Ÿ
+
 			long memsize = am.getProcessMemoryInfo(new int[]{info.pid})[0].getTotalPrivateDirty()*1024;
 			taskInfo.setMemsize(memsize);
 			taskInfo.setPackname(packname);
 			try {
 				ApplicationInfo  appinfo =	pm.getApplicationInfo(packname, 0);
-				if( (appinfo.flags & ApplicationInfo.FLAG_SYSTEM)==1 ){//ÅĞ¶Ï ÊÇ·ñÊÇÓÃ»§¡¢ÏµÍ³Ó¦ÓÃ 
+				if( (appinfo.flags & ApplicationInfo.FLAG_SYSTEM)==1 ){//åˆ¤æ–­ æ˜¯å¦æ˜¯ç”¨æˆ·ã€ç³»ç»Ÿåº”ç”¨ 
 					taskInfo.setUsertask(false);
 				}else{
 					taskInfo.setUsertask(true);
 				}
-				Drawable icon = appinfo.loadIcon(pm);//Ó¦ÓÃ Í¼±ê 
+				Drawable icon = appinfo.loadIcon(pm);//åº”ç”¨ å›¾æ ‡ 
 				taskInfo.setIcon(icon);
-				CharSequence name = appinfo.loadLabel(pm);//Ó¦ÓÃ
+				CharSequence name = appinfo.loadLabel(pm);//åº”ç”¨
 				taskInfo.setName(name.toString());
 			} catch (Exception e) {
 				e.printStackTrace();
-				//todo:Òì³£´¦Àí ÌØÊâµÄÏµÍ³Ó¦ÓÃÃ»ÓĞ³ÌĞòÃû.ÓÃ°üÃûÌæ´ú£¬ÉèÖÃÄ¬ÈÏÍ¼±ê
+				//todo:å¼‚å¸¸å¤„ç† ç‰¹æ®Šçš„ç³»ç»Ÿåº”ç”¨æ²¡æœ‰ç¨‹åºå.ç”¨åŒ…åæ›¿ä»£ï¼Œè®¾ç½®é»˜è®¤å›¾æ ‡
 				taskInfo.setName(packname);
 				taskInfo.setIcon(context.getResources().getDrawable(R.drawable.ic_launcher));
 			}

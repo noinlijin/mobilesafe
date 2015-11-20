@@ -33,7 +33,7 @@ public class UpdateWidgetService extends Service {
 
 			@Override
 			public void run() {
-				// ¸üĞÂ½çÃæÉÏµÄwidget
+				// æ›´æ–°ç•Œé¢ä¸Šçš„widget
 				AppWidgetManager awm = AppWidgetManager
 						.getInstance(getApplicationContext());
 				RemoteViews remoteView = new RemoteViews(getPackageName(),
@@ -41,32 +41,32 @@ public class UpdateWidgetService extends Service {
 				remoteView
 						.setTextViewText(
 								R.id.process_count,
-								"ÕıÔÚÔËĞĞ½ø³ÌÊıÁ¿:"
+								"æ­£åœ¨è¿è¡Œè¿›ç¨‹æ•°é‡:"
 										+ TaskUtils
-												.getRunningProcessCount(getApplicationContext()));
+										.getRunningProcessCount(getApplicationContext()));
 				remoteView
 						.setTextViewText(
 								R.id.process_memory,
-								"¿ÉÓÃÄÚ´æ:"
+								"å¯ç”¨å†…å­˜:"
 										+ Formatter
-												.formatFileSize(
-														getApplicationContext(),
-														TaskUtils
-																.getAvailMem(getApplicationContext())));
-				
-				Intent intent = new Intent();//¶¨ÒåÒ»¸ö×Ô¶¨ÒåµÄ¹ã²¥ÊÂ¼ş
+										.formatFileSize(
+												getApplicationContext(),
+												TaskUtils
+														.getAvailMem(getApplicationContext())));
+
+				Intent intent = new Intent();//å®šä¹‰ä¸€ä¸ªè‡ªå®šä¹‰çš„å¹¿æ’­äº‹ä»¶
 				intent.setAction("cn.itcast.killtask");
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-				remoteView.setOnClickPendingIntent(R.id.btn_clear, pendingIntent);//ÉèÖÃ  µã»÷ÊÂ¼ş 
-				
+				remoteView.setOnClickPendingIntent(R.id.btn_clear, pendingIntent);//è®¾ç½®  ç‚¹å‡»äº‹ä»¶ 
+
 				ComponentName widget = new ComponentName(getApplicationContext(), MyWidget.class);
 				awm.updateAppWidget(widget, remoteView);
-				
+
 			}
 		};
 		timer.schedule(task, 1000, 2000);
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub

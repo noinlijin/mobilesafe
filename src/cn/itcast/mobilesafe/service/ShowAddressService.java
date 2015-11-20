@@ -20,7 +20,7 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.TextView;
 /**
- * ¹éÊôµØÌáÊ¾·şÎñ 
+ * å½’å±åœ°æç¤ºæœåŠ¡ 
  * @author superboy
  *
  */
@@ -32,14 +32,14 @@ public class ShowAddressService extends Service {
 	private OutCallReceiverInService receiver;
 	private WindowManager wm;
 	private View view;
-	// "°ëÍ¸Ã÷","»îÁ¦³È","ÎÀÊ¿À¶","½ğÊô»Ò","Æ»¹ûÂÌ"
+	// "åŠé€æ˜","æ´»åŠ›æ©™","å«å£«è“","é‡‘å±ç°","è‹¹æœç»¿"
 	private static final int[] bgs = { R.drawable.call_locate_white,
 			R.drawable.call_locate_orange, R.drawable.call_locate_blue,
 			R.drawable.call_locate_gray, R.drawable.call_locate_green };
 
 	private SharedPreferences sp;
 	/**
-	 * ·şÎñÖĞ´´½¨¹ã²¥½ÓÊÜÕß(²»ÓÃÔÚÇåµ¥ÎÄ¼şÀïÃæÅäÖÃ )
+	 * æœåŠ¡ä¸­åˆ›å»ºå¹¿æ’­æ¥å—è€…(ä¸ç”¨åœ¨æ¸…å•æ–‡ä»¶é‡Œé¢é…ç½® )
 	 * @author superboy
 	 *
 	 */
@@ -47,7 +47,7 @@ public class ShowAddressService extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String number = getResultData();
-			Log.i(TAG, "ÄÚ²¿µÄ¹ã²¥½ÓÊÕÕß");
+			Log.i(TAG, "å†…éƒ¨çš„å¹¿æ’­æ¥æ”¶è€…");
 			if (number != null) {
 				String address = AddressDao.getAddress(number);
 				// Toast.makeText(context, address, 1).show();
@@ -65,26 +65,26 @@ public class ShowAddressService extends Service {
 	public void onCreate() {
 		sp = getSharedPreferences("config", MODE_PRIVATE);
 		wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-		
-		// ÔÚ·şÎñ´´½¨µÄÊ±ºò ²ÉÓÃ´úÂëµÄ·½Ê½ ×¢²áÒ»¸ö¹ã²¥½ÓÊÜÕß.
-		// ¹ã²¥½ÓÊÕÕßµÄ×÷ÓÃÖÜÆÚ ¾Í¸ú ·şÎñÒ»ÖÂµÄ
+
+		// åœ¨æœåŠ¡åˆ›å»ºçš„æ—¶å€™ é‡‡ç”¨ä»£ç çš„æ–¹å¼ æ³¨å†Œä¸€ä¸ªå¹¿æ’­æ¥å—è€….
+		// å¹¿æ’­æ¥æ”¶è€…çš„ä½œç”¨å‘¨æœŸ å°±è·Ÿ æœåŠ¡ä¸€è‡´çš„
 		receiver = new OutCallReceiverInService();
 		IntentFilter filter = new IntentFilter();
-		filter.addAction("android.intent.action.NEW_OUTGOING_CALL");//¼àÌıÍâ²¦µç»°µÄ¶¯×÷
-		this.registerReceiver(receiver, filter);//×¢²á¹ã²¥½ÓÊÜÕß
+		filter.addAction("android.intent.action.NEW_OUTGOING_CALL");//ç›‘å¬å¤–æ‹¨ç”µè¯çš„åŠ¨ä½œ
+		this.registerReceiver(receiver, filter);//æ³¨å†Œå¹¿æ’­æ¥å—è€…
 
-		// ×¢²áÒ»¸öµç»°×´Ì¬µÄ¼àÌıÆ÷.
+		// æ³¨å†Œä¸€ä¸ªç”µè¯çŠ¶æ€çš„ç›‘å¬å™¨.
 		tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 		listener = new MyPhoneStatusListener();
-		tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);//¼àÌıµç»°×´Ì¬ 
-		
-		//PhoneStateListener.LISTEN_DATA_ACTIVITY    Á÷Á¿ ¼àÌı 
+		tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);//ç›‘å¬ç”µè¯çŠ¶æ€ 
+
+		//PhoneStateListener.LISTEN_DATA_ACTIVITY    æµé‡ ç›‘å¬ 
 		super.onCreate();
 	}
 
 	@Override
 	public void onDestroy() {
-		tm.listen(listener, PhoneStateListener.LISTEN_NONE);//È¡Ïû¼àÌı 
+		tm.listen(listener, PhoneStateListener.LISTEN_NONE);//å–æ¶ˆç›‘å¬ 
 		listener = null;
 		this.unregisterReceiver(receiver);
 		receiver = null;
@@ -96,57 +96,57 @@ public class ShowAddressService extends Service {
 		public void onCallStateChanged(int state, String incomingNumber) {
 			super.onCallStateChanged(state, incomingNumber);
 			switch (state) {
-			case TelephonyManager.CALL_STATE_IDLE:// ÊÖ»ú´¦ÓÚ¿ÕÏĞ×´Ì¬.
-				if (view != null) {
-					wm.removeView(view);//ÒÆ³ıÄ£·ÂÍÁË¾
-					view = null;
-				}
-				break;
+				case TelephonyManager.CALL_STATE_IDLE:// æ‰‹æœºå¤„äºç©ºé—²çŠ¶æ€.
+					if (view != null) {
+						wm.removeView(view);//ç§»é™¤æ¨¡ä»¿åœŸå¸
+						view = null;
+					}
+					break;
 
-			case TelephonyManager.CALL_STATE_RINGING:// ÏìÁå×´Ì¬
-				String address = AddressDao.getAddress(incomingNumber);
-				// Toast.makeText(getApplicationContext(), address, 1).show();
-				showAddress(address);
+				case TelephonyManager.CALL_STATE_RINGING:// å“é“ƒçŠ¶æ€
+					String address = AddressDao.getAddress(incomingNumber);
+					// Toast.makeText(getApplicationContext(), address, 1).show();
+					showAddress(address);
 
-				break;
+					break;
 
-			case TelephonyManager.CALL_STATE_OFFHOOK:// ½ÓÍ¨µç»°µÄ×´Ì¬
+				case TelephonyManager.CALL_STATE_OFFHOOK:// æ¥é€šç”µè¯çš„çŠ¶æ€
 
-				break;
+					break;
 			}
 
 		}
 	}
 
 	/**
-	 * Ä£·ÂÍÁË¾ ÔÚÊÖ»úµÄ´°ÌåÉÏ ÏÔÊ¾Ò»¸ö×Ô¶¨ÒåµÄview¶ÔÏó.
-	 * 
-	 * @param address ÊÖ»ú¹éÊôµØ
+	 * æ¨¡ä»¿åœŸå¸ åœ¨æ‰‹æœºçš„çª—ä½“ä¸Š æ˜¾ç¤ºä¸€ä¸ªè‡ªå®šä¹‰çš„viewå¯¹è±¡.
+	 *
+	 * @param address æ‰‹æœºå½’å±åœ°
 	 */
 	public void showAddress(String address) {
 		view = View.inflate(this, R.layout.toast_address, null);
-		// ¸ù¾İÉèÖÃ ĞŞ¸ÄÒ»ÏÂ±³¾°ÑÕÉ«.
+		// æ ¹æ®è®¾ç½® ä¿®æ”¹ä¸€ä¸‹èƒŒæ™¯é¢œè‰².
 		int which = sp.getInt("which", 0);
 		view.setBackgroundResource(bgs[which]);
 		TextView tv = (TextView) view.findViewById(R.id.tv_toast_address);
 		tv.setText(address);
-		
-		//²Î¿¼ÏµÍ³´úÂë 
+
+		//å‚è€ƒç³»ç»Ÿä»£ç  
 		final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-		params.gravity = Gravity.LEFT | Gravity.TOP;// Óë×óÉÏ½Ç¶ÔÆä
-		
-		//ÉèÖÃºóµÄ²ÎÊı
+		params.gravity = Gravity.LEFT | Gravity.TOP;// ä¸å·¦ä¸Šè§’å¯¹å…¶
+
+		//è®¾ç½®åçš„å‚æ•°
 		params.x = sp.getInt("lastx", 0);
 		params.y = sp.getInt("lasty", 0);
-		
+
 		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 		params.width = WindowManager.LayoutParams.WRAP_CONTENT;
 		params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 				| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 		params.format = PixelFormat.TRANSLUCENT;
-		params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;//ĞèÒªÖ¸¶¨ 
+		params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;//éœ€è¦æŒ‡å®š 
 
-		//¿ØÖÆ¿Ø¼şÒÆ¶¯
+		//æ§åˆ¶æ§ä»¶ç§»åŠ¨
 		view.setOnTouchListener(new OnTouchListener() {
 			int startX;
 			int startY;
@@ -154,23 +154,23 @@ public class ShowAddressService extends Service {
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 
-				case MotionEvent.ACTION_DOWN:
-					startX = (int) event.getRawX();
-					startY = (int) event.getRawY();
-					break;
+					case MotionEvent.ACTION_DOWN:
+						startX = (int) event.getRawX();
+						startY = (int) event.getRawY();
+						break;
 
-				case MotionEvent.ACTION_MOVE:
-					int x = (int) event.getRawX();
-					int y = (int) event.getRawY();
-					int dx = x - startX;
-					int dy = y - startY;
-					params.x += dx;
-					params.y += dy;
-					
-					wm.updateViewLayout(view, params);//¸üĞÂview
-					startX = (int) event.getRawX();
-					startY = (int) event.getRawY();
-					break;
+					case MotionEvent.ACTION_MOVE:
+						int x = (int) event.getRawX();
+						int y = (int) event.getRawY();
+						int dx = x - startX;
+						int dy = y - startY;
+						params.x += dx;
+						params.y += dy;
+
+						wm.updateViewLayout(view, params);//æ›´æ–°view
+						startX = (int) event.getRawX();
+						startY = (int) event.getRawY();
+						break;
 				}
 
 				return true;

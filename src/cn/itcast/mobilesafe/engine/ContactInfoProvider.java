@@ -9,19 +9,19 @@ import android.database.Cursor;
 import android.net.Uri;
 import cn.itcast.mobilesafe.domain.ContactInfo;
 /**
- * * »ñÈ¡ÏµÍ³ÀïÃæµÄÁªÏµÈË.
+ * * è·å–ç³»ç»Ÿé‡Œé¢çš„è”ç³»äºº.
  * @author superboy
  *
  */
 public class ContactInfoProvider {
 	/**
-	 * »ñÈ¡ÏµÍ³ÀïÃæµÄÁªÏµÈË.
-	 * 
+	 * è·å–ç³»ç»Ÿé‡Œé¢çš„è”ç³»äºº.
+	 *
 	 * @param context
 	 * @return
 	 */
 	public static List<ContactInfo> getContactInfos(Context context) {
-		// 1.´Óraw_contact °ÑÁªÏµÈËµÄidÈ¡³öÈ¥ .
+		// 1.ä»raw_contact æŠŠè”ç³»äººçš„idå–å‡ºå» .
 		ContentResolver resolver = context.getContentResolver();
 		Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
 		Uri datauri = Uri.parse("content://com.android.contacts/data");
@@ -29,12 +29,12 @@ public class ContactInfoProvider {
 				null, null, null);
 		List<ContactInfo> infos = new ArrayList<ContactInfo>();
 		while (cursor.moveToNext()) {
-			// 2.¸ù¾İÕâ¸öid °Ñdata±íÀïÃæµÄÊı¾İÈ¡³öÀ´.
+			// 2.æ ¹æ®è¿™ä¸ªid æŠŠdataè¡¨é‡Œé¢çš„æ•°æ®å–å‡ºæ¥.
 			String id = cursor.getString(0);
-			if (id != null) {//ÁªÏµÈËÉ¾³ı  ¼´ ĞŞ¸Ädata±íÖĞcontact_idÎªnullÍ¬²½ÓÊÏä¡£¡£¡£
+			if (id != null) {//è”ç³»äººåˆ é™¤  å³ ä¿®æ”¹dataè¡¨ä¸­contact_idä¸ºnullåŒæ­¥é‚®ç®±ã€‚ã€‚ã€‚
 				ContactInfo info = new ContactInfo();
 				Cursor dataCursor = resolver.query(datauri, new String[] {
-						"mimetype", "data1" }, "raw_contact_id=?",
+								"mimetype", "data1" }, "raw_contact_id=?",
 						new String[] { id }, null);
 				while (dataCursor.moveToNext()) {
 					String mime = dataCursor.getString(0);
@@ -45,11 +45,11 @@ public class ContactInfoProvider {
 						info.setName(data1);
 					}
 				}
-				dataCursor.close();//¹Ø±Õcursor
+				dataCursor.close();//å…³é—­cursor
 				infos.add(info);
 			}
 		}
-		cursor.close();//¹Ø±Õcursor
+		cursor.close();//å…³é—­cursor
 		return infos;
 	}
 }

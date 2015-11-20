@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 /**
- * ¹éÊôµØÌáÊ¾¿òÎ»ÖÃ
+ * å½’å±åœ°æç¤ºæ¡†ä½ç½®
  * @author superboy
  *
  */
@@ -25,7 +25,7 @@ public class DragViewActivity extends Activity {
 	private TextView tv_drag_info;
 	private Display  display;
 	private SharedPreferences sp;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,79 +36,79 @@ public class DragViewActivity extends Activity {
 		sp =getSharedPreferences("config", MODE_PRIVATE);
 		WindowManager wm = getWindowManager();
 		display = wm.getDefaultDisplay();
-		
+
 		iv_drag_view = (ImageView) findViewById(R.id.iv_drag_view);
 		tv_drag_info = (TextView) findViewById(R.id.tv_drag_info);
-		
-		
-		//³õÊ¼»¯ Î»ÖÃ
+
+
+		//åˆå§‹åŒ– ä½ç½®
 		int lastx = sp.getInt("lastx", 0);
 		int lasty = sp.getInt("lasty", 0);
-		
-		//×¢Òâ: ÔÚ½çÃæÃ»ÓĞ±»äÖÈ¾³öÀ´Ö®Ç° layoutµÄ·½·¨ÊÇ²»»áÉúĞ§µÄ ,±ØĞëÒª²ÉÓÃ²¼¾ÖµÄ·½Ê½ Ö¸¶¨Î»ÖÃ
+
+		//æ³¨æ„: åœ¨ç•Œé¢æ²¡æœ‰è¢«æ¸²æŸ“å‡ºæ¥ä¹‹å‰ layoutçš„æ–¹æ³•æ˜¯ä¸ä¼šç”Ÿæ•ˆçš„ ,å¿…é¡»è¦é‡‡ç”¨å¸ƒå±€çš„æ–¹å¼ æŒ‡å®šä½ç½®
 		RelativeLayout.LayoutParams params = (LayoutParams) iv_drag_view.getLayoutParams();
 		params.leftMargin = lastx;
 		params.topMargin = lasty;
 		iv_drag_view.setLayoutParams(params);
-		
+
 		iv_drag_view.setOnTouchListener(new OnTouchListener() {
-			//¼ÇÂ¼³õÊ¼µÄ×ø±ê
+			//è®°å½•åˆå§‹çš„åæ ‡
 			int startX;
 			int startY;
-			
+
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
-				// ÊÖÖ¸µÚÒ»´Î´¥Ãşµ½ÆÁÄ»
-				case MotionEvent.ACTION_DOWN:
-					Log.i(TAG,"Ãşµ½!");
-					startX = (int) event.getRawX();
-					startY = (int) event.getRawY();
-					break;
-				// ÊÖÖ¸ÔÚÆÁÄ»ÉÏÒÆ¶¯
-				case MotionEvent.ACTION_MOVE:
-					Log.i(TAG,"»¬¶¯!");
-					int newX = (int) event.getRawX();
-					int newY = (int) event.getRawY();
-					int dx = newX - startX;
-					int dy = newY - startY;
-					int l = iv_drag_view.getLeft();
-					int t = iv_drag_view.getTop();
-					int b = iv_drag_view.getBottom();
-					int r = iv_drag_view.getRight();
-					
-					int newl = l+dx;
-					int newr = r+dx;
-					int newt = t+dy;
-					int newb = b+dy;
-					
-					if(newl<0||newr>display.getWidth()||newt<0||newb>display.getHeight()){
+					// æ‰‹æŒ‡ç¬¬ä¸€æ¬¡è§¦æ‘¸åˆ°å±å¹•
+					case MotionEvent.ACTION_DOWN:
+						Log.i(TAG,"æ‘¸åˆ°!");
+						startX = (int) event.getRawX();
+						startY = (int) event.getRawY();
 						break;
-					}
-					
-					int tv_height = tv_drag_info.getBottom() - tv_drag_info.getTop();
-					
-					
-					if(newt>display.getHeight()/2){
-						//tv ÉèÖÃÏÔÊ¾ÔÚÉÏ·½
-						tv_drag_info.layout(tv_drag_info.getLeft(), 0, tv_drag_info.getRight(), tv_height);
-					}else{
-						//tv ÏÔÊ¾ÔÚÏÂ·½.
-						tv_drag_info.layout(tv_drag_info.getLeft(), display.getHeight()- tv_height-30, tv_drag_info.getRight(), display.getHeight()-30);
-					}
-					
-					iv_drag_view.layout(newl, newt, newr, newb);
-					startX = (int) event.getRawX();//¸ü¸Ä³õÊ¼Î»ÖÃ 
-					startY = (int) event.getRawY();
-					
-					break;
-				// ÊÖÖ¸Àë¿ªÁËÆÁÄ»
-				case MotionEvent.ACTION_UP:
-					Log.i(TAG,"ËÉÊÖ!");
-					Editor editor = sp.edit();
-					editor.putInt("lastx", iv_drag_view.getLeft());
-					editor.putInt("lasty", iv_drag_view.getTop());
-					editor.commit();
-					break;
+					// æ‰‹æŒ‡åœ¨å±å¹•ä¸Šç§»åŠ¨
+					case MotionEvent.ACTION_MOVE:
+						Log.i(TAG,"æ»‘åŠ¨!");
+						int newX = (int) event.getRawX();
+						int newY = (int) event.getRawY();
+						int dx = newX - startX;
+						int dy = newY - startY;
+						int l = iv_drag_view.getLeft();
+						int t = iv_drag_view.getTop();
+						int b = iv_drag_view.getBottom();
+						int r = iv_drag_view.getRight();
+
+						int newl = l+dx;
+						int newr = r+dx;
+						int newt = t+dy;
+						int newb = b+dy;
+
+						if(newl<0||newr>display.getWidth()||newt<0||newb>display.getHeight()){
+							break;
+						}
+
+						int tv_height = tv_drag_info.getBottom() - tv_drag_info.getTop();
+
+
+						if(newt>display.getHeight()/2){
+							//tv è®¾ç½®æ˜¾ç¤ºåœ¨ä¸Šæ–¹
+							tv_drag_info.layout(tv_drag_info.getLeft(), 0, tv_drag_info.getRight(), tv_height);
+						}else{
+							//tv æ˜¾ç¤ºåœ¨ä¸‹æ–¹.
+							tv_drag_info.layout(tv_drag_info.getLeft(), display.getHeight()- tv_height-30, tv_drag_info.getRight(), display.getHeight()-30);
+						}
+
+						iv_drag_view.layout(newl, newt, newr, newb);
+						startX = (int) event.getRawX();//æ›´æ”¹åˆå§‹ä½ç½®
+						startY = (int) event.getRawY();
+
+						break;
+					// æ‰‹æŒ‡ç¦»å¼€äº†å±å¹•
+					case MotionEvent.ACTION_UP:
+						Log.i(TAG,"æ¾æ‰‹!");
+						Editor editor = sp.edit();
+						editor.putInt("lastx", iv_drag_view.getLeft());
+						editor.putInt("lasty", iv_drag_view.getTop());
+						editor.commit();
+						break;
 
 				}
 

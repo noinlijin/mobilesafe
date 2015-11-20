@@ -24,9 +24,9 @@ public class TrafficManagerActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_traffic_manager);
-		 lv_traffic_manager= (ListView)findViewById(R.id.lv_traffic_manager);
-		 pb_traffic_manager= (ProgressBar)findViewById(R.id.pb_traffic_manager);
-		 
+		lv_traffic_manager= (ListView)findViewById(R.id.lv_traffic_manager);
+		pb_traffic_manager= (ProgressBar)findViewById(R.id.pb_traffic_manager);
+
 		fillData();
 	}
 
@@ -35,8 +35,8 @@ public class TrafficManagerActivity extends Activity {
 
 			protected Void doInBackground(Void... params) {
 				pb_traffic_manager.setVisibility(View.VISIBLE);
-				 List<AppTraffic> appTraffics=	getTrafficCount();
-				 lv_traffic_manager.setAdapter(new TrafficAdapter());
+				List<AppTraffic> appTraffics=	getTrafficCount();
+				lv_traffic_manager.setAdapter(new TrafficAdapter());
 				return null;
 			}
 
@@ -52,61 +52,59 @@ public class TrafficManagerActivity extends Activity {
 			protected void onProgressUpdate(Void... values) {
 				super.onProgressUpdate(values);
 			}
-			
+
 		};
-		
-	}
-   class TrafficAdapter extends BaseAdapter {
 
-	public int getCount() {
-		return 0;
 	}
+	class TrafficAdapter extends BaseAdapter {
 
-	public Object getItem(int position) {
-		return null;
-	}
+		public int getCount() {
+			return 0;
+		}
 
-	public long getItemId(int position) {
-		return 0;
-	}
+		public Object getItem(int position) {
+			return null;
+		}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		return null;
+		public long getItemId(int position) {
+			return 0;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			return null;
+		}
+
 	}
-	   
-   }
 	private List<AppTraffic> getTrafficCount() {
 		PackageManager pm = getPackageManager();
 		List<PackageInfo> infos = pm
-				.getInstalledPackages(PackageManager.GET_PERMISSIONS);//±éÀú /data/data/°ü  Ó¦ÓÃ ÏÂÃæµÄAndroidManifest.xmlÎÄ¼ş  ÀïÃæµÄÈ¨ÏŞ
+				.getInstalledPackages(PackageManager.GET_PERMISSIONS);//éå† /data/data/åŒ…  åº”ç”¨ ä¸‹é¢çš„AndroidManifest.xmlæ–‡ä»¶  é‡Œé¢çš„æƒé™
 		List<AppTraffic> appTraffics=new ArrayList<AppTraffic>();
-		
+
 		for (PackageInfo info : infos) {
 			String[] permissions = info.requestedPermissions;
 
 			if (permissions != null && permissions.length > 0) {
 				for (String p : permissions) {
-					if ("android.permission.INTERNET".equals(p)) {//Èç¹û ÓĞÍøÂç·ÃÎÊÈ¨ÏŞ 
+					if ("android.permission.INTERNET".equals(p)) {//å¦‚æœ æœ‰ç½‘ç»œè®¿é—®æƒé™ 
 						AppTraffic appTraffic=new AppTraffic();
 						System.out.println(info.applicationInfo.loadLabel(pm)
-								+ "·ÃÎÊÍøÂç.");
-						
-						appTraffic.setUid(info.applicationInfo.uid);//»ñÈ¡ÏµÍ³·ÖÅä Ó¦ÓÃ µÄuid
+								+ "è®¿é—®ç½‘ç»œ.");
+
+						appTraffic.setUid(info.applicationInfo.uid);//è·å–ç³»ç»Ÿåˆ†é… åº”ç”¨ çš„uid
 						appTraffic.setName(info.applicationInfo.name);
 						appTraffic.setUidRxBytes(TrafficStats.getTotalRxBytes());
 						appTraffic.setUidTxBytes(TrafficStats.getTotalTxBytes());
-						
+
 						appTraffics.add(appTraffic);
 					}
 				}
 			}
 			/*
-			TrafficStats.getUidRxBytes(uid); // »ñÈ¡ÏÂÔØÊı¾İ
-			TrafficStats.getUidTxBytes(uid); // »ñÈ¡ÉÏ´«Êı¾İ.
-
-			TrafficStats.getMobileRxBytes(); // 2g/3g ÏÂÔØµÄ×ÜÁ÷Á¿
+			TrafficStats.getUidRxBytes(uid); // è·å–ä¸‹è½½æ•°æ®
+			TrafficStats.getUidTxBytes(uid); // è·å–ä¸Šä¼ æ•°æ®.
+			TrafficStats.getMobileRxBytes(); // 2g/3g ä¸‹è½½çš„æ€»æµé‡
 			TrafficStats.getMobileTxBytes(); //
-
 			TrafficStats.getTotalRxBytes(); // 2g/3g wifi
 			TrafficStats.getTotalTxBytes();
 			*/

@@ -4,24 +4,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 /**
- * ºÚÃûµ¥ À¹½ØÊı¾İ¿âblacknumber.dbµÄ´´½¨
+ * é»‘åå• æ‹¦æˆªæ•°æ®åº“blacknumber.dbçš„åˆ›å»º
  * @author superboy
  *
  */
 public class BlackNumberDBOpenHelper extends SQLiteOpenHelper {
 
 	public BlackNumberDBOpenHelper(Context context) {
-		
+
 		super(context, "blacknumber.db", null, 1);
 	}
 
 	/**
-	 * Êı¾İ¿âµÚÒ»´Î±»´´½¨µÄÊ±ºò µ÷ÓÃµÄ·½·¨.
-	 * À¹½ØÄ£Ê½ 0 È«²¿À¹½Ø 1µç»°À¹½Ø 2¶ÌĞÅÀ¹½Ø
+	 * æ•°æ®åº“ç¬¬ä¸€æ¬¡è¢«åˆ›å»ºçš„æ—¶å€™ è°ƒç”¨çš„æ–¹æ³•.
+	 * æ‹¦æˆªæ¨¡å¼ 0 å…¨éƒ¨æ‹¦æˆª 1ç”µè¯æ‹¦æˆª 2çŸ­ä¿¡æ‹¦æˆª
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//ºÚÃûµ¥ºÅÂë , À¹½ØÄ£Ê½
+		//é»‘åå•å·ç  , æ‹¦æˆªæ¨¡å¼
 		db.execSQL("create table blacknumber (id integer primary key autoincrement,number varchar(20),mode varchar(2) )", new Object[]{});
 	}
 

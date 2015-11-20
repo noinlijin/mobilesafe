@@ -9,13 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 public class CommonNumberDao {
 
 	/**
-	 * »ñÈ¡Êı¾İ¿âÓĞ¶àÉÙ¸ö·Ö×éĞÅÏ¢
-	 * 
+	 * è·å–æ•°æ®åº“æœ‰å¤šå°‘ä¸ªåˆ†ç»„ä¿¡æ¯
+	 *
 	 * @return
 	 */
 	public static int getGroupCount() {
 		int count = 0;
-		// 1.´ò¿ªÊı¾İ¿â
+		// 1.æ‰“å¼€æ•°æ®åº“
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				"/data/data/cn.itcast.mobilesafe/files/commonnum.db", null,
 				SQLiteDatabase.OPEN_READONLY);
@@ -26,13 +26,13 @@ public class CommonNumberDao {
 		return count;
 	}
 	/**
-	 * »ñÈ¡Êı¾İ¿âËùÓĞµÄ·Ö×éĞÅÏ¢
-	 * 
+	 * è·å–æ•°æ®åº“æ‰€æœ‰çš„åˆ†ç»„ä¿¡æ¯
+	 *
 	 * @return
 	 */
 	public static List<String> getGroupItems() {
 		List<String>  groupItems = new ArrayList<String>();
-		// 1.´ò¿ªÊı¾İ¿â
+		// 1.æ‰“å¼€æ•°æ®åº“
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				"/data/data/cn.itcast.mobilesafe/files/commonnum.db", null,
 				SQLiteDatabase.OPEN_READONLY);
@@ -45,13 +45,13 @@ public class CommonNumberDao {
 		return groupItems;
 	}
 	/**
-	 * »ñÈ¡Êı¾İ¿âÄ³¸ö·Ö×éÓĞ¶àÉÙ¸öº¢×ÓĞÅÏ¢
-	 * groupPosition´Ó0¿ªÊ¼
+	 * è·å–æ•°æ®åº“æŸä¸ªåˆ†ç»„æœ‰å¤šå°‘ä¸ªå­©å­ä¿¡æ¯
+	 * groupPositionä»0å¼€å§‹
 	 * @return
 	 */
 	public  static int getChildCount(int groupPosition) {
 		int count = 0;
-		// 1.´ò¿ªÊı¾İ¿â
+		// 1.æ‰“å¼€æ•°æ®åº“
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				"/data/data/cn.itcast.mobilesafe/files/commonnum.db", null,
 				SQLiteDatabase.OPEN_READONLY);
@@ -62,14 +62,14 @@ public class CommonNumberDao {
 		db.close();
 		return count;
 	}
-		/**
-	 * »ñÈ¡Êı¾İ¿âÄ³¸ö·Ö×éËùÓĞµÄº¢×ÓĞÅÏ¢
-	 * 
+	/**
+	 * è·å–æ•°æ®åº“æŸä¸ªåˆ†ç»„æ‰€æœ‰çš„å­©å­ä¿¡æ¯
+	 *
 	 * @return
 	 */
 	public  static List<String> getChildItems(int groupPosition) {
 		List<String> childItems =new ArrayList<String>();
-		// 1.´ò¿ªÊı¾İ¿â
+		// 1.æ‰“å¼€æ•°æ®åº“
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				"/data/data/cn.itcast.mobilesafe/files/commonnum.db", null,
 				SQLiteDatabase.OPEN_READONLY);
@@ -84,7 +84,7 @@ public class CommonNumberDao {
 	}
 
 	/**
-	 * ·µ»ØÄ³¸ö·Ö×éµÄÃû³Æ
+	 * è¿”å›æŸä¸ªåˆ†ç»„çš„åç§°
 	 * @param groupPosition
 	 * @return
 	 */
@@ -103,7 +103,7 @@ public class CommonNumberDao {
 		return groupname;
 	}
 	/**
-	 * ·µ»ØÄ³¸ö·Ö×éµÄÄ³¸öº¢×ÓĞÅÏ¢
+	 * è¿”å›æŸä¸ªåˆ†ç»„çš„æŸä¸ªå­©å­ä¿¡æ¯
 	 * @param groupPosition
 	 * @return
 	 */
@@ -114,7 +114,7 @@ public class CommonNumberDao {
 				SQLiteDatabase.OPEN_READONLY);
 		int newgroupid = groupPosition + 1;
 		int newchildid = childPosition + 1;
-		
+
 		Cursor cursor = db.rawQuery("select name,number from table"+newgroupid+" where _id=?", new String[]{newchildid+""});
 		if(cursor.moveToFirst()){
 			String name  = cursor.getString(0);
@@ -126,13 +126,3 @@ public class CommonNumberDao {
 		return result;
 	}
 }
-
-
-
-
-
-
-
-
-
-

@@ -36,8 +36,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
- * SplashActivity½çÃæ 1¡¢¸ºÔğÁ¬½Ó·şÎñÆ÷¼ì²éÏµÍ³°æ±¾2¡¢¿½±´Êı¾İ¿âÎÄ¼şassets-->data/data/cn.itcast.mobliesafe/databases/ÏÂ
- * 
+ * SplashActivityç•Œé¢ 1ã€è´Ÿè´£è¿æ¥æœåŠ¡å™¨æ£€æŸ¥ç³»ç»Ÿç‰ˆæœ¬2ã€æ‹·è´æ•°æ®åº“æ–‡ä»¶assets-->data/data/cn.itcast.mobliesafe/databases/ä¸‹
+ *
  * @author superboy
  *
  */
@@ -58,68 +58,68 @@ public class SplashActivity extends Activity {
 	private TextView tv_splash_version;
 	private RelativeLayout rl_splash_main;
 	private UpdateInfo updateInfo;
-	
+
 	private ProgressDialog pd;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case PARSE_SUCCESS:
-				// ÅĞ¶Ï°æ±¾ºÅ
-				if (getVersion().equals(updateInfo.getVersion())) {
+				case PARSE_SUCCESS:
+					// åˆ¤æ–­ç‰ˆæœ¬å·
+					if (getVersion().equals(updateInfo.getVersion())) {
+						loadMainUI();
+					} else {
+						// æ˜¾ç¤ºæ›´æ–°æç¤ºå¯¹è¯æ¡†
+						showUpdateDialog();
+					}
+
+					break;
+
+				case PARSE_ERROR:
+					showMsg("è§£æXMLå¤±è´¥,....");
 					loadMainUI();
-				} else {
-					// ÏÔÊ¾¸üĞÂÌáÊ¾¶Ô»°¿ò
-					showUpdateDialog();
-				}
-
-				break;
-
-			case PARSE_ERROR:
-				showMsg("½âÎöXMLÊ§°Ü,....");
-				loadMainUI();
-				break;
-			case SERVER_ERROR:
-				showMsg("·şÎñÆ÷´íÎó");
-				loadMainUI();
-				break;
-			case URL_ERROR:
-				showMsg("urlÂ·¾¶²»ÕıÈ·");
-				loadMainUI();
-				break;
-			case NETWORK_ERROR:
-				showMsg("ÍøÂçÁ¬½Ó´íÎó");
-				loadMainUI();
-				break;
-			case DOWNLOAD_ERROR:
-				showMsg("ÏÂÔØÎÄ¼ş´íÎó");
-				loadMainUI();
-				break;
-			case DOWNLOAD_SUCCESS:
-				//ÎÄ¼ş°²×°  ÏµÍ³Ó¦ÓÃ PackageInstallerÇåµ¥ÎÄ¼ş
-				File file = (File) msg.obj;
-				Intent intent = new Intent();
-				intent.setAction("android.intent.action.VIEW");
-				intent.addCategory("android.intent.category.DEFAULT");
-				intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-				startActivity(intent);
-				finish();
-				break;
-			case COPY_ADDRESSDB_ERROR:
-				showMsg("³õÊ¼»¯µç»°Êı¾İ¿â´íÎó");
-				break;
-			case COPY_ADDRESSDB_SUCCESS:
-				showMsg("³õÊ¼»¯µç»°¹éÊôµØÊı¾İ³É¹¦");
-				break;
-			case COPY_NUMBERDB_ERROR:
-				showMsg("³õÊ¼»¯³£ÓÃºÅÂëÊı¾İ¿â´íÎó");
-				break;
-			case COPY_NUMBERDB_SUCCESS:
-				showMsg("³õÊ¼»¯³£ÓÃºÅÂëÊı¾İ³É¹¦");
-				break;
-			case COPY_VIRUS_SUCCESS:
-				showMsg("³õÊ¼»¯²¡¶¾Êı¾İ¿âÊı¾İ³É¹¦");
-				break;
+					break;
+				case SERVER_ERROR:
+					showMsg("æœåŠ¡å™¨é”™è¯¯");
+					loadMainUI();
+					break;
+				case URL_ERROR:
+					showMsg("urlè·¯å¾„ä¸æ­£ç¡®");
+					loadMainUI();
+					break;
+				case NETWORK_ERROR:
+					showMsg("ç½‘ç»œè¿æ¥é”™è¯¯");
+					loadMainUI();
+					break;
+				case DOWNLOAD_ERROR:
+					showMsg("ä¸‹è½½æ–‡ä»¶é”™è¯¯");
+					loadMainUI();
+					break;
+				case DOWNLOAD_SUCCESS:
+					//æ–‡ä»¶å®‰è£…  ç³»ç»Ÿåº”ç”¨ PackageInstalleræ¸…å•æ–‡ä»¶
+					File file = (File) msg.obj;
+					Intent intent = new Intent();
+					intent.setAction("android.intent.action.VIEW");
+					intent.addCategory("android.intent.category.DEFAULT");
+					intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+					startActivity(intent);
+					finish();
+					break;
+				case COPY_ADDRESSDB_ERROR:
+					showMsg("åˆå§‹åŒ–ç”µè¯æ•°æ®åº“é”™è¯¯");
+					break;
+				case COPY_ADDRESSDB_SUCCESS:
+					showMsg("åˆå§‹åŒ–ç”µè¯å½’å±åœ°æ•°æ®æˆåŠŸ");
+					break;
+				case COPY_NUMBERDB_ERROR:
+					showMsg("åˆå§‹åŒ–å¸¸ç”¨å·ç æ•°æ®åº“é”™è¯¯");
+					break;
+				case COPY_NUMBERDB_SUCCESS:
+					showMsg("åˆå§‹åŒ–å¸¸ç”¨å·ç æ•°æ®æˆåŠŸ");
+					break;
+				case COPY_VIRUS_SUCCESS:
+					showMsg("åˆå§‹åŒ–ç—…æ¯’æ•°æ®åº“æ•°æ®æˆåŠŸ");
+					break;
 			}
 
 		}
@@ -127,35 +127,35 @@ public class SplashActivity extends Activity {
 	};
 	private void showMsg(String msg) {
 		Toast.makeText(getApplicationContext(), msg, 0)
-		.show();
+				.show();
 	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
-		tv_splash_version.setText("°æ±¾:" + getVersion());
+		tv_splash_version.setText("ç‰ˆæœ¬:" + getVersion());
 		rl_splash_main = (RelativeLayout) findViewById(R.id.rl_splash_main);
-		new Thread(new CheckVersionTask()).start();//×ÓÏß³ÌÖĞÁ¬½Ó·şÎñÆ÷×ö·Ñ²Ù×÷
+		new Thread(new CheckVersionTask()).start();//å­çº¿ç¨‹ä¸­è¿æ¥æœåŠ¡å™¨åšè´¹æ“ä½œ
 
-		//rootÈ¨ÏŞ
+		//rootæƒé™
 		try {
 			Runtime.getRuntime().exec("su");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);//Í¸Ã÷¶È¶¯»­
-		aa.setDuration(2000);//³ÖĞøÊ±¼ä 
+
+
+		AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);//é€æ˜åº¦åŠ¨ç”»
+		aa.setDuration(2000);//æŒç»­æ—¶é—´ 
 		rl_splash_main.startAnimation(aa);
-		
+
 		new Thread(new CopyFileTask()).start();
-/*		´´½¨¿ì½İÍ¼±ê
+/*		åˆ›å»ºå¿«æ·å›¾æ ‡
 		Intent intent = new Intent();
 		intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 		
-		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "ÊÖ»úÎÀÊ¿¿ì½İÍ¼±ê");
+		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "æ‰‹æœºå«å£«å¿«æ·å›¾æ ‡");
 		Intent homeIntent = new Intent();
 		homeIntent.setAction("cn.itcast.home");
 		homeIntent.addCategory("android.intent.category.DEFAULT");
@@ -164,18 +164,18 @@ public class SplashActivity extends Activity {
 		sendBroadcast(intent);*/
 	}
 	/**
-	 * ¿½±´ÎÄ¼ş assets-->data/data/cn.itcast.mobliesafe/databases/
-	 * @param dbname  Òª¿½±´µÄÎÄ¼ş
-	 * @param success  ³É¹¦ÌáÊ¾
-	 * @param fail  Ê§°ÜÌáÊ¾
+	 * æ‹·è´æ–‡ä»¶ assets-->data/data/cn.itcast.mobliesafe/databases/
+	 * @param dbname  è¦æ‹·è´çš„æ–‡ä»¶
+	 * @param success  æˆåŠŸæç¤º
+	 * @param fail  å¤±è´¥æç¤º
 	 */
 	private void copyFile(String dbname, int success,int fail){
-		//ÅĞ¶ÏÒ»ÏÂÎÄ¼şÊÇ·ñÒÑ¾­¿½±´µ½ÏµÍ³µÄÄ¿Â¼ÏÂ.
+		//åˆ¤æ–­ä¸€ä¸‹æ–‡ä»¶æ˜¯å¦å·²ç»æ‹·è´åˆ°ç³»ç»Ÿçš„ç›®å½•ä¸‹.
 		File file = new File(getFilesDir(),dbname);
 		if(file.exists()&&file.length()>0){
-			//Ê²Ã´ÊÂÇé¶¼²»×ö
+			//ä»€ä¹ˆäº‹æƒ…éƒ½ä¸åš
 		}else{
-			//¿½±´ÎÄ¼şµ½ÏµÍ³Ä¿Â¼.
+			//æ‹·è´æ–‡ä»¶åˆ°ç³»ç»Ÿç›®å½•.
 			File copyedfile = AssetCopyUtil.copy(getApplicationContext(), dbname, file.getAbsolutePath());
 			Message msg = Message.obtain();
 			if(copyedfile==null){
@@ -186,32 +186,32 @@ public class SplashActivity extends Activity {
 			handler.sendMessage(msg);
 		}
 	}
-	
+
 	/**
-	 * ¿½±´ÎÄ¼şµ½ÏµÍ³Ä¿Â¼
+	 * æ‹·è´æ–‡ä»¶åˆ°ç³»ç»Ÿç›®å½•
 	 * @author Administrator
 	 *
 	 */
 	private class CopyFileTask implements Runnable{
 
 		public void run() {
-			//ÅĞ¶ÏÒ»ÏÂÎÄ¼şÊÇ·ñÒÑ¾­¿½±´µ½ÏµÍ³µÄÄ¿Â¼ÏÂ.
+			//åˆ¤æ–­ä¸€ä¸‹æ–‡ä»¶æ˜¯å¦å·²ç»æ‹·è´åˆ°ç³»ç»Ÿçš„ç›®å½•ä¸‹.
 			copyFile("address.db",COPY_ADDRESSDB_ERROR,COPY_ADDRESSDB_SUCCESS);
 			copyFile("commonnum.db",COPY_ADDRESSDB_ERROR,COPY_ADDRESSDB_SUCCESS);
 			copyFile("antivirus.db",COPY_ADDRESSDB_ERROR,COPY_VIRUS_SUCCESS);
 		}
 	}
-	
+
 	/**
-	 * ´ÓAndroidManifest.xmlÎÄ¼şÖĞ»ñÈ¡ÒÔÏÂĞÅÏ¢
-	    android:versionName="1.0"
+	 * ä»AndroidManifest.xmlæ–‡ä»¶ä¸­è·å–ä»¥ä¸‹ä¿¡æ¯
+	 android:versionName="1.0"
 	 * @return
 	 */
 	private String getVersion() {
 
 		PackageManager pm = getPackageManager();
 		try {
-			PackageInfo packinfo = pm.getPackageInfo(getPackageName(), 0);//²ÎÊı2ÓÃ²»µ½ Èû0
+			PackageInfo packinfo = pm.getPackageInfo(getPackageName(), 0);//å‚æ•°2ç”¨ä¸åˆ° å¡0
 			return packinfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
@@ -223,10 +223,10 @@ public class SplashActivity extends Activity {
 
 	private class CheckVersionTask implements Runnable {
 		public void run() {
-			//¼ì²éÊÇ·ñ¿ªÆô×Ô¶¯¸üĞÂ
+			//æ£€æŸ¥æ˜¯å¦å¼€å¯è‡ªåŠ¨æ›´æ–°
 			SharedPreferences sp  = getSharedPreferences("config", MODE_PRIVATE);
 			boolean update = sp.getBoolean("update", true);
-			if(!update){//²»¸üĞÂ
+			if(!update){//ä¸æ›´æ–°
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -235,10 +235,10 @@ public class SplashActivity extends Activity {
 				loadMainUI();
 				return ;
 			}
-			
+
 			long startTime = System.currentTimeMillis();
-			Message msg = Message.obtain(); //ÀûÓÃ¾ÉµÄ msgÌáÉıĞ§ÂÊ
-			// Á¬½Ó·şÎñÆ÷ »ñÈ¡¸üĞÂĞÅÏ¢.
+			Message msg = Message.obtain(); //åˆ©ç”¨æ—§çš„ msgæå‡æ•ˆç‡
+			// è¿æ¥æœåŠ¡å™¨ è·å–æ›´æ–°ä¿¡æ¯.
 			try {
 				URL url = new URL(getResources().getString(R.string.serverurl));
 				HttpURLConnection conn = (HttpURLConnection) url
@@ -249,13 +249,13 @@ public class SplashActivity extends Activity {
 				int code = conn.getResponseCode();
 				if (code == 200) {
 					InputStream is = conn.getInputStream();
-					// ½âÎöxml
+					// è§£æxml
 					updateInfo = UpdateInfoParser.getUpdateInfo(is);
 					if (updateInfo != null) {
-						// ½âÎö³É¹¦.
+						// è§£ææˆåŠŸ.
 						msg.what = PARSE_SUCCESS;
 					} else {
-						// ½âÎöxmlÊ§°Ü.
+						// è§£æxmlå¤±è´¥.
 						msg.what = PARSE_ERROR;
 					}
 				} else {
@@ -274,7 +274,7 @@ public class SplashActivity extends Activity {
 			} finally {
 				long endtime = System.currentTimeMillis();
 				long dtime = endtime - startTime;
-				if (dtime < 2000) {//»º³åÊ±¼äÔÚ2ÃëÄÚ
+				if (dtime < 2000) {//ç¼“å†²æ—¶é—´åœ¨2ç§’å†…
 					try {
 						Thread.sleep(2000 - dtime);
 					} catch (Exception e) {
@@ -289,74 +289,74 @@ public class SplashActivity extends Activity {
 	}
 
 	/**
-	 * ½øÈëÓ¦ÓÃ³ÌĞòÖ÷½çÃæ
+	 * è¿›å…¥åº”ç”¨ç¨‹åºä¸»ç•Œé¢
 	 */
 	private void loadMainUI() {
 		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);
-		finish();//¹Ø±Õµ±Ç°activity
+		finish();//å…³é—­å½“å‰activity
 	}
 
 	/**
-	 * ÏÔÊ¾¸üĞÂÌáÊ¾µÄ¶Ô»°¿ò
+	 * æ˜¾ç¤ºæ›´æ–°æç¤ºçš„å¯¹è¯æ¡†
 	 */
 	protected void showUpdateDialog() {
 
-		Log.i(TAG, "ÏÔÊ¾¸üĞÂÌáÊ¾¶Ô»°¿ò");
+		Log.i(TAG, "æ˜¾ç¤ºæ›´æ–°æç¤ºå¯¹è¯æ¡†");
 		AlertDialog.Builder buidler = new Builder(this);
 		buidler.setIcon(R.drawable.notification);
-		buidler.setTitle("Éı¼¶ÌáÊ¾");
+		buidler.setTitle("å‡çº§æç¤º");
 		buidler.setMessage(updateInfo.getDescription());
-		buidler.setOnCancelListener(new OnCancelListener() {//ºóÍË¼ü    ÊÂ¼ş 
+		buidler.setOnCancelListener(new OnCancelListener() {//åé€€é”®    äº‹ä»¶ 
 
 			public void onCancel(DialogInterface dialog) {
-				loadMainUI();//½øÈëµ½Ö÷½çÃæ 
+				loadMainUI();//è¿›å…¥åˆ°ä¸»ç•Œé¢ 
 			}
 		});
-		buidler.setPositiveButton("Éı¼¶", new OnClickListener() {//µã»÷È·¶¨ÊÂ¼ş 
+		buidler.setPositiveButton("å‡çº§", new OnClickListener() {//ç‚¹å‡»ç¡®å®šäº‹ä»¶ 
 
 			public void onClick(DialogInterface dialog, int which) {
-				Log.i(TAG, "ÏÂÔØ:" + updateInfo.getPath());
+				Log.i(TAG, "ä¸‹è½½:" + updateInfo.getPath());
 				if (Environment.getExternalStorageState().equals(
-						Environment.MEDIA_MOUNTED)) {//ÅĞ¶Ï ÍâÖÃÄÚ´æ¿¨×´Ì¬ 
-					
-					pd = new ProgressDialog(SplashActivity.this);//ÄÚ²¿Àà¶àÁËºó£¬ÎŞ´úÂëÌáÊ¾
-					pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);//ÉèÖÃ·½Ïò
-					pd.show();//ÏÔÊ¾ ³öÀ´
-					
-					//½«ÏÂÔØ ÎÄ¼ş´´½¨ÔÚsd¿¨¸ùÄ¿Â¼
+						Environment.MEDIA_MOUNTED)) {//åˆ¤æ–­ å¤–ç½®å†…å­˜å¡çŠ¶æ€ 
+
+					pd = new ProgressDialog(SplashActivity.this);//å†…éƒ¨ç±»å¤šäº†åï¼Œæ— ä»£ç æç¤º
+					pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);//è®¾ç½®æ–¹å‘
+					pd.show();//æ˜¾ç¤º å‡ºæ¥
+
+					//å°†ä¸‹è½½ æ–‡ä»¶åˆ›å»ºåœ¨sdå¡æ ¹ç›®å½•
 					final File file = new File(Environment.getExternalStorageDirectory(),DownLoadUtil.getFileName(updateInfo.getPath()));
 					new Thread() {
 						public void run() {
 							File downloadfile = DownLoadUtil.downLoad(updateInfo.getPath(),
 									file.getAbsolutePath(), pd);
-							Message msg = Message.obtain();//×ÓÏß³ÌÖĞ´´½¨ msg
+							Message msg = Message.obtain();//å­çº¿ç¨‹ä¸­åˆ›å»º msg
 							if(downloadfile!=null){
-								//ÏÂÔØ³É¹¦,°²×°....
-								msg.what= DOWNLOAD_SUCCESS;//what´æ·Å ³£Á¿ obj´æ·Å¶ÔÏó
+								//ä¸‹è½½æˆåŠŸ,å®‰è£…....
+								msg.what= DOWNLOAD_SUCCESS;//whatå­˜æ”¾ å¸¸é‡ objå­˜æ”¾å¯¹è±¡
 								msg.obj = downloadfile;
 							}else{
-								//ÌáÊ¾ÓÃ»§ÏÂÔØÊ§°Ü.
+								//æç¤ºç”¨æˆ·ä¸‹è½½å¤±è´¥.
 								msg.what= DOWNLOAD_ERROR;
 							}
-							handler.sendMessage(msg);//·¢ËÍmsg
-							pd.dismiss();//¹Ø±Õ¸üĞÂÌõ
+							handler.sendMessage(msg);//å‘é€msg
+							pd.dismiss();//å…³é—­æ›´æ–°æ¡
 						};
 					}.start();
 				}else{
-					showMsg("sd¿¨²»¿ÉÓÃ");
+					showMsg("sdå¡ä¸å¯ç”¨");
 					loadMainUI();
 				}
 
 			}
 		});
-		buidler.setNegativeButton("È¡Ïû", new OnClickListener() {//µã»÷È¡ÏûÊÂ¼ş
+		buidler.setNegativeButton("å–æ¶ˆ", new OnClickListener() {//ç‚¹å‡»å–æ¶ˆäº‹ä»¶
 
 			public void onClick(DialogInterface dialog, int which) {
 				loadMainUI();
 			}
 		});
 		// buidler.create().show();
-		buidler.show();//±ØĞëµ÷ÓÃ ËüµÄshow·½·¨
+		buidler.show();//å¿…é¡»è°ƒç”¨ å®ƒçš„showæ–¹æ³•
 	}
 }

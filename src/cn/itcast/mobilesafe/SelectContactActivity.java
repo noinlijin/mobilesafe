@@ -15,26 +15,26 @@ import android.widget.TextView;
 import cn.itcast.mobilesafe.domain.ContactInfo;
 import cn.itcast.mobilesafe.engine.ContactInfoProvider;
 /**
- * Ñ¡ÔñÁªÏµÈË½çÃæ
+ * é€‰æ‹©è”ç³»äººç•Œé¢
  * @author superboy
  *
  */
 public class SelectContactActivity extends Activity {
 	private ListView lv_select_contact;
 	private List<ContactInfo>  infos;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_contact);
 		lv_select_contact = (ListView)findViewById(R.id.lv_select_contact);
-		infos = ContactInfoProvider.getContactInfos(this);//²éÑ¯Êı¾İ¿âµÄ²Ù×÷ÊÇ·ñ·ÅÔÚ×ÓÏß³ÌÖĞÄØ
+		infos = ContactInfoProvider.getContactInfos(this);//æŸ¥è¯¢æ•°æ®åº“çš„æ“ä½œæ˜¯å¦æ”¾åœ¨å­çº¿ç¨‹ä¸­å‘¢
 		lv_select_contact.setAdapter(new SelectContactAdapter());
-		
+
 		lv_select_contact.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+									int position, long id) {
 				ContactInfo info = (ContactInfo) lv_select_contact.getItemAtPosition(position);
 				String number = info.getNumber();
 				Intent data = new Intent();
@@ -44,7 +44,7 @@ public class SelectContactActivity extends Activity {
 			}
 		});
 	}
-	
+
 	private class SelectContactAdapter extends BaseAdapter{
 		public int getCount() {
 			return infos.size();
@@ -58,7 +58,7 @@ public class SelectContactActivity extends Activity {
 			return position;
 		}
 
-		public View getView(int position, View convertView, ViewGroup parent) {//ÊÇ·ñÓÅ»¯
+		public View getView(int position, View convertView, ViewGroup parent) {//æ˜¯å¦ä¼˜åŒ–
 			View view = View.inflate(getApplicationContext(), R.layout.list_item_contact, null);
 			TextView tv_name = (TextView) view.findViewById(R.id.tv_item_contact_name);
 			TextView tv_number = (TextView) view.findViewById(R.id.tv_item_contact_number);

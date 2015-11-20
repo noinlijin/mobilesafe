@@ -1,12 +1,12 @@
 package cn.itcast.mobilesafe;
 /**
- * ³ÌĞòËø½Ó¿Ú
+ * ç¨‹åºé”æ¥å£
  * @author superboy
  *
  */
 public interface IService {
 	/**
-	 * ÆÁÎ´Ëø×´Ì¬ÏÂ,ÁÙÊ±Í£Ö¹±£»¤¸Ã ³ÌĞò 
+	 * å±æœªé”çŠ¶æ€ä¸‹,ä¸´æ—¶åœæ­¢ä¿æŠ¤è¯¥ ç¨‹åº 
 	 * @param packname
 	 */
 	public void callTempStopProtect(String packname);

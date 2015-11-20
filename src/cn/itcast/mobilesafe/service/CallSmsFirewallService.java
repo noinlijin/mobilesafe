@@ -26,7 +26,7 @@ import cn.itcast.mobilesafe.db.dao.BlackNumberDao;
 
 import com.android.internal.telephony.ITelephony;
 /**
- * ºÚÃûµ¥À¹½Ø·şÎñ 
+ * é»‘åå•æ‹¦æˆªæœåŠ¡ 
  * @author superboy
  *
  */
@@ -41,13 +41,13 @@ public class CallSmsFirewallService extends Service {
 	@Override
 	public void onCreate() {
 		dao = new BlackNumberDao(this);
-		receiver = new InnerSmsReceiver();//·şÎñÆô¶¯¹ã²¥½ÓÊÜÕß
+		receiver = new InnerSmsReceiver();//æœåŠ¡å¯åŠ¨å¹¿æ’­æ¥å—è€…
 		IntentFilter filter = new IntentFilter();
 		filter.setPriority(1000);
 //		filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);//`
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 		registerReceiver(receiver, filter);
-		
+
 		tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 		listener = new CallStatusBlockListener();
 		tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -68,7 +68,7 @@ public class CallSmsFirewallService extends Service {
 		return null;
 	}
 	/**
-	 * µç»°¼àÌıÕß
+	 * ç”µè¯ç›‘å¬è€…
 	 * @author superboy
 	 *
 	 */
@@ -79,34 +79,34 @@ public class CallSmsFirewallService extends Service {
 		public void onCallStateChanged(int state, String incomingNumber) {
 
 			switch (state) {
-			case TelephonyManager.CALL_STATE_RINGING:// ÏìÁå×´Ì¬
-				startTime = System.currentTimeMillis();
-				String mode = dao.findMode(incomingNumber);
-				if ("0".equals(mode) || "1".equals(mode)) {
-					// ¹Ò¶Ïµç»°.
-					endCall();
-				}
-				break;
-			case TelephonyManager.CALL_STATE_IDLE:// µç»°¹Ò¶ÏºóµÄ¿ÕÏĞ×´Ì¬.
-				if(dao.find(incomingNumber)){
+				case TelephonyManager.CALL_STATE_RINGING:// å“é“ƒçŠ¶æ€
+					startTime = System.currentTimeMillis();
+					String mode = dao.findMode(incomingNumber);
+					if ("0".equals(mode) || "1".equals(mode)) {
+						// æŒ‚æ–­ç”µè¯.
+						endCall();
+					}
 					break;
-				}
-				long endtime = System.currentTimeMillis();
-				long ringingtime = endtime - startTime;
-				if (ringingtime < 3000) {
-					// ÌáÊ¾ÓÃ»§É§ÈÅµç»°.
-					// notificationµÄ·½Ê½ÌáÊ¾ÓÃ»§.
-					showNotification(incomingNumber);
-					// TODO:´Óºô½Ğ¼ÇÂ¼ÀïÃæÒÆ³ıĞÅÏ¢
-					// ¹Û²ìÏµÍ³µÄºô½Ğ¼ÇÂ¼µÄĞÅÏ¢,Èç¹û·¢ÏÖÄÚÈİ±ä»¯ÁË.
+				case TelephonyManager.CALL_STATE_IDLE:// ç”µè¯æŒ‚æ–­åçš„ç©ºé—²çŠ¶æ€.
+					if(dao.find(incomingNumber)){
+						break;
+					}
+					long endtime = System.currentTimeMillis();
+					long ringingtime = endtime - startTime;
+					if (ringingtime < 3000) {
+						// æç¤ºç”¨æˆ·éªšæ‰°ç”µè¯.
+						// notificationçš„æ–¹å¼æç¤ºç”¨æˆ·.
+						showNotification(incomingNumber);
+						// TODO:ä»å‘¼å«è®°å½•é‡Œé¢ç§»é™¤ä¿¡æ¯
+						// è§‚å¯Ÿç³»ç»Ÿçš„å‘¼å«è®°å½•çš„ä¿¡æ¯,å¦‚æœå‘ç°å†…å®¹å˜åŒ–äº†.
 //					 deleteFromCallLog(incomingNumber);
 
-					getContentResolver().registerContentObserver(
-							CallLog.Calls.CONTENT_URI, true,
-							new CallLogObserver(new Handler(),incomingNumber));
+						getContentResolver().registerContentObserver(
+								CallLog.Calls.CONTENT_URI, true,
+								new CallLogObserver(new Handler(),incomingNumber));
 
-				}
-				break;
+					}
+					break;
 			}
 
 			super.onCallStateChanged(state, incomingNumber);
@@ -114,7 +114,7 @@ public class CallSmsFirewallService extends Service {
 
 	}
 	/**
-	 * Í¨¹ıÄÚÈİ¹Û²ìÕßÀ´É¾³ı£¬À´µçÒ»ÉùÏìµÄºô½Ğ¼ÇÂ¼
+	 * é€šè¿‡å†…å®¹è§‚å¯Ÿè€…æ¥åˆ é™¤ï¼Œæ¥ç”µä¸€å£°å“çš„å‘¼å«è®°å½•
 	 * @author superboy
 	 *
 	 */
@@ -126,7 +126,7 @@ public class CallSmsFirewallService extends Service {
 			this.incomingNumber = incomingNumber;
 		}
 
-		// µ±¹Û²ìµ½ÄÚÈİ·¢Éú¸Ä±äµÄÊ±ºò µ÷ÓÃµÄ·½·¨.
+		// å½“è§‚å¯Ÿåˆ°å†…å®¹å‘ç”Ÿæ”¹å˜çš„æ—¶å€™ è°ƒç”¨çš„æ–¹æ³•.
 		@Override
 		public void onChange(boolean selfChange) {
 			super.onChange(selfChange);
@@ -136,7 +136,7 @@ public class CallSmsFirewallService extends Service {
 
 	}
 	/**
-	 * ¶ÌĞÅÀ¹½Ø
+	 * çŸ­ä¿¡æ‹¦æˆª
 	 * @author superboy
 	 *
 	 */
@@ -151,13 +151,13 @@ public class CallSmsFirewallService extends Service {
 				String body = smsMessage.getMessageBody();
 				String sender = smsMessage.getOriginatingAddress();
 				if (body.contains("fapiao")) {
-					Log.i(TAG, "·¢Æ±¶ÌĞÅ,À¹½Ø");
-					abortBroadcast();//¶ÌĞÅÊÇ¸ö ÓĞĞò¹ã²¥ 
+					Log.i(TAG, "å‘ç¥¨çŸ­ä¿¡,æ‹¦æˆª");
+					abortBroadcast();//çŸ­ä¿¡æ˜¯ä¸ª æœ‰åºå¹¿æ’­ 
 				}
 				String mode = dao.findMode(sender);
-				//Êı¾İ»ØÏÔ 0 È«²¿À¹½Ø 1µç»°À¹½Ø 2¶ÌĞÅÀ¹½Ø
+				//æ•°æ®å›æ˜¾ 0 å…¨éƒ¨æ‹¦æˆª 1ç”µè¯æ‹¦æˆª 2çŸ­ä¿¡æ‹¦æˆª
 				if ("0".equals(mode) || "2".equals(mode)) {
-					Log.i(TAG, "ºÚÃûµ¥ºÅÂë,À¹½Ø");
+					Log.i(TAG, "é»‘åå•å·ç ,æ‹¦æˆª");
 					abortBroadcast();
 				}
 			}
@@ -167,16 +167,16 @@ public class CallSmsFirewallService extends Service {
 	}
 
 	/**
-	 *  ¹Ò¶Ïµç»°
+	 *  æŒ‚æ–­ç”µè¯
 	 */
 	public void endCall() {
 		try {
-			Method method = Class.forName("android.os.ServiceManager")//Í¨¹ı ·´Éä·½Ê½
+			Method method = Class.forName("android.os.ServiceManager")//é€šè¿‡ åå°„æ–¹å¼
 					.getMethod("getService", String.class);
 			IBinder binder = (IBinder) method.invoke(null,
 					new Object[] { TELEPHONY_SERVICE });
 			ITelephony telephony = ITelephony.Stub.asInterface(binder);
-//			telephony.answerRingingCall();  //½ÓÌı µç»° 
+//			telephony.answerRingingCall();  //æ¥å¬ ç”µè¯ 
 			telephony.endCall();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,13 +185,13 @@ public class CallSmsFirewallService extends Service {
 	}
 
 	/**
-	 * ´Óºô½Ğ¼ÇÂ¼ÒÆ³ıÒ»ÉùÏìºÅÂë
-	 * 
+	 * ä»å‘¼å«è®°å½•ç§»é™¤ä¸€å£°å“å·ç 
+	 *
 	 * @param incomingNumber
 	 */
 	public void deleteFromCallLog(String incomingNumber) {
-		Log.i(TAG, "É¾³ıºô½Ğ¼ÇÂ¼:" + incomingNumber);
-		Uri uri = Uri.parse("content://call_log/calls");// µÃµ½ºô½Ğ¼ÇÂ¼ÄÚÈİÌá¹©ÕßµÄÂ·¾¶
+		Log.i(TAG, "åˆ é™¤å‘¼å«è®°å½•:" + incomingNumber);
+		Uri uri = Uri.parse("content://call_log/calls");// å¾—åˆ°å‘¼å«è®°å½•å†…å®¹æä¾›è€…çš„è·¯å¾„
 		Cursor cursor = getContentResolver().query(uri, new String[] { "_id" },
 				"number=?", new String[] { incomingNumber }, null);
 		while (cursor.moveToNext()) {
@@ -202,29 +202,29 @@ public class CallSmsFirewallService extends Service {
 	}
 
 	/**
-	 * ÌáÊ¾À´µçÒ»ÉùÏì
-	 * 
+	 * æç¤ºæ¥ç”µä¸€å£°å“
+	 *
 	 * @param incomingNumber
-	 *            µç»°ºÅÂë
+	 *            ç”µè¯å·ç 
 	 */
 	public void showNotification(String incomingNumber) {
-		// 1.»ñÈ¡NotificationManagerµÄÒıÓÃ:
+		// 1.è·å–NotificationManagerçš„å¼•ç”¨:
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		// 2. ÊµÀı»¯ Notification:
+		// 2. å®ä¾‹åŒ– Notification:
 		Notification notification = new Notification(R.drawable.notification,
-				"·¢ÏÖÀ´µçÏìÒ»ÉùºÅÂë", System.currentTimeMillis());
-		// 3. ÅäÖÃnotificationµÄÏêÏ¸ĞÅÏ¢
+				"å‘ç°æ¥ç”µå“ä¸€å£°å·ç ", System.currentTimeMillis());
+		// 3. é…ç½®notificationçš„è¯¦ç»†ä¿¡æ¯
 		Context context = getApplicationContext();
-		CharSequence contentTitle = "À¹½Øµ½ÏìÒ»ÉùºÅÂë";
-		CharSequence contentText = "ºÅÂëÎª:" + incomingNumber;
+		CharSequence contentTitle = "æ‹¦æˆªåˆ°å“ä¸€å£°å·ç ";
+		CharSequence contentText = "å·ç ä¸º:" + incomingNumber;
 		Intent notificationIntent = new Intent(this, CallSmsSafeActivity.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				notificationIntent, 0);
 
-		notification.flags = Notification.FLAG_AUTO_CANCEL;//µã»÷Ö®ºó»áÈ¡Ïû
+		notification.flags = Notification.FLAG_AUTO_CANCEL;//ç‚¹å‡»ä¹‹åä¼šå–æ¶ˆ
 		notification.setLatestEventInfo(context, contentTitle, contentText,
 				contentIntent);
-		// 4. °Ñnotification¸øÏÔÊ¾³öÀ´
+		// 4. æŠŠnotificationç»™æ˜¾ç¤ºå‡ºæ¥
 		nm.notify(0, notification);
 	}
 

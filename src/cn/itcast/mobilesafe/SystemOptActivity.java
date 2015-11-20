@@ -15,35 +15,35 @@ public class SystemOptActivity extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_system_opt);
-		//1.»ñÈ¡µ±Ç°½çÃæÀïÃæµÄtabhost
+		//1.è·å–å½“å‰ç•Œé¢é‡Œé¢çš„tabhost
 		mTabHost = getTabHost();
-		
-		//2.Ìî³ätabhostµÄÊı¾İ
-		// ×¼±¸ºÃÃ¿¸öĞ¡µÄÑ¡Ïî¿¨±êÇ©.
-		TabSpec tab1 = mTabHost.newTabSpec("»º´æÇåÀí");
-		
-		tab1.setIndicator(getIndicatorView(R.drawable.tab1, "»º´æÇåÀí"));
+
+		//2.å¡«å……tabhostçš„æ•°æ®
+		// å‡†å¤‡å¥½æ¯ä¸ªå°çš„é€‰é¡¹å¡æ ‡ç­¾.
+		TabSpec tab1 = mTabHost.newTabSpec("ç¼“å­˜æ¸…ç†");
+
+		tab1.setIndicator(getIndicatorView(R.drawable.tab1, "ç¼“å­˜æ¸…ç†"));
 		Intent intent1 = new Intent(this,CleanCacheActivity.class);
 		tab1.setContent(intent1);
-		
-		TabSpec tab2 = mTabHost.newTabSpec("SD¿¨ÇåÀí");
-		tab2.setIndicator(getIndicatorView(R.drawable.tab2, "SD¿¨ÇåÀí"));
+
+		TabSpec tab2 = mTabHost.newTabSpec("SDå¡æ¸…ç†");
+		tab2.setIndicator(getIndicatorView(R.drawable.tab2, "SDå¡æ¸…ç†"));
 		Intent intent2 = new Intent(this,CleanSDActivity.class);
 		tab2.setContent(intent2);
-		
-		
-		TabSpec tab3 = mTabHost.newTabSpec("Æô¶¯¼ÓËÙ");
-		tab3.setIndicator(getIndicatorView(R.drawable.tab3, "Æô¶¯¼ÓËÙ"));
+
+
+		TabSpec tab3 = mTabHost.newTabSpec("å¯åŠ¨åŠ é€Ÿ");
+		tab3.setIndicator(getIndicatorView(R.drawable.tab3, "å¯åŠ¨åŠ é€Ÿ"));
 		Intent intent3 = new Intent(this,CleanStartupActivity.class);
 		tab3.setContent(intent3);
-		
+
 		mTabHost.addTab(tab1);
 		mTabHost.addTab(tab2);
 		mTabHost.addTab(tab3);
-		
-		
+
+
 	}
-	
+
 	public View getIndicatorView(int icon,String text){
 		View view = View.inflate(getApplicationContext(), R.layout.system_opt_item, null);
 		ImageView iv = (ImageView) view.findViewById(R.id.iv_opt_item);
@@ -51,6 +51,6 @@ public class SystemOptActivity extends TabActivity {
 		iv.setImageResource(icon);
 		tv.setText(text);
 		return view;
-		
+
 	}
 }

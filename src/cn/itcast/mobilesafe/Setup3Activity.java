@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 /**
- * ÊÖ»ú·ÀµÁÉèÖÃÏòµ¼3
+ * æ‰‹æœºé˜²ç›—è®¾ç½®å‘å¯¼3
  * @author superboy
  *
  */
@@ -29,16 +29,16 @@ public class Setup3Activity extends BaseSetupActivity {
 	@Override
 	public void showNext() {
 		String safenumber = et_setup3_number.getText().toString().trim();
-		
+
 		if(TextUtils.isEmpty(safenumber)){
-			Toast.makeText(this, "°²È«ºÅÂë²»ÄÜÎª¿Õ", 0).show();
+			Toast.makeText(this, "å®‰å…¨å·ç ä¸èƒ½ä¸ºç©º", 0).show();
 			return;
 		}
-		
+
 		Editor editor = sp.edit();
 		editor.putString("safenumber", safenumber);
 		editor.commit();
-		
+
 		openActivity(Setup4Activity.class);
 		overridePendingTransition(R.anim.tran_shownext_in,
 				R.anim.tran_shownext_out);
@@ -50,7 +50,7 @@ public class Setup3Activity extends BaseSetupActivity {
 		overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
 	}
 
-	// Ñ¡ÔñÁªÏµÈË
+	// é€‰æ‹©è”ç³»äºº
 	public void selectContact(View view) {
 		Intent intent = new Intent(this, SelectContactActivity.class);
 		startActivityForResult(intent, 0);
@@ -58,7 +58,7 @@ public class Setup3Activity extends BaseSetupActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (data != null) {//»ñÈ¡Ç°Ò»¸öactivity·µ»ØµÄÖµ
+		if (data != null) {//è·å–å‰ä¸€ä¸ªactivityè¿”å›çš„å€¼
 			String number = data.getStringExtra("number");
 			et_setup3_number.setText(number);
 		}

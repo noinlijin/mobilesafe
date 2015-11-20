@@ -51,7 +51,7 @@ public class CleanCacheActivity extends Activity {
 		ll_container = (LinearLayout) findViewById(R.id.ll_clean_cache_container);
 		pm = getPackageManager();
 
-		// ¿ªÆôÒ»¸öºóÌ¨ÈÎÎñ É¨Ãè µ±Ç°ÊÖ»úÉÏµÄ»º´æĞÅÏ¢ .
+		// å¼€å¯ä¸€ä¸ªåå°ä»»åŠ¡ æ‰«æ å½“å‰æ‰‹æœºä¸Šçš„ç¼“å­˜ä¿¡æ¯ .
 
 		new AsyncTask<Void, Object, Void>() {
 
@@ -59,7 +59,7 @@ public class CleanCacheActivity extends Activity {
 			protected Void doInBackground(Void... params) {
 				try {
 					Thread.sleep(1000);
-					// É¨ÃèÊÖ»úÉÏËùÓĞµÄÓ¦ÓÃ³ÌĞò.
+					// æ‰«ææ‰‹æœºä¸Šæ‰€æœ‰çš„åº”ç”¨ç¨‹åº.
 					List<PackageInfo> packinfos = pm.getInstalledPackages(0);
 					pb.setMax(packinfos.size());
 					int total = 0;
@@ -81,13 +81,13 @@ public class CleanCacheActivity extends Activity {
 
 			@Override
 			protected void onPreExecute() {
-				tv_status.setText("ÕıÔÚ³õÊ¼»¯°ËºË»º´æÉ¨ÃèÒıÇæ......");
+				tv_status.setText("æ­£åœ¨åˆå§‹åŒ–å…«æ ¸ç¼“å­˜æ‰«æå¼•æ“......");
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
-				tv_status.setText("É¨ÃèÍê±Ï!");
+				tv_status.setText("æ‰«æå®Œæ¯•!");
 				if (cacheMap.size() > 0) {
 					Set<Entry<String, Long>> set = cacheMap.entrySet();
 					for (Entry<String, Long> entry : set) {
@@ -116,14 +116,14 @@ public class CleanCacheActivity extends Activity {
 									.getDrawable(R.drawable.ic_launcher));
 						}
 
-						tv_size.setText("»º´æ:"
+						tv_size.setText("ç¼“å­˜:"
 								+ Formatter.formatFileSize(
-										getApplicationContext(), size));
+								getApplicationContext(), size));
 
 						iv_delete.setOnClickListener(new OnClickListener() {
 
 							public void onClick(View v) {
-								System.out.println("ÇåÀí»º´æ" + packname);
+								System.out.println("æ¸…ç†ç¼“å­˜" + packname);
 
 								deleteCache(packname);
 
@@ -141,7 +141,7 @@ public class CleanCacheActivity extends Activity {
 			@Override
 			protected void onProgressUpdate(Object... values) {
 				PackageInfo packinfo = (PackageInfo) values[0];
-				tv_status.setText("ÕıÔÚÉ¨Ãè:"
+				tv_status.setText("æ­£åœ¨æ‰«æ:"
 						+ packinfo.applicationInfo.loadLabel(pm));
 				super.onProgressUpdate(values);
 			}
@@ -198,7 +198,7 @@ public class CleanCacheActivity extends Activity {
 			intent.setData(Uri.parse("package:" + packname));
 			startActivity(intent);
 		} else {
-			// 2.2 ÒÔÏÂ
+			// 2.2 ä»¥ä¸‹
 			Intent intent2 = new Intent();
 			intent2.setAction("android.intent.action.VIEW");
 			intent2.addCategory("android.intent.category.DEFAULT");

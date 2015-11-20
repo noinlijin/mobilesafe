@@ -1,10 +1,10 @@
 package cn.itcast.mobilesafe.domain;
 
 public class AppTraffic {
-	private int uid;// ½ø³ÌµÄuid
-	private String name;// ½ø³Ì µÄÃû³Æ
-	private long uidRxBytes;// ÏÂÔØÊı¾İÁ¿
-	private long uidTxBytes;// ÉÏÔØÊı¾İÁ¿
+	private int uid;// è¿›ç¨‹çš„uid
+	private String name;// è¿›ç¨‹ çš„åç§°
+	private long uidRxBytes;// ä¸‹è½½æ•°æ®é‡
+	private long uidTxBytes;// ä¸Šè½½æ•°æ®é‡
 
 	public int getUid() {
 		return uid;

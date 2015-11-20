@@ -61,10 +61,10 @@ public class CallSmsSafeActivityCopy1 extends Activity {
 			}
 		}.execute();
 
-		
+
 	}
 
-	
+
 	private class CallSmsAdapter extends BaseAdapter {
 
 		protected static final String TAG = "CallSmsAdapter";
@@ -84,17 +84,17 @@ public class CallSmsSafeActivityCopy1 extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			//Log.i(TAG,"getview:"+position);
 			View view ;
-			//ÓÃÀ´±£´æÄÇĞ©view¶ÔÏóÀïÃæ¿Ø¼şµÄÒıÓÃ.
+			//ç”¨æ¥ä¿å­˜é‚£äº›viewå¯¹è±¡é‡Œé¢æ§ä»¶çš„å¼•ç”¨.
 			ViewHolder holder;
-			//1.¸´ÓÃ»º´æµÄview¶ÔÏó ÓÅ»¯listview ¼õÉÙ²¼¾ÖÎÄ¼ş->viewµÄ²Ù×÷´ÎÊı.
+			//1.å¤ç”¨ç¼“å­˜çš„viewå¯¹è±¡ ä¼˜åŒ–listview å‡å°‘å¸ƒå±€æ–‡ä»¶->viewçš„æ“ä½œæ¬¡æ•°.
 			if(convertView!=null && convertView instanceof RelativeLayout){
 				view = convertView;
-				Log.i(TAG,"¸´ÓÃ  old view :"+position);
+				Log.i(TAG,"å¤ç”¨  old view :"+position);
 				holder = (ViewHolder) view.getTag();
 			}else{
 				view = View.inflate(getApplicationContext(),
 						R.layout.list_item_call_sms, null);
-				Log.i(TAG,"´´½¨ĞÂµÄ view :"+position);
+				Log.i(TAG,"åˆ›å»ºæ–°çš„ view :"+position);
 				holder = new ViewHolder();
 				holder.tv_mode = (TextView) view
 						.findViewById(R.id.tv_call_sms_item_mode);
@@ -102,10 +102,10 @@ public class CallSmsSafeActivityCopy1 extends Activity {
 						.findViewById(R.id.tv_call_sms_item_number);
 				holder.iv = (ImageView) view
 						.findViewById(R.id.iv_call_sms_item_delete);
-			//2.½øÒ»²½ÓÅ»¯listview ¼õÉÙÀïÃæ¿Ø¼şµÄ²éÕÒ´ÎÊı
+				//2.è¿›ä¸€æ­¥ä¼˜åŒ–listview å‡å°‘é‡Œé¢æ§ä»¶çš„æŸ¥æ‰¾æ¬¡æ•°
 				view.setTag(holder);
 			}
-			
+
 			BlackNumberBean bean = blacknumberBeans.get(position);
 
 			String mode = bean.getMode();
@@ -113,17 +113,17 @@ public class CallSmsSafeActivityCopy1 extends Activity {
 			holder.iv.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					Log.i(TAG, "É¾³ı"+number);
+					Log.i(TAG, "åˆ é™¤"+number);
 
 				}
 			});
 			holder.tv_number.setText(number);
 			if ("1".equals(mode)) {
-				holder.tv_mode.setText("Ö»À¹½Øµç»°");
+				holder.tv_mode.setText("åªæ‹¦æˆªç”µè¯");
 			} else if ("2".equals(mode)) {
-				holder.tv_mode.setText("Ö»À¹½Ø¶ÌĞÅ");
+				holder.tv_mode.setText("åªæ‹¦æˆªçŸ­ä¿¡");
 			} else {
-				holder.tv_mode.setText("µç»°¶ÌĞÅÈ«²¿À¹½Ø");
+				holder.tv_mode.setText("ç”µè¯çŸ­ä¿¡å…¨éƒ¨æ‹¦æˆª");
 			}
 
 			return view;
@@ -135,6 +135,6 @@ public class CallSmsSafeActivityCopy1 extends Activity {
 		TextView tv_mode;
 		ImageView iv;
 	}
-	
-	
+
+
 }

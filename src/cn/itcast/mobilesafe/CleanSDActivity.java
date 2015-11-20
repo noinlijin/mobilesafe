@@ -22,8 +22,8 @@ public class CleanSDActivity extends Activity {
 				for (File file : files) {
 					if (file.isDirectory()) {
 						String name = file.getName();
-						// ²éÑ¯Êı¾İ¿â ÊÇ·ñÓĞÕâ¸öÃû³Æ.
-						// Ìí¼Óµ½´ıÇåÀíµÄ½çÃæÉÏ.
+						// æŸ¥è¯¢æ•°æ®åº“ æ˜¯å¦æœ‰è¿™ä¸ªåç§°.
+						// æ·»åŠ åˆ°å¾…æ¸…ç†çš„ç•Œé¢ä¸Š.
 					}
 				}
 
@@ -32,13 +32,13 @@ public class CleanSDActivity extends Activity {
 
 			@Override
 			protected void onPreExecute() {
-				Toast.makeText(getApplicationContext(), "¿ªÊ¼É¨Ãèsd¿¨", 0).show();
+				Toast.makeText(getApplicationContext(), "å¼€å§‹æ‰«æsdå¡", 0).show();
 				super.onPreExecute();
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
-				Toast.makeText(getApplicationContext(), "É¨Ãèsd¿¨Íê³É", 0).show();
+				Toast.makeText(getApplicationContext(), "æ‰«æsdå¡å®Œæˆ", 0).show();
 				super.onPostExecute(result);
 			}
 
@@ -46,8 +46,8 @@ public class CleanSDActivity extends Activity {
 
 	}
 
-	
-	//Çå³ıÎÄ¼ş¼Ğ
+
+	//æ¸…é™¤æ–‡ä»¶å¤¹
 	private void deleteFile(File file) {
 		if (file.isDirectory()) {
 			File[] fs = file.listFiles();

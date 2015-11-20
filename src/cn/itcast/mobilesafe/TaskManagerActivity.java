@@ -28,19 +28,19 @@ import cn.itcast.mobilesafe.utils.TaskUtils;
 public class TaskManagerActivity extends Activity {
 	private TextView tv_task_count;
 	private TextView tv_task_mem;
-	//ÏµÍ³¿ÉÓÃµÄÄÚ´æ´óĞ¡
+	//ç³»ç»Ÿå¯ç”¨çš„å†…å­˜å¤§å°
 	private long availmem;
-	//ÏµÍ³µÄ×ÜÄÚ´æ
+	//ç³»ç»Ÿçš„æ€»å†…å­˜
 	private long totalmem;
 	private int processcount;
-	
+
 	private LinearLayout ll_loading;
 	private ListView lv_task_manager;
-	
+
 	private List<TaskInfo> taskinfos;
-	
+
 	private TaskAdapter adapter;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,20 +49,20 @@ public class TaskManagerActivity extends Activity {
 		tv_task_count = (TextView) findViewById(R.id.tv_task_count);
 		availmem = TaskUtils.getAvailMem(this);
 		totalmem = TaskUtils.getTotalMem();
-		
-		//¸ñÊ½»¯´óĞ¡	
-		tv_task_mem.setText("Ê£Óà/×ÜÄÚ´æ:"+Formatter.formatFileSize(this, availmem)+"/"+Formatter.formatFileSize(this, totalmem));
+
+		//æ ¼å¼åŒ–å¤§å°	
+		tv_task_mem.setText("å‰©ä½™/æ€»å†…å­˜:"+Formatter.formatFileSize(this, availmem)+"/"+Formatter.formatFileSize(this, totalmem));
 		processcount = TaskUtils.getRunningProcessCount(this);
-		tv_task_count.setText("ÕıÔÚÔËĞĞ:"+ processcount+"¸ö");
+		tv_task_count.setText("æ­£åœ¨è¿è¡Œ:"+ processcount+"ä¸ª");
 		ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
 		lv_task_manager = (ListView) findViewById(R.id.lv_task_manager);
-		
+
 		fillData();
-		
+
 		lv_task_manager.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+									int position, long id) {
 				TaskInfo taskinfo = taskinfos.get(position);
 				if(getPackageName().equals(taskinfo.getPackname())){
 					return ;
@@ -75,20 +75,20 @@ public class TaskManagerActivity extends Activity {
 					taskinfo.setChecked(true);
 					cb.setChecked(true);
 				}
-				
+
 			}
 		});
 	}
 
 
 	private void fillData() {
-		
+
 		new AsyncTask<Void, Void, Void>() {
 
 			@Override
 			protected Void doInBackground(Void... params) {
 				taskinfos = TaskInfoProvider.getTaskInfos(getApplicationContext());
-				
+
 				return null;
 			}
 
@@ -106,14 +106,14 @@ public class TaskManagerActivity extends Activity {
 				adapter = new TaskAdapter();
 				lv_task_manager.setAdapter(adapter);
 			}
-			
-			
-			
+
+
+
 		}.execute();
-		
-		
+
+
 	}
-	
+
 	private class TaskAdapter extends BaseAdapter{
 
 		public int getCount() {
@@ -131,7 +131,7 @@ public class TaskManagerActivity extends Activity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			
+
 			View view ;
 			ViewHolder holder;
 			if(convertView!=null&& convertView instanceof RelativeLayout){
@@ -145,25 +145,25 @@ public class TaskManagerActivity extends Activity {
 				holder.cb = (CheckBox) view.findViewById(R.id.cb_task_item_status);
 				holder.iv = (ImageView) view.findViewById(R.id.iv_task_item_icon);
 				view.setTag(holder);
-				
+
 			}
 			TaskInfo info = taskinfos.get(position);
 			holder.iv.setImageDrawable(info.getIcon());
 			holder.tv_name .setText(info.getName());
-			holder.tv_mem.setText("ÄÚ´æÕ¼ÓÃ:"+Formatter.formatFileSize(getApplicationContext(), info.getMemsize()));
+			holder.tv_mem.setText("å†…å­˜å ç”¨:"+Formatter.formatFileSize(getApplicationContext(), info.getMemsize()));
 			holder.cb.setChecked(info.isChecked());
-			//Ö»ÊÇÈÃcheckbox²»ÏÔÊ¾.
+			//åªæ˜¯è®©checkboxä¸æ˜¾ç¤º.
 			if(getPackageName().equals(info.getPackname())){
 				holder.cb.setVisibility(View.INVISIBLE);
 			}else{
-				//ÀûÓÃ±ØĞë¼ÓÉÏÕâ¸ö Ìõ¼ş
+				//åˆ©ç”¨å¿…é¡»åŠ ä¸Šè¿™ä¸ª æ¡ä»¶
 				holder.cb.setVisibility(View.VISIBLE);
 			}
-			
-			
+
+
 			return view;
 		}
-		
+
 	}
 	static class ViewHolder{
 		ImageView iv;
@@ -171,16 +171,16 @@ public class TaskManagerActivity extends Activity {
 		TextView tv_mem;
 		CheckBox cb;
 	}
-	
+
 	public void killTask(View view){
 		long count=0;
 		long savedmem = 0;
-		//É±ËÀÄÇĞ©±»Ñ¡ÔñµÄitem¶ÔÓ¦µÄ½ø³Ì.
+		//æ€æ­»é‚£äº›è¢«é€‰æ‹©çš„itemå¯¹åº”çš„è¿›ç¨‹.
 		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		ArrayList<TaskInfo> killedTasks = new ArrayList<TaskInfo>();
 		for(TaskInfo info : taskinfos){
 			if(info.isChecked()){
-				//É±ËÀÕâ¸ö½ø³Ì.
+				//æ€æ­»è¿™ä¸ªè¿›ç¨‹.
 				am.killBackgroundProcesses(info.getPackname());
 				count++;
 				savedmem+=info.getMemsize();
@@ -188,13 +188,13 @@ public class TaskManagerActivity extends Activity {
 			}
 		}
 		taskinfos.removeAll(killedTasks);
-		adapter.notifyDataSetChanged();//Í¨ÖªÊÊÅäÆ÷
+		adapter.notifyDataSetChanged();//é€šçŸ¥é€‚é…å™¨
 		String size = Formatter.formatFileSize(this, savedmem);
-		//Toast.makeText(this, "É±ËÀÁË"+count+"¸ö½ø³Ì,ÊÍ·ÅÁË"+size+"µÄÄÚ´æ", 1).show();
-		MyToast.show(this, R.drawable.notification, "É±ËÀÁË"+count+"¸ö½ø³Ì,ÊÍ·ÅÁË"+size+"µÄÄÚ´æ");
+		//Toast.makeText(this, "æ€æ­»äº†"+count+"ä¸ªè¿›ç¨‹,é‡Šæ”¾äº†"+size+"çš„å†…å­˜", 1).show();
+		MyToast.show(this, R.drawable.notification, "æ€æ­»äº†"+count+"ä¸ªè¿›ç¨‹,é‡Šæ”¾äº†"+size+"çš„å†…å­˜");
 		processcount -= count;
 		availmem+= savedmem;
-		tv_task_count.setText("ÕıÔÚÔËĞĞ:"+ processcount+"¸ö");
-		tv_task_mem.setText("Ê£Óà/×ÜÄÚ´æ:"+Formatter.formatFileSize(this, availmem)+"/"+Formatter.formatFileSize(this, totalmem));
+		tv_task_count.setText("æ­£åœ¨è¿è¡Œ:"+ processcount+"ä¸ª");
+		tv_task_mem.setText("å‰©ä½™/æ€»å†…å­˜:"+Formatter.formatFileSize(this, availmem)+"/"+Formatter.formatFileSize(this, totalmem));
 	}
 }

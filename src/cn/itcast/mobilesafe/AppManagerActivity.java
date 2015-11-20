@@ -43,8 +43,8 @@ public class AppManagerActivity extends Activity {
 		tv_avail_rom = (TextView) findViewById(R.id.tv_avail_rom);
 		tv_avail_sd = (TextView) findViewById(R.id.tv_avail_sd);
 		lv_appmanger = (ListView) findViewById(R.id.lv_appmanger);
-		tv_avail_rom.setText("¿ÉÓÃÄÚ´æ:" + getAvailRom());
-		tv_avail_sd.setText("¿ÉÓÃSD¿¨:" + getAvailSD());
+		tv_avail_rom.setText("å¯ç”¨å†…å­˜:" + getAvailRom());
+		tv_avail_sd.setText("å¯ç”¨SDå¡:" + getAvailSD());
 		tv_app_manager_status = (TextView) findViewById(R.id.tv_app_manager_status);
 		fillData();
 
@@ -55,23 +55,23 @@ public class AppManagerActivity extends Activity {
 			}
 
 			/**
-			 * 
+			 *
 			 * @param view
-			 * @param firstVisibleItemµÚÒ»¸öÓÃ»§¿É¼ûµÄÌõÄ¿µÄÎ»ÖÃ
+			 * @param firstVisibleItemç¬¬ä¸€ä¸ªç”¨æˆ·å¯è§çš„æ¡ç›®çš„ä½ç½®
 			 *            .
 			 * @param visibleItemCount
 			 * @param totalItemCount
 			 */
 			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
+								 int visibleItemCount, int totalItemCount) {
 				int position = lv_appmanger.getFirstVisiblePosition();
 				if (userAppInfos != null&& systemAppInfos!=null) {
 					if (position < userAppInfos.size()) {
-						tv_app_manager_status.setText("ÓÃ»§³ÌĞò("
-								+ userAppInfos.size() + "¸ö)");
+						tv_app_manager_status.setText("ç”¨æˆ·ç¨‹åº("
+								+ userAppInfos.size() + "ä¸ª)");
 					} else {
-						tv_app_manager_status.setText("ÏµÍ³³ÌĞò("
-								+ systemAppInfos.size() + "¸ö)");
+						tv_app_manager_status.setText("ç³»ç»Ÿç¨‹åº("
+								+ systemAppInfos.size() + "ä¸ª)");
 					}
 				}
 			}
@@ -80,7 +80,7 @@ public class AppManagerActivity extends Activity {
 	}
 
 	/**
-	 * Ìî³äÊı¾İ
+	 * å¡«å……æ•°æ®
 	 */
 	private void fillData() {
 		new AsyncTask<Void, Void, Void>() {
@@ -162,9 +162,9 @@ public class AppManagerActivity extends Activity {
 
 			holder.iv.setImageDrawable(appinfo.getIcon());
 			if (appinfo.isInrom()) {
-				holder.tv_location.setText("ÊÖ»úÄÚ´æ");
+				holder.tv_location.setText("æ‰‹æœºå†…å­˜");
 			} else {
-				holder.tv_location.setText("SD¿¨");
+				holder.tv_location.setText("SDå¡");
 			}
 			holder.tv_name.setText(appinfo.getName());
 			holder.tv_version.setText(appinfo.getVersion());
@@ -181,23 +181,23 @@ public class AppManagerActivity extends Activity {
 	}
 
 	/**
-	 * »ñÈ¡ÊÖ»úsd¿¨¿ÉÓÃµÄ¿Õ¼ä
-	 * 
+	 * è·å–æ‰‹æœºsdå¡å¯ç”¨çš„ç©ºé—´
+	 *
 	 * @return
 	 */
 	private String getAvailSD() {
 		File path = Environment.getExternalStorageDirectory();
 		StatFs stat = new StatFs(path.getPath());
-		long blockSize = stat.getBlockSize(); // »ñÈ¡µ½Ã¿Ò»¿é¿Õ¼ä´æ´¢Êı¾İµÄ´óĞ¡
-		long availableBlocks = stat.getAvailableBlocks();// µÃµ½¿ÉÓÃµÄsd¿Õ¼äµÄ¸öÊı
+		long blockSize = stat.getBlockSize(); // è·å–åˆ°æ¯ä¸€å—ç©ºé—´å­˜å‚¨æ•°æ®çš„å¤§å°
+		long availableBlocks = stat.getAvailableBlocks();// å¾—åˆ°å¯ç”¨çš„sdç©ºé—´çš„ä¸ªæ•°
 
 		long size = blockSize * availableBlocks;
 		return Formatter.formatFileSize(this, size);
 	}
 
 	/**
-	 * »ñÈ¡ÊÖ»úsd¿¨¿ÉÓÃµÄ¿Õ¼ä
-	 * 
+	 * è·å–æ‰‹æœºsdå¡å¯ç”¨çš„ç©ºé—´
+	 *
 	 * @return
 	 */
 	private String getAvailRom() {

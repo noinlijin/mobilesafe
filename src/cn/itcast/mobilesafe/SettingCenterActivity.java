@@ -18,187 +18,187 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 /**
- * ÉèÖÃÖĞĞÄ
+ * è®¾ç½®ä¸­å¿ƒ
  * @author superboy
  *
  */
 public class SettingCenterActivity extends Activity implements OnClickListener {
 	private SettingView sv_setting_update;
 	private SharedPreferences sp;
-	
-	
-	//ºÅÂë¹éÊôµØÏÔÊ¾
+
+
+	//å·ç å½’å±åœ°æ˜¾ç¤º
 	private SettingView sv_setting_showaddress;
 	private Intent showAddressServiceIntent;
-	
-	//¶ÌĞÅµç»°ºÚÃûµ¥
+
+	//çŸ­ä¿¡ç”µè¯é»‘åå•
 	private SettingView sv_setting_call_sms_safe;
 	private Intent callSmsSafeIntent;
-	
-	//³ÌĞòËø sv_setting_app_lock
+
+	//ç¨‹åºé” sv_setting_app_lock
 	private SettingView sv_setting_app_lock;
 	private Intent appLockIntent;
-	
-	
-	
-	//¹éÊôµØÏÔÊ¾µÄ·ç¸ñ
+
+
+
+	//å½’å±åœ°æ˜¾ç¤ºçš„é£æ ¼
 	private RelativeLayout rl_setting_showaddress_bg;
 	private TextView tv_setting_showaddress_bg;
-	
-	
-	private static final String[] items = {"°ëÍ¸Ã÷","»îÁ¦³È","ÎÀÊ¿À¶","½ğÊô»Ò","Æ»¹ûÂÌ"};
-	
-	//¹éÊôµØÏÔÊ¾Î»ÖÃ
+
+
+	private static final String[] items = {"åŠé€æ˜","æ´»åŠ›æ©™","å«å£«è“","é‡‘å±ç°","è‹¹æœç»¿"};
+
+	//å½’å±åœ°æ˜¾ç¤ºä½ç½®
 	private RelativeLayout rl_setting_showaddress_location;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		sp = getSharedPreferences("config", MODE_PRIVATE);
 		setContentView(R.layout.activity_setting_center);
-		
-		//×Ô¶¯¸üĞÂÉèÖÃ
+
+		//è‡ªåŠ¨æ›´æ–°è®¾ç½®
 		sv_setting_update = (SettingView) findViewById(R.id.sv_setting_update);
 		sv_setting_update.setOnClickListener(this);
-		boolean update = sp.getBoolean("update", true);//Êı¾İÏÂ´Î¿ªÆô»ØÏÔ
+		boolean update = sp.getBoolean("update", true);//æ•°æ®ä¸‹æ¬¡å¼€å¯å›æ˜¾
 		if(update){
-			sv_setting_update.setContent("×Ô¶¯¸üĞÂÒÑ¾­¿ªÆô");
+			sv_setting_update.setContent("è‡ªåŠ¨æ›´æ–°å·²ç»å¼€å¯");
 			sv_setting_update.setChecked(true);
 		}else{
-			sv_setting_update.setContent("×Ô¶¯¸üĞÂÃ»ÓĞ¿ªÆô");
+			sv_setting_update.setContent("è‡ªåŠ¨æ›´æ–°æ²¡æœ‰å¼€å¯");
 			sv_setting_update.setChecked(false);
 		}
-		
-		//¹éÊôµØÌáÊ¾·şÎñÏÔÊ¾µÄÉèÖÃ³õÊ¼»¯
+
+		//å½’å±åœ°æç¤ºæœåŠ¡æ˜¾ç¤ºçš„è®¾ç½®åˆå§‹åŒ–
 		sv_setting_showaddress = (SettingView)findViewById(R.id.sv_setting_showaddress);
 		showAddressServiceIntent = new Intent(this,ShowAddressService.class);
 		sv_setting_showaddress.setOnClickListener(this);
 
-		//³ÌĞòËøÉèÖÃ³õÊ¼»¯
+		//ç¨‹åºé”è®¾ç½®åˆå§‹åŒ–
 		sv_setting_app_lock = (SettingView)findViewById(R.id.sv_setting_app_lock);
 		appLockIntent = new Intent(this,WatchDogService2.class);
 		sv_setting_app_lock.setOnClickListener(this);
-		
-		
-		
-		//ºÚÃûµ¥À¹½Ø³õÊ¼»¯
+
+
+
+		//é»‘åå•æ‹¦æˆªåˆå§‹åŒ–
 
 		sv_setting_call_sms_safe = (SettingView)findViewById(R.id.sv_setting_call_sms_safe);
 		callSmsSafeIntent = new Intent(this,CallSmsFirewallService.class);
 		sv_setting_call_sms_safe.setOnClickListener(this);
 
-		
-		//¹éÊôµØ·ç¸ñ³õÊ¼»¯
+
+		//å½’å±åœ°é£æ ¼åˆå§‹åŒ–
 		tv_setting_showaddress_bg = (TextView)findViewById(R.id.tv_setting_showaddress_bg);
 		rl_setting_showaddress_bg =(RelativeLayout)findViewById(R.id.rl_setting_showaddress_bg);
 		rl_setting_showaddress_bg.setOnClickListener(this);
 		int which = sp.getInt("which", 0);
 		tv_setting_showaddress_bg.setText(items[which]);
-		
+
 		rl_setting_showaddress_location = (RelativeLayout) findViewById(R.id.rl_setting_showaddress_location);
 		rl_setting_showaddress_location.setOnClickListener(this);
 	}
-	
-	
+
+
 	protected void onResume() {
 		if(ServiceStatusUtil.isServiceRunning(this, "cn.itcast.mobilesafe.service.ShowAddressService")){
 			sv_setting_showaddress.setChecked(true);
-			sv_setting_showaddress.setContent("ºÅÂë¹éÊôµØ·şÎñÒÑ¾­¿ªÆô");
+			sv_setting_showaddress.setContent("å·ç å½’å±åœ°æœåŠ¡å·²ç»å¼€å¯");
 		}else{
 			sv_setting_showaddress.setChecked(false);
-			sv_setting_showaddress.setContent("ºÅÂë¹éÊôµØ·şÎñÃ»ÓĞ¿ªÆô");
+			sv_setting_showaddress.setContent("å·ç å½’å±åœ°æœåŠ¡æ²¡æœ‰å¼€å¯");
 		}
-		
+
 		if(ServiceStatusUtil.isServiceRunning(this, "cn.itcast.mobilesafe.service.CallSmsFirewallService")){
 			sv_setting_call_sms_safe.setChecked(true);
-			sv_setting_call_sms_safe.setContent("ºÚÃûµ¥À¹½Ø·şÎñÒÑ¾­¿ªÆô");
+			sv_setting_call_sms_safe.setContent("é»‘åå•æ‹¦æˆªæœåŠ¡å·²ç»å¼€å¯");
 		}else{
 			sv_setting_call_sms_safe.setChecked(false);
-			sv_setting_call_sms_safe.setContent("ºÚÃûµ¥À¹½Ø·şÎñÃ»ÓĞ¿ªÆô");
+			sv_setting_call_sms_safe.setContent("é»‘åå•æ‹¦æˆªæœåŠ¡æ²¡æœ‰å¼€å¯");
 		}
-		
-		
+
+
 		if(ServiceStatusUtil.isServiceRunning(this, "cn.itcast.mobilesafe.service.WatchDogService2")){
 			sv_setting_app_lock.setChecked(true);
-			sv_setting_app_lock.setContent("³ÌĞòËø·şÎñÒÑ¾­¿ªÆô");
+			sv_setting_app_lock.setContent("ç¨‹åºé”æœåŠ¡å·²ç»å¼€å¯");
 		}else{
 			sv_setting_app_lock.setChecked(false);
-			sv_setting_app_lock.setContent("³ÌĞòËø·şÎñÃ»ÓĞ¿ªÆô");
+			sv_setting_app_lock.setContent("ç¨‹åºé”æœåŠ¡æ²¡æœ‰å¼€å¯");
 		}
 		super.onResume();
 	}
-	
+
 	public void onClick(View v) {
 		switch (v.getId()) {
-		//×Ô¶¯¸üĞÂÌõÄ¿µÄµã»÷ÊÂ¼ş
-		case R.id.sv_setting_update:
-			Editor editor = sp.edit();//»ñÈ¡editor
-			if(sv_setting_update.isChecked()){
-				sv_setting_update.setChecked(false);
-				sv_setting_update.setContent("×Ô¶¯¸üĞÂÃ»ÓĞ¿ªÆô");
-				editor.putBoolean("update", false); 
-			}else{
-				sv_setting_update.setChecked(true);
-				sv_setting_update.setContent("×Ô¶¯¸üĞÂÒÑ¾­¿ªÆô");
-				editor.putBoolean("update", true);
-			}
-			editor.commit();//Ìá½»Êı¾İ
-			break;
-		case R.id.sv_setting_call_sms_safe:
-			if(sv_setting_call_sms_safe.isChecked()){
-				sv_setting_call_sms_safe.setChecked(false);
-				sv_setting_call_sms_safe.setContent("ºÚÃûµ¥À¹½Ø·şÎñÃ»ÓĞ¿ªÆô");
-				stopService(callSmsSafeIntent);
-			}else{
-				sv_setting_call_sms_safe.setChecked(true);
-				sv_setting_call_sms_safe.setContent("ºÚÃûµ¥À¹½Ø·şÎñÒÑ¾­¿ªÆô");
-				startService(callSmsSafeIntent);
-			}
-			break;
-		case R.id.sv_setting_app_lock:
-			if(sv_setting_app_lock.isChecked()){
-				sv_setting_app_lock.setChecked(false);
-				sv_setting_app_lock.setContent("³ÌĞòËø·şÎñÃ»ÓĞ¿ªÆô");
-				stopService(appLockIntent);
-			}else{
-				sv_setting_app_lock.setChecked(true);
-				sv_setting_app_lock.setContent("³ÌĞòËø·şÎñÒÑ¾­¿ªÆô");
-				startService(appLockIntent);
-			}
-			break;
-		case R.id.sv_setting_showaddress:
-			if(sv_setting_showaddress.isChecked()){
-				sv_setting_showaddress.setChecked(false);
-				sv_setting_showaddress.setContent("ºÅÂë¹éÊôµØ·şÎñÃ»ÓĞ¿ªÆô");
-				stopService(showAddressServiceIntent);
-			}else{
-				sv_setting_showaddress.setChecked(true);
-				sv_setting_showaddress.setContent("ºÅÂë¹éÊôµØ·şÎñÒÑ¾­¿ªÆô");
-				startService(showAddressServiceIntent);
-			}
-			break;
-		case R.id.rl_setting_showaddress_bg:
-			showChangeBgDialog();
-			break;
-		case R.id.rl_setting_showaddress_location:
-			Intent intent = new Intent(this,DragViewActivity.class);
-			startActivity(intent);
-			break;
+			//è‡ªåŠ¨æ›´æ–°æ¡ç›®çš„ç‚¹å‡»äº‹ä»¶
+			case R.id.sv_setting_update:
+				Editor editor = sp.edit();//è·å–editor
+				if(sv_setting_update.isChecked()){
+					sv_setting_update.setChecked(false);
+					sv_setting_update.setContent("è‡ªåŠ¨æ›´æ–°æ²¡æœ‰å¼€å¯");
+					editor.putBoolean("update", false);
+				}else{
+					sv_setting_update.setChecked(true);
+					sv_setting_update.setContent("è‡ªåŠ¨æ›´æ–°å·²ç»å¼€å¯");
+					editor.putBoolean("update", true);
+				}
+				editor.commit();//æäº¤æ•°æ®
+				break;
+			case R.id.sv_setting_call_sms_safe:
+				if(sv_setting_call_sms_safe.isChecked()){
+					sv_setting_call_sms_safe.setChecked(false);
+					sv_setting_call_sms_safe.setContent("é»‘åå•æ‹¦æˆªæœåŠ¡æ²¡æœ‰å¼€å¯");
+					stopService(callSmsSafeIntent);
+				}else{
+					sv_setting_call_sms_safe.setChecked(true);
+					sv_setting_call_sms_safe.setContent("é»‘åå•æ‹¦æˆªæœåŠ¡å·²ç»å¼€å¯");
+					startService(callSmsSafeIntent);
+				}
+				break;
+			case R.id.sv_setting_app_lock:
+				if(sv_setting_app_lock.isChecked()){
+					sv_setting_app_lock.setChecked(false);
+					sv_setting_app_lock.setContent("ç¨‹åºé”æœåŠ¡æ²¡æœ‰å¼€å¯");
+					stopService(appLockIntent);
+				}else{
+					sv_setting_app_lock.setChecked(true);
+					sv_setting_app_lock.setContent("ç¨‹åºé”æœåŠ¡å·²ç»å¼€å¯");
+					startService(appLockIntent);
+				}
+				break;
+			case R.id.sv_setting_showaddress:
+				if(sv_setting_showaddress.isChecked()){
+					sv_setting_showaddress.setChecked(false);
+					sv_setting_showaddress.setContent("å·ç å½’å±åœ°æœåŠ¡æ²¡æœ‰å¼€å¯");
+					stopService(showAddressServiceIntent);
+				}else{
+					sv_setting_showaddress.setChecked(true);
+					sv_setting_showaddress.setContent("å·ç å½’å±åœ°æœåŠ¡å·²ç»å¼€å¯");
+					startService(showAddressServiceIntent);
+				}
+				break;
+			case R.id.rl_setting_showaddress_bg:
+				showChangeBgDialog();
+				break;
+			case R.id.rl_setting_showaddress_location:
+				Intent intent = new Intent(this,DragViewActivity.class);
+				startActivity(intent);
+				break;
 		}
-		
+
 	}
 
 	/**
-	 * ÏÔÊ¾¸ü¸Ä±³¾°µÄ¶Ô»°¿ò
+	 * æ˜¾ç¤ºæ›´æ”¹èƒŒæ™¯çš„å¯¹è¯æ¡†
 	 */
 	private void showChangeBgDialog() {
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setIcon(R.drawable.notification);
-		builder.setTitle("¸ü¸Ä¹éÊôµØÌáÊ¾·ç¸ñ");
+		builder.setTitle("æ›´æ”¹å½’å±åœ°æç¤ºé£æ ¼");
 		int which = sp.getInt("which", 0);
 		builder.setSingleChoiceItems(items, which, new DialogInterface.OnClickListener() {
-			
+
 			public void onClick(DialogInterface dialog, int which) {
 				Editor editor = sp.edit();
 				editor.putInt("which", which);
@@ -207,24 +207,17 @@ public class SettingCenterActivity extends Activity implements OnClickListener {
 				tv_setting_showaddress_bg.setText(items[which]);
 			}
 		});
-		builder.setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
-			
+		builder.setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener() {
+
 			public void onClick(DialogInterface dialog, int which) {
-				
+
 			}
 		});
 		builder.show();
 	}
 
-	
+
 }
-
-
-
-
-
-
-
 
 
 

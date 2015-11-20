@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import cn.itcast.mobilesafe.db.AppLockDBOpenHelper;
 /**
- * Ó¦ÓÃ³ÌĞòËødao²ã
+ * åº”ç”¨ç¨‹åºé”daoå±‚
  * @author superboy
  *
  */
@@ -17,33 +17,33 @@ public class AppLockDao {
 
 	private AppLockDBOpenHelper helper;
 	private Context context;
-	public static  final Uri applockuri = Uri.parse("content://cn.itcast.mobile/applock");//  content:   ±ØĞë µÄ
+	public static  final Uri applockuri = Uri.parse("content://cn.itcast.mobile/applock");//  content:   å¿…é¡» çš„
 	public AppLockDao(Context context) {
 		helper = new AppLockDBOpenHelper(context);
 		this.context = context;
 	}
 
 	/**
-	 * Ìí¼Ó°üÃû
-	 * 
+	 * æ·»åŠ åŒ…å
+	 *
 	 * @param packname
-	 *            °üÃû
+	 *            åŒ…å
 	 * @param mode
-	 *            À¹½ØÄ£Ê½
+	 *            æ‹¦æˆªæ¨¡å¼
 	 */
 	public void add(String packname) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.execSQL("insert into applock (packname) values (?)",
 				new Object[] { packname });
-		context.getContentResolver().notifyChange(applockuri, null);//Í¨Öª ÄÚÈİ ¹Û²ìÕß
+		context.getContentResolver().notifyChange(applockuri, null);//é€šçŸ¥ å†…å®¹ è§‚å¯Ÿè€…
 		db.close();
 	}
 
 	/**
-	 * ²éÑ¯°üÃû
-	 * 
+	 * æŸ¥è¯¢åŒ…å
+	 *
 	 * @param packname
-	 *            °üÃû
+	 *            åŒ…å
 	 * @return
 	 */
 	public boolean find(String packname) {
@@ -58,24 +58,24 @@ public class AppLockDao {
 		db.close();
 		return result;
 	}
-	
-	
+
+
 
 	/**
-	 * É¾³ıÒ»Ìõ°üÃû¼ÇÂ¼
-	 * 
+	 * åˆ é™¤ä¸€æ¡åŒ…åè®°å½•
+	 *
 	 * @param packname
 	 */
 	public void delete(String packname) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.execSQL("delete from applock where packname=?",
 				new Object[] { packname });
-		context.getContentResolver().notifyChange(applockuri, null);//Í¨Öª ÄÚÈİ ¹Û²ìÕß
+		context.getContentResolver().notifyChange(applockuri, null);//é€šçŸ¥ å†…å®¹ è§‚å¯Ÿè€…
 		db.close();
 	}
 
 	/**
-	 * ²éÑ¯È«²¿µÄ³ÌĞòËø °üÃûĞÅÏ¢
+	 * æŸ¥è¯¢å…¨éƒ¨çš„ç¨‹åºé” åŒ…åä¿¡æ¯
 	 * @return
 	 */
 	public List<String> findAll() {
@@ -90,5 +90,5 @@ public class AppLockDao {
 		db.close();
 		return result;
 	}
-	
+
 }

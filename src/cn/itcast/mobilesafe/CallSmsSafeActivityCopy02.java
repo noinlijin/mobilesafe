@@ -33,7 +33,7 @@ public class CallSmsSafeActivityCopy02 extends Activity {
 	private LinearLayout ll_loading;
 	private List<BlackNumberBean> blacknumberBeans;
 
-	// Ò»´Î×î¶à»ñÈ¡µÄÊı¾İ
+	// ä¸€æ¬¡æœ€å¤šè·å–çš„æ•°æ®
 	private static final int maxNumber = 25;
 	protected static final String TAG = "CallSmsSafeActivity";
 
@@ -54,43 +54,43 @@ public class CallSmsSafeActivityCopy02 extends Activity {
 		lv_call_sms_safe.setOnScrollListener(new OnScrollListener() {
 
 			/**
-			 * ¾²Ö¹->¹ö¶¯ ¹ö¶¯->¾²Ö¹
-			 * 
+			 * é™æ­¢->æ»šåŠ¨ æ»šåŠ¨->é™æ­¢
+			 *
 			 */
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				if (isloading) {
-					Log.i(TAG,"ÕıÔÚ¼ÓÔØÊı¾İ,²»½ÓÊÜĞÂµÄÈÎÎñ");
+					Log.i(TAG,"æ­£åœ¨åŠ è½½æ•°æ®,ä¸æ¥å—æ–°çš„ä»»åŠ¡");
 					return;
 				}
 
 				switch (scrollState) {
-				case OnScrollListener.SCROLL_STATE_FLING: // ÊÖÖ¸Àë¿ªºóµÄ»¬¶¯×´Ì¬
+					case OnScrollListener.SCROLL_STATE_FLING: // æ‰‹æŒ‡ç¦»å¼€åçš„æ»‘åŠ¨çŠ¶æ€
 
-					break;
-				case OnScrollListener.SCROLL_STATE_IDLE:// ¾²Ö¹×´Ì¬
-					// µ±listview´¦ÓÚ¾²Ö¹×´Ì¬µÄÊ±ºò, ÅĞ¶ÏÒ»ÏÂÔÚµ±Ç°½çÃæÉÏ×îºóÒ»¸öÌõÄ¿
-					// ÊÇ·ñÒÑ¾­ÊÇlistviewµÄÊı¾İÊÊÅäÆ÷ÀïÃæµÄ×îºóÒ»¸öÌõÄ¿
-					int lastItemPosition = lv_call_sms_safe
-							.getLastVisiblePosition();// Õâ¸öÎ»ÖÃÊÇ´Ó0¿ªÊ¼µÄ.
-					int size = adapter.getCount();// Êı¾İÊÊÅäÆ÷ÀïÃæÓĞ¶àÉÙ¸öÌõÄ¿ ÊıÄ¿ ´Ó1¿ªÊ¼µÄ.
-					if (lastItemPosition == (size - 1)) {
-						Toast.makeText(getApplicationContext(), "ÍÏ¶¯µ½ÁË×îºóÃæ", 0)
-								.show();
-						startIndex += maxNumber;
-						fillData();
-					}
-					break;
-				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:// ÊÖÖ¸ÔÚ½çÃæµÄ¹ö¶¯×´Ì¬.
+						break;
+					case OnScrollListener.SCROLL_STATE_IDLE:// é™æ­¢çŠ¶æ€
+						// å½“listviewå¤„äºé™æ­¢çŠ¶æ€çš„æ—¶å€™, åˆ¤æ–­ä¸€ä¸‹åœ¨å½“å‰ç•Œé¢ä¸Šæœ€åä¸€ä¸ªæ¡ç›®
+						// æ˜¯å¦å·²ç»æ˜¯listviewçš„æ•°æ®é€‚é…å™¨é‡Œé¢çš„æœ€åä¸€ä¸ªæ¡ç›®
+						int lastItemPosition = lv_call_sms_safe
+								.getLastVisiblePosition();// è¿™ä¸ªä½ç½®æ˜¯ä»0å¼€å§‹çš„.
+						int size = adapter.getCount();// æ•°æ®é€‚é…å™¨é‡Œé¢æœ‰å¤šå°‘ä¸ªæ¡ç›® æ•°ç›® ä»1å¼€å§‹çš„.
+						if (lastItemPosition == (size - 1)) {
+							Toast.makeText(getApplicationContext(), "æ‹–åŠ¨åˆ°äº†æœ€åé¢", 0)
+									.show();
+							startIndex += maxNumber;
+							fillData();
+						}
+						break;
+					case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:// æ‰‹æŒ‡åœ¨ç•Œé¢çš„æ»šåŠ¨çŠ¶æ€.
 
-					break;
+						break;
 				}
 			}
 
 			/**
-			 * Ö»Òªlistview´¦ÓÚ¹ö¶¯×´Ì¬
+			 * åªè¦listviewå¤„äºæ»šåŠ¨çŠ¶æ€
 			 */
 			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
+								 int visibleItemCount, int totalItemCount) {
 
 			}
 		});
@@ -119,7 +119,7 @@ public class CallSmsSafeActivityCopy02 extends Activity {
 					adapter = new CallSmsAdapter();
 					lv_call_sms_safe.setAdapter(adapter);
 				} else {
-					// Í¨ÖªÊı¾İÊÊÅäÆ÷Êı¾İ·¢ÉúÁË¸Ä±ä.
+					// é€šçŸ¥æ•°æ®é€‚é…å™¨æ•°æ®å‘ç”Ÿäº†æ”¹å˜.
 					adapter.notifyDataSetChanged();
 				}
 				isloading = false;
@@ -164,17 +164,17 @@ public class CallSmsSafeActivityCopy02 extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// Log.i(TAG,"getview:"+position);
 			View view;
-			// ÓÃÀ´±£´æÄÇĞ©view¶ÔÏóÀïÃæ¿Ø¼şµÄÒıÓÃ.
+			// ç”¨æ¥ä¿å­˜é‚£äº›viewå¯¹è±¡é‡Œé¢æ§ä»¶çš„å¼•ç”¨.
 			ViewHolder holder;
-			// 1.¸´ÓÃ»º´æµÄview¶ÔÏó ÓÅ»¯listview ¼õÉÙ²¼¾ÖÎÄ¼ş->viewµÄ²Ù×÷´ÎÊı.
+			// 1.å¤ç”¨ç¼“å­˜çš„viewå¯¹è±¡ ä¼˜åŒ–listview å‡å°‘å¸ƒå±€æ–‡ä»¶->viewçš„æ“ä½œæ¬¡æ•°.
 			if (convertView != null && convertView instanceof RelativeLayout) {
 				view = convertView;
-				Log.i(TAG, "¸´ÓÃ  old view :" + position);
+				Log.i(TAG, "å¤ç”¨  old view :" + position);
 				holder = (ViewHolder) view.getTag();
 			} else {
 				view = View.inflate(getApplicationContext(),
 						R.layout.list_item_call_sms, null);
-				Log.i(TAG, "´´½¨ĞÂµÄ view :" + position);
+				Log.i(TAG, "åˆ›å»ºæ–°çš„ view :" + position);
 				holder = new ViewHolder();
 				holder.tv_mode = (TextView) view
 						.findViewById(R.id.tv_call_sms_item_mode);
@@ -182,7 +182,7 @@ public class CallSmsSafeActivityCopy02 extends Activity {
 						.findViewById(R.id.tv_call_sms_item_number);
 				holder.iv = (ImageView) view
 						.findViewById(R.id.iv_call_sms_item_delete);
-				// 2.½øÒ»²½ÓÅ»¯listview ¼õÉÙÀïÃæ¿Ø¼şµÄ²éÕÒ´ÎÊı
+				// 2.è¿›ä¸€æ­¥ä¼˜åŒ–listview å‡å°‘é‡Œé¢æ§ä»¶çš„æŸ¥æ‰¾æ¬¡æ•°
 				view.setTag(holder);
 			}
 
@@ -193,17 +193,17 @@ public class CallSmsSafeActivityCopy02 extends Activity {
 			holder.iv.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					Log.i(TAG, "É¾³ı" + number);
+					Log.i(TAG, "åˆ é™¤" + number);
 
 				}
 			});
 			holder.tv_number.setText(number);
 			if ("1".equals(mode)) {
-				holder.tv_mode.setText("Ö»À¹½Øµç»°");
+				holder.tv_mode.setText("åªæ‹¦æˆªç”µè¯");
 			} else if ("2".equals(mode)) {
-				holder.tv_mode.setText("Ö»À¹½Ø¶ÌĞÅ");
+				holder.tv_mode.setText("åªæ‹¦æˆªçŸ­ä¿¡");
 			} else {
-				holder.tv_mode.setText("µç»°¶ÌĞÅÈ«²¿À¹½Ø");
+				holder.tv_mode.setText("ç”µè¯çŸ­ä¿¡å…¨éƒ¨æ‹¦æˆª");
 			}
 
 			return view;

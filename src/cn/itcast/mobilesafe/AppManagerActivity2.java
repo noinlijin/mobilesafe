@@ -44,7 +44,7 @@ import cn.itcast.mobilesafe.db.dao.AppLockDao;
 import cn.itcast.mobilesafe.domain.AppInfo;
 import cn.itcast.mobilesafe.engine.AppInfoProvider;
 /**
- * Èí¼ş¹ÜÀí
+ * è½¯ä»¶ç®¡ç†
  * @author superboy
  *
  */
@@ -62,34 +62,34 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 
 	private PopupWindow popupwindow;
 
-	// ±»µã»÷µÄÌõÄ¿ Ëù´ú±íµÄ¶ÔÏó
+	// è¢«ç‚¹å‡»çš„æ¡ç›® æ‰€ä»£è¡¨çš„å¯¹è±¡
 	private AppInfo appinfo;
-	
-	//³ÌĞòËøµÄÊı¾İ¿â·ÃÎÊ°ïÖúÀà
+
+	//ç¨‹åºé”çš„æ•°æ®åº“è®¿é—®å¸®åŠ©ç±»
 	private AppLockDao dao;
 
-	//Ëø¶¨µÄ³ÌĞòµÄ¼¯ºÏ.
+	//é”å®šçš„ç¨‹åºçš„é›†åˆ.
 	private List<String> lockedPacknames;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_manager2);
 		dao = new AppLockDao(this);
 		lockedPacknames = dao.findAll();
-		
+
 		ll_loading = findViewById(R.id.ll_loading);
 		tv_avail_rom = (TextView) findViewById(R.id.tv_avail_rom);
 		tv_avail_sd = (TextView) findViewById(R.id.tv_avail_sd);
 		lv_appmanger = (ListView) findViewById(R.id.lv_appmanger);
-		
-		tv_avail_rom.setText("¿ÉÓÃÄÚ´æ:" + getAvailRom());
-		tv_avail_sd.setText("¿ÉÓÃSD¿¨:" + getAvailSD());
-		
+
+		tv_avail_rom.setText("å¯ç”¨å†…å­˜:" + getAvailRom());
+		tv_avail_sd.setText("å¯ç”¨SDå¡:" + getAvailSD());
+
 		tv_app_manager_status = (TextView) findViewById(R.id.tv_app_manager_status);
 		fillData();
 
-		// 1.¸ølistview×¢²áÒ»¸öÉÏÏÂÎÄ²Ëµ¥.
+		// 1.ç»™listviewæ³¨å†Œä¸€ä¸ªä¸Šä¸‹æ–‡èœå•.
 		registerForContextMenu(lv_appmanger);
 
 		lv_appmanger.setOnScrollListener(new OnScrollListener() {
@@ -99,16 +99,16 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 			}
 
 			/**
-			 * 
+			 *
 			 * @param view
-			 * @param firstVisibleItemµÚÒ»¸öÓÃ»§¿É¼ûµÄÌõÄ¿µÄÎ»ÖÃ
+			 * @param firstVisibleItemç¬¬ä¸€ä¸ªç”¨æˆ·å¯è§çš„æ¡ç›®çš„ä½ç½®
 			 *            .
 			 * @param visibleItemCount
 			 * @param totalItemCount
 			 */
 			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-				dismisPopupWindow();//¹ö¶¯Ê±  dismissµô
+								 int visibleItemCount, int totalItemCount) {
+				dismisPopupWindow();//æ»šåŠ¨æ—¶  dismissæ‰
 				int position = lv_appmanger.getFirstVisiblePosition();
 				if (userAppInfos != null && systemAppInfos != null) {
 					if (position == 0) {
@@ -117,14 +117,14 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 						tv_app_manager_status.setVisibility(View.INVISIBLE);
 					} else if (position < userAppInfos.size() + 1) {
 						tv_app_manager_status.setVisibility(View.VISIBLE);
-						tv_app_manager_status.setText("ÓÃ»§³ÌĞò("
-								+ userAppInfos.size() + "¸ö)");
+						tv_app_manager_status.setText("ç”¨æˆ·ç¨‹åº("
+								+ userAppInfos.size() + "ä¸ª)");
 					}
 
 					else {
 						tv_app_manager_status.setVisibility(View.VISIBLE);
-						tv_app_manager_status.setText("ÏµÍ³³ÌĞò("
-								+ systemAppInfos.size() + "¸ö)");
+						tv_app_manager_status.setText("ç³»ç»Ÿç¨‹åº("
+								+ systemAppInfos.size() + "ä¸ª)");
 					}
 				}
 			}
@@ -133,26 +133,26 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 		lv_appmanger.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Object obj = lv_appmanger.getItemAtPosition(position);//»áµ÷ÓÃ Õâ¸ö·½·¨ getItem
+									int position, long id) {
+				Object obj = lv_appmanger.getItemAtPosition(position);//ä¼šè°ƒç”¨ è¿™ä¸ªæ–¹æ³• getItem
 				if (obj != null) {
 					dismisPopupWindow();
 
 					appinfo = (AppInfo) obj;
-					Log.i(TAG, "±»µã»÷µÄ°üÃû:" + appinfo.getPackname());
+					Log.i(TAG, "è¢«ç‚¹å‡»çš„åŒ…å:" + appinfo.getPackname());
 					View popupView = View.inflate(getApplicationContext(),
 							R.layout.popup_item, null);
-					// ·Ö±ğ×¢²áµã»÷ÊÂ¼ş
+					// åˆ†åˆ«æ³¨å†Œç‚¹å‡»äº‹ä»¶
 					popupView.findViewById(R.id.ll_share).setOnClickListener(
 							AppManagerActivity2.this);
 					popupView.findViewById(R.id.ll_start).setOnClickListener(
 							AppManagerActivity2.this);
 					popupView.findViewById(R.id.ll_uninstall)
 							.setOnClickListener(AppManagerActivity2.this);
-						
+
 //					new PopupWindow(View contentView, int width, int height, boolean focusable)  
-					//±ØĞëÉèÖÃ ±³¾°×ÊÔ´²ÅÄÜÉúĞ§
-					//ÉèÖÃ²ÎÊı4ÎªtrueÊ± »á½â¾öpopwÊ§È¥½¹µã»á¹Ø±Õ´°Ìå 
+					//å¿…é¡»è®¾ç½® èƒŒæ™¯èµ„æºæ‰èƒ½ç”Ÿæ•ˆ
+					//è®¾ç½®å‚æ•°4ä¸ºtrueæ—¶ ä¼šè§£å†³popwå¤±å»ç„¦ç‚¹ä¼šå…³é—­çª—ä½“ 
 					popupwindow = new PopupWindow(popupView,
 							LayoutParams.WRAP_CONTENT,
 							LayoutParams.WRAP_CONTENT);
@@ -160,7 +160,7 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 							Color.TRANSPARENT));
 
 					int[] location = new int[2];
-					view.getLocationInWindow(location);//view»ñÈ¡µ±Ç°view¶ÔÏóµÄÎ»ÖÃ 
+					view.getLocationInWindow(location);//viewè·å–å½“å‰viewå¯¹è±¡çš„ä½ç½® 
 					popupwindow.showAtLocation(view,
 							Gravity.TOP | Gravity.LEFT, location[0] + 60,
 							location[1]);
@@ -176,7 +176,7 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Ìî³äÊı¾İ
+	 * å¡«å……æ•°æ®
 	 */
 	private void fillData() {
 		new AsyncTask<Void, Void, Void>() {
@@ -225,11 +225,11 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 			if (position == 0 || position == (userAppInfos.size() + 1)) {
 				return null;
 			} else if (position <= userAppInfos.size()) {
-				// ÓÃ»§³ÌĞò
+				// ç”¨æˆ·ç¨‹åº
 				int newpostion = position - 1;
 				appinfo = userAppInfos.get(newpostion);
 			} else {
-				// ÏµÍ³³ÌĞò
+				// ç³»ç»Ÿç¨‹åº
 				int newposition = position - 1 - userAppInfos.size() - 1;
 				appinfo = systemAppInfos.get(newposition);
 			}
@@ -252,7 +252,7 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 			AppInfo appinfo;
 			if (position == 0) {
 				TextView tv = new TextView(getApplicationContext());
-				tv.setText("ÓÃ»§³ÌĞò(" + userAppInfos.size() + ")¸ö");
+				tv.setText("ç”¨æˆ·ç¨‹åº(" + userAppInfos.size() + ")ä¸ª");
 				tv.setTextColor(Color.BLACK);
 				tv.setBackgroundColor(R.color.gray);
 				return tv;
@@ -260,14 +260,14 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 				TextView tv = new TextView(getApplicationContext());
 				tv.setTextColor(Color.BLACK);
 				tv.setBackgroundColor(R.color.gray);
-				tv.setText("ÏµÍ³³ÌĞò(" + systemAppInfos.size() + ")¸ö");
+				tv.setText("ç³»ç»Ÿç¨‹åº(" + systemAppInfos.size() + ")ä¸ª");
 				return tv;
 			} else if (position <= userAppInfos.size()) {
-				// ÓÃ»§³ÌĞò
+				// ç”¨æˆ·ç¨‹åº
 				int newpostion = position - 1;
 				appinfo = userAppInfos.get(newpostion);
 			} else {
-				// ÏµÍ³³ÌĞò
+				// ç³»ç»Ÿç¨‹åº
 				int newposition = position - 1 - userAppInfos.size() - 1;
 				appinfo = systemAppInfos.get(newposition);
 			}
@@ -296,20 +296,20 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 
 			holder.iv.setImageDrawable(appinfo.getIcon());
 			if (appinfo.isInrom()) {
-				holder.tv_location.setText("ÊÖ»úÄÚ´æ");
+				holder.tv_location.setText("æ‰‹æœºå†…å­˜");
 			} else {
-				holder.tv_location.setText("SD¿¨");
+				holder.tv_location.setText("SDå¡");
 			}
 			holder.tv_name.setText(appinfo.getName());
 			holder.tv_version.setText(appinfo.getVersion());
-			
-		//	if(dao.find(appinfo.getPackname())){ ²éÑ¯Êı¾İ¿â Ğ§ÂÊµÍ
+
+			//	if(dao.find(appinfo.getPackname())){ æŸ¥è¯¢æ•°æ®åº“ æ•ˆç‡ä½
 			if(lockedPacknames.contains(appinfo.getPackname())){
 				holder.iv_status.setImageResource(R.drawable.lock);
 			}else{
 				holder.iv_status.setImageResource(R.drawable.unlock);
 			}
-			
+
 			return view;
 		}
 
@@ -324,27 +324,27 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * »ñÈ¡ÊÖ»úsd¿¨¿ÉÓÃµÄ¿Õ¼ä
-	 * 
+	 * è·å–æ‰‹æœºsdå¡å¯ç”¨çš„ç©ºé—´
+	 *
 	 * @return
 	 */
 	private String getAvailSD() {
-		File path = Environment.getExternalStorageDirectory();//sd¿¨
+		File path = Environment.getExternalStorageDirectory();//sdå¡
 		StatFs stat = new StatFs(path.getPath());
-		long blockSize = stat.getBlockSize(); // »ñÈ¡µ½Ã¿Ò»¿é¿Õ¼ä´æ´¢Êı¾İµÄ´óĞ¡
-		long availableBlocks = stat.getAvailableBlocks();// µÃµ½¿ÉÓÃµÄsd¿Õ¼äµÄ¸öÊı
+		long blockSize = stat.getBlockSize(); // è·å–åˆ°æ¯ä¸€å—ç©ºé—´å­˜å‚¨æ•°æ®çš„å¤§å°
+		long availableBlocks = stat.getAvailableBlocks();// å¾—åˆ°å¯ç”¨çš„sdç©ºé—´çš„ä¸ªæ•°
 
 		long size = blockSize * availableBlocks;
 		return Formatter.formatFileSize(this, size);
 	}
 
 	/**
-	 * »ñÈ¡ÊÖ»úRom¿ÉÓÃµÄ¿Õ¼ä
-	 * 
+	 * è·å–æ‰‹æœºRomå¯ç”¨çš„ç©ºé—´
+	 *
 	 * @return
 	 */
 	private String getAvailRom() {
-		File path = Environment.getDataDirectory();//Rom¿ÉÓÃ
+		File path = Environment.getDataDirectory();//Romå¯ç”¨
 		StatFs stat = new StatFs(path.getPath());
 		long blockSize = stat.getBlockSize();
 		long availableBlocks = stat.getAvailableBlocks();
@@ -360,71 +360,71 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View v) {
-		// ¹Ø±Õµôµ¯³öµÄ´°Ìå
+		// å…³é—­æ‰å¼¹å‡ºçš„çª—ä½“
 		dismisPopupWindow();
 		switch (v.getId()) {
-		case R.id.ll_share:
-			shareApk();
-			break;
+			case R.id.ll_share:
+				shareApk();
+				break;
 
-		case R.id.ll_start:
-			startApk();
-			break;
-		case R.id.ll_uninstall:
-			if (appinfo.isUserapp()) {
-				uninstallApk();
-			} else {
-				Toast.makeText(this, "ÏµÍ³Ó¦ÓÃĞèÒªrootÈ¨ÏŞ²ÅÄÜĞ¶ÔØ", 0).show();
-			}
-			break;
+			case R.id.ll_start:
+				startApk();
+				break;
+			case R.id.ll_uninstall:
+				if (appinfo.isUserapp()) {
+					uninstallApk();
+				} else {
+					Toast.makeText(this, "ç³»ç»Ÿåº”ç”¨éœ€è¦rootæƒé™æ‰èƒ½å¸è½½", 0).show();
+				}
+				break;
 		}
 
 	}
 
 	/**
-	 * ·ÖÏíÓ¦ÓÃ³ÌĞò ÓÊ¼ş,¶ÌĞÅ,ĞÂÀËÎ¢²© ÌÚÑ¶Î¢²© ....
+	 * åˆ†äº«åº”ç”¨ç¨‹åº é‚®ä»¶,çŸ­ä¿¡,æ–°æµªå¾®åš è…¾è®¯å¾®åš ....
 	 */
 	private void shareApk() {
 		Intent intent = new Intent();
 		intent.setAction("android.intent.action.SEND");
 		intent.addCategory("android.intent.category.DEFAULT");
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, "ÍÆ¼öÄúÊ¹ÓÃÒ»¿îÈí¼ş,Ãû³ÆÎª:" + appinfo.getName()
-				+ "ÏÂÔØµØÖ·,url:http://xxx.xxx");
+		intent.putExtra(Intent.EXTRA_TEXT, "æ¨èæ‚¨ä½¿ç”¨ä¸€æ¬¾è½¯ä»¶,åç§°ä¸º:" + appinfo.getName()
+				+ "ä¸‹è½½åœ°å€,url:http://xxx.xxx");
 		startActivity(intent);
 	}
 
 	/**
-	 * ¿ªÆôÒ»¸öÓ¦ÓÃ³ÌĞò
+	 * å¼€å¯ä¸€ä¸ªåº”ç”¨ç¨‹åº
 	 * <activity
-            android:name=".SplashActivity"
+	 android:name=".SplashActivity"
 	 */
 	private void startApk() {
-		// »ñÈ¡µ±Ç°Ó¦ÓÃ³ÌĞòµÄµÚÒ»¸öactivity.
+		// è·å–å½“å‰åº”ç”¨ç¨‹åºçš„ç¬¬ä¸€ä¸ªactivity.
 		try {
 			PackageInfo packinfo = getPackageManager().getPackageInfo(
-					appinfo.getPackname(), PackageManager.GET_ACTIVITIES);//»ñÈ¡ACTIVITIESµÄĞÅÏ¢
+					appinfo.getPackname(), PackageManager.GET_ACTIVITIES);//è·å–ACTIVITIESçš„ä¿¡æ¯
 			ActivityInfo[] infos = packinfo.activities;
 			if (infos != null && infos.length > 0) {
 				ActivityInfo activityinfo = infos[0];
 				String classname = activityinfo.name;
 				Intent intent = new Intent();
-				intent.setClassName(appinfo.getPackname(), classname);//Ò»¸öÓ¦ÓÃ ¼¤»îÁíÒ»¸öÓ¦ÓÃ 
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//±ØĞë ÒªÉèÖÃ Õâ¸öflag
+				intent.setClassName(appinfo.getPackname(), classname);//ä¸€ä¸ªåº”ç”¨ æ¿€æ´»å¦ä¸€ä¸ªåº”ç”¨ 
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//å¿…é¡» è¦è®¾ç½® è¿™ä¸ªflag
 				startActivity(intent);
 			} else {
-				Toast.makeText(this, "ÎŞ·¨¿ªÆôµ±Ç°Ó¦ÓÃ", 0).show();
+				Toast.makeText(this, "æ— æ³•å¼€å¯å½“å‰åº”ç”¨", 0).show();
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Toast.makeText(this, "ÎŞ·¨¿ªÆôµ±Ç°Ó¦ÓÃ", 0).show();
+			Toast.makeText(this, "æ— æ³•å¼€å¯å½“å‰åº”ç”¨", 0).show();
 		}
 
 	}
 
 	/**
-	 * Ğ¶ÔØµôÏµÍ³µÄÒ»¸öÓ¦ÓÃ
+	 * å¸è½½æ‰ç³»ç»Ÿçš„ä¸€ä¸ªåº”ç”¨
 	 */
 	private void uninstallApk() {
 		Intent intent = new Intent();
@@ -432,7 +432,7 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 		intent.setAction("android.intent.action.DELETE");
 		intent.addCategory("android.intent.category.DEFAULT");
 		intent.setData(Uri.parse("package:" + appinfo.getPackname()));
-		startActivityForResult(intent, 0);//1Ğ¶ÔØ ºó Ë¢ĞÂµ±Ç°ÁĞ±í  2ÖØĞ´ onActivityResult·½·¨ ÖØĞÂ°ó¶¨ Êı¾İ
+		startActivityForResult(intent, 0);//1å¸è½½ å åˆ·æ–°å½“å‰åˆ—è¡¨  2é‡å†™ onActivityResultæ–¹æ³• é‡æ–°ç»‘å®š æ•°æ®
 	}
 
 	@Override
@@ -441,46 +441,46 @@ public class AppManagerActivity2 extends Activity implements OnClickListener {
 		fillData();
 	}
 
-	// 2. µ±ÉÏÏÂÎÄ²Ëµ¥±»´´½¨µÄÊ±ºò µ÷ÓÃµÄ·½·¨.
+	// 2. å½“ä¸Šä¸‹æ–‡èœå•è¢«åˆ›å»ºçš„æ—¶å€™ è°ƒç”¨çš„æ–¹æ³•.
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+									ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.app_lock_menu, menu);
 	}
 
-	// 3.ÊµÏÖÉÏÏÂÎÄ²Ëµ¥µÄµã»÷ÊÂ¼ş
+	// 3.å®ç°ä¸Šä¸‹æ–‡èœå•çš„ç‚¹å‡»äº‹ä»¶
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
-		// µÃµ½µ±Ç°µ¯³ö²Ëµ¥¶ÔÓ¦µÄÌõÄ¿µÄÎ»ÖÃ.
+		// å¾—åˆ°å½“å‰å¼¹å‡ºèœå•å¯¹åº”çš„æ¡ç›®çš„ä½ç½®.
 		int position =  info.position;
-		Log.i(TAG,"Î»ÖÃ:"+position);
+		Log.i(TAG,"ä½ç½®:"+position);
 		AppInfo appinfo = (AppInfo) lv_appmanger.getItemAtPosition(position);
-		
+
 		switch (item.getItemId()) {
-		case R.id.item_add_to_lock:
-			Log.i(TAG,"Ìí¼ÓËø¶¨:"+appinfo.getPackname());
-			if(dao.find(appinfo.getPackname())){
-				Toast.makeText(getApplicationContext(), "ÒÑ¾­´æÔÚ.", 1).show();
+			case R.id.item_add_to_lock:
+				Log.i(TAG,"æ·»åŠ é”å®š:"+appinfo.getPackname());
+				if(dao.find(appinfo.getPackname())){
+					Toast.makeText(getApplicationContext(), "å·²ç»å­˜åœ¨.", 1).show();
+					return true;
+				}
+				dao.add(appinfo.getPackname());
+				//ä¿æŒæ•°æ®åº“ å’Œå†…å­˜ç¼“å­˜çš„åŒæ­¥
+				lockedPacknames.add(appinfo.getPackname());
+				adapter.notifyDataSetChanged();//æ›´æ–°ç•Œé¢
 				return true;
-			}
-			dao.add(appinfo.getPackname());
-			//±£³ÖÊı¾İ¿â ºÍÄÚ´æ»º´æµÄÍ¬²½
-			lockedPacknames.add(appinfo.getPackname());
-			adapter.notifyDataSetChanged();//¸üĞÂ½çÃæ
-			return true;
-		case R.id.item_remove_from_lock:
-			Log.i(TAG,"ÒÆ³ıËø¶¨:"+appinfo.getPackname());
-			dao.delete(appinfo.getPackname());
-			lockedPacknames.remove(appinfo.getPackname());
-			adapter.notifyDataSetChanged();
-			return true;
-		default:
-			return super.onContextItemSelected(item);
+			case R.id.item_remove_from_lock:
+				Log.i(TAG,"ç§»é™¤é”å®š:"+appinfo.getPackname());
+				dao.delete(appinfo.getPackname());
+				lockedPacknames.remove(appinfo.getPackname());
+				adapter.notifyDataSetChanged();
+				return true;
+			default:
+				return super.onContextItemSelected(item);
 		}
 	}
 }

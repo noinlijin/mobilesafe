@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
- * ³ÌĞòËø£¬ÊäÈë ÃÜÂë½çÃæ 
+ * ç¨‹åºé”ï¼Œè¾“å…¥ å¯†ç ç•Œé¢ 
  * @author superboy
  *
  */
@@ -28,11 +28,11 @@ public class EnterPasswordActivity extends Activity {
 	private ImageView iv_enterpwd_icon;
 	private TextView tv_enterpwd_name;
 	private String packname;
-	
+
 	private Intent watchDogIntent;
 	private IService iService;
 	private MyConn conn;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,18 +40,18 @@ public class EnterPasswordActivity extends Activity {
 		et_enterpwd = (EditText) findViewById(R.id.et_enterpwd);
 		iv_enterpwd_icon = (ImageView) findViewById(R.id.iv_enterpwd_icon);
 		tv_enterpwd_name = (TextView) findViewById(R.id.tv_enterpwd_name);
-		
+
 		watchDogIntent = new Intent(this,WatchDogService2.class);
 		conn = new MyConn();
-		bindService(watchDogIntent, conn, BIND_AUTO_CREATE);//activityÖĞ°ó¶¨ service,BIND_AUTO_CREATE·şÎñ²»´æÔÚÔò×Ô¶¯ ´´½¨
-		
-		//»ñÈ¡´«µİ¹ıÀ´µÄ²ÎÊı
-		Intent intent = getIntent();//»ñÈ¡Ìø×ªÀ´µÄbean·â×°µÄÊı¾İ
+		bindService(watchDogIntent, conn, BIND_AUTO_CREATE);//activityä¸­ç»‘å®š service,BIND_AUTO_CREATEæœåŠ¡ä¸å­˜åœ¨åˆ™è‡ªåŠ¨ åˆ›å»º
+
+		//è·å–ä¼ é€’è¿‡æ¥çš„å‚æ•°
+		Intent intent = getIntent();//è·å–è·³è½¬æ¥çš„beanå°è£…çš„æ•°æ®
 		packname = intent.getStringExtra("packname");
-		
+
 		try {
-			PackageManager pm = getPackageManager(); 
-			ApplicationInfo info = pm.getApplicationInfo(packname, 0);//ÔİÊ±ÎŞÓÃ£¬Èû¸ö0
+			PackageManager pm = getPackageManager();
+			ApplicationInfo info = pm.getApplicationInfo(packname, 0);//æš‚æ—¶æ— ç”¨ï¼Œå¡ä¸ª0
 			Drawable icon = info.loadIcon(pm);
 			CharSequence name = info.loadLabel(pm);
 			iv_enterpwd_icon.setImageDrawable(icon);
@@ -60,58 +60,58 @@ public class EnterPasswordActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void enter (View view){
 		String password = et_enterpwd.getText().toString().trim();
-		if("123".equals(password)){//¶ÔÓ¦³ÌĞò¼Ó¶ÔÓ¦ ÃÜÂë£¬»òÕß Í³Ò»ÃÜÂë
-			//ÃÜÂëÊäÈëÕıÈ·.
+		if("123".equals(password)){//å¯¹åº”ç¨‹åºåŠ å¯¹åº” å¯†ç ï¼Œæˆ–è€… ç»Ÿä¸€å¯†ç 
+			//å¯†ç è¾“å…¥æ­£ç¡®.
 		/*	Intent intent = new Intent();
-			intent.setAction("cn.itcast.stop");//·¢ËÍÒ»¸ö×Ô¶¨ÒåµÄ¹ã²¥ÊÂ¼ş.
+			intent.setAction("cn.itcast.stop");//å‘é€ä¸€ä¸ªè‡ªå®šä¹‰çš„å¹¿æ’­äº‹ä»¶.
 			intent.putExtra("stopedname", packname);
 			sendBroadcast(intent);*/
-			//²ÉÓÃµ÷ÓÃ·şÎñÀïÃæµÄ·½·¨. Í¨Öª·şÎñÁÙÊ±µÄÍ£Ö¹±£»¤.
+			//é‡‡ç”¨è°ƒç”¨æœåŠ¡é‡Œé¢çš„æ–¹æ³•. é€šçŸ¥æœåŠ¡ä¸´æ—¶çš„åœæ­¢ä¿æŠ¤.
 			iService.callTempStopProtect(packname);
 			finish();
 		}else{
-			Toast.makeText(this, "ÃÜÂë²»ÕıÈ·", 0).show();
+			Toast.makeText(this, "å¯†ç ä¸æ­£ç¡®", 0).show();
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 	private class MyConn implements ServiceConnection{
 
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			Log.i("Binder","·şÎñ±»³É¹¦°ó¶¨ÁË.");
-			iService = (IService) service;//Ô¶³Ì´úÀí¶ÔÏóµÄ³õÊ¼»¯
+			Log.i("Binder","æœåŠ¡è¢«æˆåŠŸç»‘å®šäº†.");
+			iService = (IService) service;//è¿œç¨‹ä»£ç†å¯¹è±¡çš„åˆå§‹åŒ–
 		}
 
 		public void onServiceDisconnected(ComponentName name) {
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		//ÅĞ¶Ïµ±Ç°°´¼üÊÇ·ñÊÇºóÍË¼ü
+		//åˆ¤æ–­å½“å‰æŒ‰é”®æ˜¯å¦æ˜¯åé€€é”®
 		if(keyCode==KeyEvent.KEYCODE_BACK){
-			//»Ø×ÀÃæµÄ²Ù×÷£¬¼¤»î×ÀÃæµÄ²Ù×÷
+			//å›æ¡Œé¢çš„æ“ä½œï¼Œæ¿€æ´»æ¡Œé¢çš„æ“ä½œ
 			Intent intent = new Intent();
 			intent.setAction("android.intent.action.MAIN");
 			intent.addCategory("android.intent.category.HOME");
 			startActivity(intent);
-			finish();//¹Ø±ÕÊäÈëÃÜÂëµÄ½çÃæ.
-			return true;//·µ»ØtrueÒÔ×èÖ¹ÕâÒ»ÊÂ¼şµÄ½øÒ»²½´«²¥£¬»ò¼ÙÀ´±íÃ÷ÄãÃ»ÓĞ´¦ÀíÕâ¸öÊÂ¼ş£¬ËüÓ¦¸Ã¼ÌĞø´«²¥¡£
+			finish();//å…³é—­è¾“å…¥å¯†ç çš„ç•Œé¢.
+			return true;//è¿”å›trueä»¥é˜»æ­¢è¿™ä¸€äº‹ä»¶çš„è¿›ä¸€æ­¥ä¼ æ’­ï¼Œæˆ–å‡æ¥è¡¨æ˜ä½ æ²¡æœ‰å¤„ç†è¿™ä¸ªäº‹ä»¶ï¼Œå®ƒåº”è¯¥ç»§ç»­ä¼ æ’­ã€‚
 		}
-		
+
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
-		unbindService(conn);//·şÎñÏú»ÙµÄÊ±ºò ½â°ó·şÎñ
+		unbindService(conn);//æœåŠ¡é”€æ¯çš„æ—¶å€™ è§£ç»‘æœåŠ¡
 		super.onDestroy();
 	}
 }

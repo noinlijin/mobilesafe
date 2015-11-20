@@ -20,12 +20,12 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 	private static MyUncaughtExceptionHandler mExceptionHandler;
 
 	/**
-	 * Î´´¦ÀíµÄÒì³£´¦ÀíÆ÷ µÚÒ»¸ö²ÎÊı ³öÏÖÒì³£µÄÏß³Ì µÚ¶ş¸ö²ÎÊı µ±Ç°µÄÒì³£¶ÔÏó.
+	 * æœªå¤„ç†çš„å¼‚å¸¸å¤„ç†å™¨ ç¬¬ä¸€ä¸ªå‚æ•° å‡ºç°å¼‚å¸¸çš„çº¿ç¨‹ ç¬¬äºŒä¸ªå‚æ•° å½“å‰çš„å¼‚å¸¸å¯¹è±¡.
 	 */
 	public void uncaughtException(Thread thread, Throwable err) {
 
 		// throwable.printStackTrace(err);
-		System.out.println("·¢ÉúÁËÒì³£,µ«ÊÇ±»ÎÒ²¶»ñÁË.!!!");
+		System.out.println("å‘ç”Ÿäº†å¼‚å¸¸,ä½†æ˜¯è¢«æˆ‘æ•è·äº†.!!!");
 		try {
 			File file = new File(Environment.getExternalStorageDirectory(),
 					"error.log");
@@ -34,18 +34,18 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 			fos.write(("time:"+System.currentTimeMillis()+"\n").getBytes());
 			Field[] fields = Build.class.getDeclaredFields();
 			for (Field field : fields) {
-				// ±©Á¦·´ÉäË½ÓĞ×Ö¶Î.
+				// æš´åŠ›åå°„ç§æœ‰å­—æ®µ.
 				field.setAccessible(true);
 				String name = field.getName();
 				String value = field.get(null).toString();
 				fos.write((name+":"+value+"\n").getBytes());
 			}
-			
+
 			StringWriter sw = new StringWriter();
 			PrintWriter writer = new PrintWriter(sw);
 			err.printStackTrace(writer);
 			err.printStackTrace();
-			
+
 			String errorlog = sw.toString();
 			System.out.println("---"+errorlog);
 			fos.write(errorlog.getBytes());

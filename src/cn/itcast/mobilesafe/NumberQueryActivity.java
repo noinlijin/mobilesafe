@@ -18,38 +18,38 @@ import cn.itcast.mobilesafe.db.dao.AddressDao;
 public class NumberQueryActivity extends Activity {
 	private EditText et_number_query;
 	private TextView tv_number_query_address;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_number_query);
 		tv_number_query_address = (TextView) findViewById(R.id.tv_number_query_address);
 		et_number_query = (EditText)findViewById(R.id.et_number_query);
-		
+
 		et_number_query.addTextChangedListener(new TextWatcher() {
-			
+
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				
+
 			}
-			
+
 			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+										  int after) {
 			}
-			
+
 			public void afterTextChanged(Editable s) {
-				String number = s.toString();//µ±Ç° ´°¿ÚÀïÃæµÄÄÚÈİ 
+				String number = s.toString();//å½“å‰ çª—å£é‡Œé¢çš„å†…å®¹ 
 				String address = AddressDao.getAddress(number);
-				tv_number_query_address.setText("¹éÊôµØ:"+address);
+				tv_number_query_address.setText("å½’å±åœ°:"+address);
 			}
 		});
-		
+
 	}
-	
+
 	public void query(View view){
 		String number = et_number_query.getText().toString().trim();
 		if(TextUtils.isEmpty(number)){
-			Toast.makeText(this, "ºÅÂë²»ÄÜÎª¿Õ", 0).show();
+			Toast.makeText(this, "å·ç ä¸èƒ½ä¸ºç©º", 0).show();
 			Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 			et_number_query.startAnimation(shake);
 //			Vibrator vibrotor =	(Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -57,6 +57,6 @@ public class NumberQueryActivity extends Activity {
 			return;
 		}
 		String address = AddressDao.getAddress(number);
-		tv_number_query_address.setText("¹éÊôµØ:"+address);
+		tv_number_query_address.setText("å½’å±åœ°:"+address);
 	}
 }

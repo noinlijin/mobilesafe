@@ -8,9 +8,9 @@ public class AppInfo {
 	private String name;
 	private String packname;
 	private String version;
-	private boolean inrom;//°²×°Î»ÖÃ ÊÖ»ú ÄÚÔÚ»òÕß sd¿¨
-	private boolean userapp;//ÊÇ·ñÎªÏµÍ³Ó¦ÓÃ 
-	
+	private boolean inrom;//å®‰è£…ä½ç½® æ‰‹æœº å†…åœ¨æˆ–è€… sdå¡
+	private boolean userapp;//æ˜¯å¦ä¸ºç³»ç»Ÿåº”ç”¨ 
+
 	private String receivername;
 	public String getReceivername() {
 		return receivername;
@@ -60,7 +60,7 @@ public class AppInfo {
 	public void setUserapp(boolean userapp) {
 		this.userapp = userapp;
 	}
-	
-	
-	
+
+
+
 }

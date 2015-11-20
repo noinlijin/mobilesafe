@@ -34,7 +34,7 @@ public class CommnumActivity extends Activity {
 	private class CommonNumAdapter extends BaseExpandableListAdapter {
 
 		/**
-		 * ·µ»Ø·Ö×éµÄÊıÁ¿
+		 * è¿”å›åˆ†ç»„çš„æ•°é‡
 		 */
 		public int getGroupCount() {
 			groupItems = CommonNumberDao.getGroupItems();
@@ -42,7 +42,7 @@ public class CommnumActivity extends Activity {
 		}
 
 		/**
-		 * ·µ»ØÃ¿¸ö·Ö×éÀïÃæÓĞ¶àÉÙ¸ö×Óº¢×Ó
+		 * è¿”å›æ¯ä¸ªåˆ†ç»„é‡Œé¢æœ‰å¤šå°‘ä¸ªå­å­©å­
 		 */
 		public int getChildrenCount(int groupPosition) {
 			List<String> childItems;
@@ -76,10 +76,10 @@ public class CommnumActivity extends Activity {
 		}
 
 		/**
-		 * µÃµ½Ã¿Ò»¸ö·Ö×éµÄview¶ÔÏó
+		 * å¾—åˆ°æ¯ä¸€ä¸ªåˆ†ç»„çš„viewå¯¹è±¡
 		 */
 		public View getGroupView(int groupPosition, boolean isExpanded,
-				View convertView, ViewGroup parent) {
+								 View convertView, ViewGroup parent) {
 			TextView tv;
 			if (convertView != null && convertView instanceof TextView) {
 				tv = (TextView) convertView;
@@ -93,7 +93,7 @@ public class CommnumActivity extends Activity {
 		}
 
 		public View getChildView(int groupPosition, int childPosition,
-				boolean isLastChild, View convertView, ViewGroup parent) {
+								 boolean isLastChild, View convertView, ViewGroup parent) {
 			TextView tv;
 			if (convertView != null && convertView instanceof TextView) {
 				tv = (TextView) convertView;

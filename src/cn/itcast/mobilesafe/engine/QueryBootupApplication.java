@@ -15,8 +15,8 @@ import cn.itcast.mobilesafe.domain.AppInfo;
 public class QueryBootupApplication {
 
 	/**
-	 * 获取所有具有开机启动能力的应用程序
-	 * 
+	 * 鑾峰彇鎵�鏈夊叿鏈夊紑鏈哄惎鍔ㄨ兘鍔涚殑搴旂敤绋嬪簭
+	 *
 	 * @param context
 	 * @return
 	 */
@@ -32,7 +32,7 @@ public class QueryBootupApplication {
 		for(ResolveInfo info : infos){
 			AppInfo appinfo = new AppInfo();
 			appinfo.setReceivername(info.activityInfo.name);
-			
+
 			appinfo.setIcon(info.activityInfo.applicationInfo.loadIcon(pm));
 			appinfo.setName(info.activityInfo.applicationInfo.loadLabel(pm).toString());
 			appinfo.setPackname(info.activityInfo.packageName);

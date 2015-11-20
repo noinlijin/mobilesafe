@@ -1,13 +1,13 @@
 package cn.itcast.mobilesafe.domain;
 /**
- * 拦截电话模式封装
+ * 鎷︽埅鐢佃瘽妯″紡灏佽
  * @author superboy
  *
  */
 public class BlackNumberBean {
 
 	private String number;
-	private String mode; // 0 全部拦截 1电话拦截 2短信拦截
+	private String mode; // 0 鍏ㄩ儴鎷︽埅 1鐢佃瘽鎷︽埅 2鐭俊鎷︽埅
 
 	public String getNumber() {
 		return number;
@@ -33,6 +33,6 @@ public class BlackNumberBean {
 	public String toString() {
 		return "BlackNumberBean [number=" + number + ", mode=" + mode + "]";
 	}
-	
-	
+
+
 }

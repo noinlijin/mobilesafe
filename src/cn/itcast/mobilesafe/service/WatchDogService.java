@@ -19,7 +19,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 /**
- * Ó¦ÓÃ³ÌĞò¿´ÃÅ¹··şÎñ
+ * åº”ç”¨ç¨‹åºçœ‹é—¨ç‹—æœåŠ¡
  * @author superboy
  *
  */
@@ -32,9 +32,9 @@ public class WatchDogService extends Service {
 	private StopProtectReceiver receiver;
 	private LockScreenReceiver lockScreenReceiver;
 	private UnLockScreenReceiver unlockScreenReceiver;
-	
+
 	private List<String> lockedPacknames;
-	
+
 	private AppLockObserver observer;
 
 	@Override
@@ -46,7 +46,7 @@ public class WatchDogService extends Service {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.i("StopProtectReceiver", "ÁÙÊ±Í£Ö¹±£»¤");
+			Log.i("StopProtectReceiver", "ä¸´æ—¶åœæ­¢ä¿æŠ¤");
 			String packname = intent.getStringExtra("stopedname");
 			tempStopProtectNames.add(packname);
 		}
@@ -56,25 +56,25 @@ public class WatchDogService extends Service {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.i("LockScreenReceiver", "ÊÖ»úËøÆÁÁË");
+			Log.i("LockScreenReceiver", "æ‰‹æœºé”å±äº†");
 			tempStopProtectNames.clear();
 			flag = false;
-			
+
 		}
 
 	}
-	
+
 	private class UnLockScreenReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.i("LockScreenReceiver", "ÊÖ»ú½âËøÁË");
+			Log.i("LockScreenReceiver", "æ‰‹æœºè§£é”äº†");
 			flag = true;
 			startWatchDog();
 		}
 
 	}
-	
+
 	private class AppLockObserver extends ContentObserver{
 
 		public AppLockObserver(Handler handler) {
@@ -85,45 +85,45 @@ public class WatchDogService extends Service {
 		@Override
 		public void onChange(boolean selfChange) {
 			super.onChange(selfChange);
-			Log.i("AppLockObserver","Êı¾İ¿âµÄÄÚÈİ±ä»¯ÁË.");
+			Log.i("AppLockObserver","æ•°æ®åº“çš„å†…å®¹å˜åŒ–äº†.");
 			lockedPacknames = dao.findAll();
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onCreate() {
-	
-		
+
+
 		receiver = new  StopProtectReceiver();
 		IntentFilter filter = new IntentFilter();
-		filter.addAction("cn.itcast.stop");//×¢²áÒ»¸ö×Ô¶¨ÒåµÄ¹ã²¥½ÓÊÜÕß
+		filter.addAction("cn.itcast.stop");//æ³¨å†Œä¸€ä¸ªè‡ªå®šä¹‰çš„å¹¿æ’­æ¥å—è€…
 		registerReceiver(receiver, filter);
-		
+
 		lockScreenReceiver = new LockScreenReceiver();
 		IntentFilter lockFilter = new IntentFilter();
-		lockFilter.addAction(Intent.ACTION_SCREEN_OFF);//ËøÆÁ¹ã²¥
+		lockFilter.addAction(Intent.ACTION_SCREEN_OFF);//é”å±å¹¿æ’­
 		registerReceiver(lockScreenReceiver, lockFilter);
-		
+
 		unlockScreenReceiver = new UnLockScreenReceiver();
 		IntentFilter unlockFilter = new IntentFilter();
-		unlockFilter.addAction(Intent.ACTION_SCREEN_ON);//½âËø¹ã²¥
+		unlockFilter.addAction(Intent.ACTION_SCREEN_ON);//è§£é”å¹¿æ’­
 		registerReceiver(unlockScreenReceiver, unlockFilter);
-		
-		
+
+
 		am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		tempStopProtectNames = new ArrayList<String>();//ÁÙÊ±²»ÊÜ±£»¤ ³ÌĞò
+		tempStopProtectNames = new ArrayList<String>();//ä¸´æ—¶ä¸å—ä¿æŠ¤ ç¨‹åº
 		dao = new AppLockDao(this);
-		//°ÑËùÓĞËø¶¨µÄÓ¦ÓÃ³ÌĞòµÄĞÅÏ¢ ·ÅÈëµ½ÄÚ´æ¼¯ºÏÀïÃæ.
-		
+		//æŠŠæ‰€æœ‰é”å®šçš„åº”ç”¨ç¨‹åºçš„ä¿¡æ¯ æ”¾å…¥åˆ°å†…å­˜é›†åˆé‡Œé¢.
+
 		lockedPacknames = dao.findAll();
-		//×¢²áÒ»¸öÄÚÈİ±ä»¯µÄ¹Û²ìÕß. ¹Û²ìÊı¾İµÄ±ä»¯.
+		//æ³¨å†Œä¸€ä¸ªå†…å®¹å˜åŒ–çš„è§‚å¯Ÿè€…. è§‚å¯Ÿæ•°æ®çš„å˜åŒ–.
 		observer = new AppLockObserver(new Handler());
 		getContentResolver().registerContentObserver(AppLockDao.applockuri, true, observer);
-		
-		
+
+
 		lockIntent = new Intent(this, EnterPasswordActivity.class);
-		lockIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//·şÎñ¿ªÆôactivity±ØĞë ¼ÓÕâ¸ö±ê¼Ç
+		lockIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//æœåŠ¡å¼€å¯activityå¿…é¡» åŠ è¿™ä¸ªæ ‡è®°
 		startWatchDog();
 
 		super.onCreate();
@@ -133,25 +133,25 @@ public class WatchDogService extends Service {
 		new Thread() {
 			public void run() {
 				while (flag) {
-					List<RunningTaskInfo> infos = am.getRunningTasks(1);// »ñÈ¡×î½ü´ò¿ªµÄÇ°1¸öÈÎÎñÕ»
-					RunningTaskInfo taskinfo = infos.get(0);// »ñÈ¡×î½ü´ò¿ªµÄÈÎÎñ
-					ComponentName activityinfo = taskinfo.topActivity; // µ±Ç°ÓÃ»§Òª¿´µ½µÄactivity.
+					List<RunningTaskInfo> infos = am.getRunningTasks(1);// è·å–æœ€è¿‘æ‰“å¼€çš„å‰1ä¸ªä»»åŠ¡æ ˆ
+					RunningTaskInfo taskinfo = infos.get(0);// è·å–æœ€è¿‘æ‰“å¼€çš„ä»»åŠ¡
+					ComponentName activityinfo = taskinfo.topActivity; // å½“å‰ç”¨æˆ·è¦çœ‹åˆ°çš„activity.
 					String packname = activityinfo.getPackageName();
 					Log.i("WATCHDOG",packname);
-					// ÅĞ¶Ï ÅĞ¶Ïµ±Ç°³ÌĞòµÄ°üÃûÊÇ·ñÒª±»Ëø¶¨.
-					//if (dao.find(activityinfo.getPackageName())) { //²éÑ¯Êı¾İ¿â
+					// åˆ¤æ–­ åˆ¤æ–­å½“å‰ç¨‹åºçš„åŒ…åæ˜¯å¦è¦è¢«é”å®š.
+					//if (dao.find(activityinfo.getPackageName())) { //æŸ¥è¯¢æ•°æ®åº“
 					if(lockedPacknames.contains(packname)){
-						// Òª±£»¤.
-						// ÅĞ¶ÏÊÇ·ñÒªÁÙÊ±Í£Ö¹±£»¤.
+						// è¦ä¿æŠ¤.
+						// åˆ¤æ–­æ˜¯å¦è¦ä¸´æ—¶åœæ­¢ä¿æŠ¤.
 						if (tempStopProtectNames.contains(packname)) {
-							// ÁÙÊ±Í£Ö¹±£»¤µÄ...
+							// ä¸´æ—¶åœæ­¢ä¿æŠ¤çš„...
 						} else {
 							lockIntent.putExtra("packname",
 									packname);
 							startActivity(lockIntent);
 						}
 					}
-					//1. ±ğµÄÓ¦ÓÃ³ÌĞòÉ±ËÀÁË. ½ø³Ì¹ÜÀíÆ÷ É±ËÀ±ğµÄÃ»ÓÃµÄ½ø³Ì.
+					//1. åˆ«çš„åº”ç”¨ç¨‹åºæ€æ­»äº†. è¿›ç¨‹ç®¡ç†å™¨ æ€æ­»åˆ«çš„æ²¡ç”¨çš„è¿›ç¨‹.
 					//2. 
 					try {
 						Thread.sleep(200);

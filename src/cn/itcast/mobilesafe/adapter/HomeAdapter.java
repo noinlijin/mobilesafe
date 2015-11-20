@@ -8,24 +8,24 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 /**
- * HomeActivity GridView Êı¾İÊÊÅäÆ÷(´ıÓÅ»¯²Î¿¼listviewÓÅ»¯)
+ * HomeActivity GridView æ•°æ®é€‚é…å™¨(å¾…ä¼˜åŒ–å‚è€ƒlistviewä¼˜åŒ–)
  * @author superboy
  *
  */
 public class HomeAdapter extends BaseAdapter {
-	
+
 	private Context context;
-	
+
 
 	public HomeAdapter(Context context) {
 		this.context = context;
 	}
 
-	private static final String[] names={"ÊÖ»ú·ÀµÁ","Í¨Ñ¶ÎÀÊ¿","Èí¼ş¹ÜÀí","½ø³Ì¹ÜÀí","Á÷Á¿Í³¼Æ",
-		"ÊÖ»úÉ±¶¾","ÏµÍ³ÇåÀí","¸ß¼¶¹¤¾ß","ÉèÖÃÖĞĞÄ"};
-	
+	private static final String[] names={"æ‰‹æœºé˜²ç›—","é€šè®¯å«å£«","è½¯ä»¶ç®¡ç†","è¿›ç¨‹ç®¡ç†","æµé‡ç»Ÿè®¡",
+			"æ‰‹æœºæ€æ¯’","ç³»ç»Ÿæ¸…ç†","é«˜çº§å·¥å…·","è®¾ç½®ä¸­å¿ƒ"};
+
 	private static final int[] icons={R.drawable.safe,R.drawable.callmsgsafe,R.drawable.app,R.drawable.taskmanager,R.drawable.netmanager,
-		R.drawable.trojan,R.drawable.sysoptimize,R.drawable.atools,R.drawable.settings
+			R.drawable.trojan,R.drawable.sysoptimize,R.drawable.atools,R.drawable.settings
 	};
 	public int getCount() {
 		return names.length;
@@ -40,7 +40,7 @@ public class HomeAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		//1.°Ñxml²¼¾Ö×ª»¯³ÉÒ»¸öview¶ÔÏó.
+		//1.æŠŠxmlå¸ƒå±€è½¬åŒ–æˆä¸€ä¸ªviewå¯¹è±¡.
 		View view = View.inflate(context, R.layout.grid_item_main, null);
 		TextView tv = (TextView) view.findViewById(R.id.tv_item_main_name);
 		ImageView iv = (ImageView) view.findViewById(R.id.iv_item_main_icon);

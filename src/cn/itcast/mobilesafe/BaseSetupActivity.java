@@ -10,34 +10,34 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 /**
- * ·â×° ÊÖ»ú·ÀµÁ¹«¹²µÄ²¿·Ö
+ * å°è£… æ‰‹æœºé˜²ç›—å…¬å…±çš„éƒ¨åˆ†
  * @author superboy
  *
  */
 public abstract class BaseSetupActivity extends Activity {
 	protected static final String TAG = "BaseSetupActivity";
 	protected SharedPreferences sp;
-	// 1.´´½¨Ò»¸öÊÖÊÆÊ¶±ğÆ÷
+	// 1.åˆ›å»ºä¸€ä¸ªæ‰‹åŠ¿è¯†åˆ«å™¨
 	protected GestureDetector mGestureDetector;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// 2.³õÊ¼»¯ÊÖÊÆÊ¶±ğÆ÷
+		// 2.åˆå§‹åŒ–æ‰‹åŠ¿è¯†åˆ«å™¨
 		mGestureDetector = new GestureDetector(
 				new GestureDetector.SimpleOnGestureListener() {
-					// velocityx Ë®Æ½·½ÏòÒÆ¶¯µÄËÙ¶È
-					@Override//·µ»ØtrueÏû·Ñµô  ¼´ ÖÕÖ¹µô
+					// velocityx æ°´å¹³æ–¹å‘ç§»åŠ¨çš„é€Ÿåº¦
+					@Override//è¿”å›trueæ¶ˆè´¹æ‰  å³ ç»ˆæ­¢æ‰
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
-							float velocityX, float velocityY) {
-						//e1 e2  µÚÒ»µãµÚ¶ş´¥µã   velocityX velocityY  ÊúÖ±Óë´¹Ö±·½ÏòÉÏÒÆ¶¯µÄËÙ¶È
-						if (Math.abs(velocityX) < 100) {//È¡¾ø¶ÔÖµ   µ¥Î» ÏñËØ
-							Log.i(TAG, "ÒÆ¶¯µÄÌ«Âı");
+										   float velocityX, float velocityY) {
+						//e1 e2  ç¬¬ä¸€ç‚¹ç¬¬äºŒè§¦ç‚¹   velocityX velocityY  ç«–ç›´ä¸å‚ç›´æ–¹å‘ä¸Šç§»åŠ¨çš„é€Ÿåº¦
+						if (Math.abs(velocityX) < 100) {//å–ç»å¯¹å€¼   å•ä½ åƒç´ 
+							Log.i(TAG, "ç§»åŠ¨çš„å¤ªæ…¢");
 							return true;
 						}
 
 						if (Math.abs(e1.getRawY() - e2.getRawY()) > 100) {
-							Log.i(TAG, "¶¯×÷²»ºÏ·¨");
+							Log.i(TAG, "åŠ¨ä½œä¸åˆæ³•");
 							return true;
 						}
 						if (e2.getRawX() - e1.getRawX() > 200) {
@@ -60,20 +60,20 @@ public abstract class BaseSetupActivity extends Activity {
 		setupView();
 	}
 	/**
-	 *²éÕÒ¿Ø¼ş
+	 *æŸ¥æ‰¾æ§ä»¶
 	 */
 	public abstract void findView();
-    /**
-     * Êı¾İ»ØÏÔ
-     */
+	/**
+	 * æ•°æ®å›æ˜¾
+	 */
 	public abstract void setupView();
-    /**
-     * ÏÂÒ»Ò³
-     */
+	/**
+	 * ä¸‹ä¸€é¡µ
+	 */
 	public abstract void showNext();
-    /**
-     * Ç°Ò»Ò³
-     */
+	/**
+	 * å‰ä¸€é¡µ
+	 */
 	public abstract void showPre();
 
 	public void next(View view) {
@@ -90,7 +90,7 @@ public abstract class BaseSetupActivity extends Activity {
 		finish();
 	}
 
-	// 3.ÈÃÊÖÊÆÊ¶±ğÆ÷¹¤×÷
+	// 3.è®©æ‰‹åŠ¿è¯†åˆ«å™¨å·¥ä½œ
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		mGestureDetector.onTouchEvent(event);

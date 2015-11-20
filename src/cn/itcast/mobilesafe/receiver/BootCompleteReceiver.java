@@ -14,7 +14,7 @@ import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 /**
- * ¶©ÔÄ¿ª»ú¹ã²¥
+ * è®¢é˜…å¼€æœºå¹¿æ’­
  * @author superboy
  *
  */
@@ -24,29 +24,29 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.i(TAG, "ÊÖ»ú¿ª»úÁË.");
-		
-		
+		Log.i(TAG, "æ‰‹æœºå¼€æœºäº†.");
+
+
 		//1. 
 		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		
-		Notification no = new Notification(R.drawable.notification, "ÉñÂí»¤ÎÀ»¤ÎÀÄú", System.currentTimeMillis());
-		no.flags = Notification.FLAG_NO_CLEAR;//ÉèÖÃºó£¬ÏûÏ¢µã»÷ºó ²»»áÏûÊ§
+
+		Notification no = new Notification(R.drawable.notification, "ç¥é©¬æŠ¤å«æŠ¤å«æ‚¨", System.currentTimeMillis());
+		no.flags = Notification.FLAG_NO_CLEAR;//è®¾ç½®åï¼Œæ¶ˆæ¯ç‚¹å‡»å ä¸ä¼šæ¶ˆå¤±
 		Intent homeIntent = new Intent(context,HomeActivity.class);
-		homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//·ÇactivityÖĞÆô¶¯ÁíÒ»¸öactivity±ØĞëÒª¼Ó
+		homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//éactivityä¸­å¯åŠ¨å¦ä¸€ä¸ªactivityå¿…é¡»è¦åŠ 
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, homeIntent, 0);
-		no.setLatestEventInfo(context, "ÎÒÊÇÉñÂí»¤ÎÀ", "»¤ÎÀÄúµÄÊÖ»ú", contentIntent);
-		
+		no.setLatestEventInfo(context, "æˆ‘æ˜¯ç¥é©¬æŠ¤å«", "æŠ¤å«æ‚¨çš„æ‰‹æœº", contentIntent);
+
 		nm.notify(0, no);
-		
+
 		/**
-		 * ¿ª»úÆô¶¯À´µç·À»ğÇ½·şÎñ
+		 * å¼€æœºå¯åŠ¨æ¥ç”µé˜²ç«å¢™æœåŠ¡
 		 */
 		Intent callIntent = new Intent(context,CallSmsFirewallService.class);
 		context.startService(callIntent);
-		
-		
-		
+
+
+
 		TelephonyManager tm = (TelephonyManager) context
 				.getSystemService(Context.TELEPHONY_SERVICE);
 		String currentSim = tm.getSimSerialNumber();
@@ -56,13 +56,13 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 		String bindSim = sp.getString("sim", "");
 
 		if (!bindSim.equals(currentSim)) {
-			// ÊÖ»úµÄsim¿¨±»¸ü»»ÁË.
-			// ÅĞ¶ÏÊÖ»úÊÇ·ñÊÇ´¦ÓÚ·ÀµÁ±£»¤µÄ×´Ì¬.
+			// æ‰‹æœºçš„simå¡è¢«æ›´æ¢äº†.
+			// åˆ¤æ–­æ‰‹æœºæ˜¯å¦æ˜¯å¤„äºé˜²ç›—ä¿æŠ¤çš„çŠ¶æ€.
 			boolean isprotecting = sp.getBoolean("isprotecting", false);
 			if (isprotecting) {
-				//·¢ËÍ±¨¾¯¶ÌĞÅ.
+				//å‘é€æŠ¥è­¦çŸ­ä¿¡.
 				SmsManager smsManager =SmsManager.getDefault();
-				String safenumber = sp.getString("safenumber", "");//¿É²ÉÈ¡base64¼ÓÃÜºó½âÃÜ
+				String safenumber = sp.getString("safenumber", "");//å¯é‡‡å–base64åŠ å¯†åè§£å¯†
 				smsManager.sendTextMessage(safenumber, null, "sim changed", null, null);
 			}
 		}

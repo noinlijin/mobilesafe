@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 public class AntivirusDao {
 
 	/**
-	 * ²éÑ¯µ±Ç°md5ÊÇ·ñÔÚ²¡¶¾Êı¾İ¿âÀïÃæ.
-	 * 
+	 * æŸ¥è¯¢å½“å‰md5æ˜¯å¦åœ¨ç—…æ¯’æ•°æ®åº“é‡Œé¢.
+	 *
 	 * @param md5
-	 * @return ²¡¶¾µÄÃèÊöĞÅÏ¢. Èç¹û²»´æÔÚ ·µ»Ønull
+	 * @return ç—…æ¯’çš„æè¿°ä¿¡æ¯. å¦‚æœä¸å­˜åœ¨ è¿”å›null
 	 */
 	public static String findVirus(String md5) {
 		String result = null;

@@ -12,7 +12,7 @@ import android.util.Log;
 import cn.itcast.mobilesafe.R;
 import cn.itcast.mobilesafe.engine.GPSInfoProvider;
 /**
- * ¶ÌĞÅÀ¹½ØÆ÷
+ * çŸ­ä¿¡æ‹¦æˆªå™¨
  * @author superboy
  *
  */
@@ -22,42 +22,42 @@ public class SmsReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.i(TAG,"¶ÌĞÅµ½À´ÁË");
-		
-		Object[] objs = (Object[]) intent.getExtras().get("pdus");//ÄÃµ½ÏµÍ³¶ÌĞÅ¹ã²¥½ÓÊÕÊı¾İ
+		Log.i(TAG,"çŸ­ä¿¡åˆ°æ¥äº†");
+
+		Object[] objs = (Object[]) intent.getExtras().get("pdus");//æ‹¿åˆ°ç³»ç»ŸçŸ­ä¿¡å¹¿æ’­æ¥æ”¶æ•°æ®
 
 		for(Object obj: objs){
 			SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) obj);
 			String body = smsMessage.getMessageBody();
 			String sender = smsMessage.getOriginatingAddress();
-			
+
 			if("#*location*#".equals(body)){
-				Log.i(TAG,"·µ»ØÊÖ»úµÄÎ»ÖÃ");
+				Log.i(TAG,"è¿”å›æ‰‹æœºçš„ä½ç½®");
 				String address = GPSInfoProvider.getInstance(context).getAddress();
 				if(!TextUtils.isEmpty(address)){
 					SmsManager manager = SmsManager.getDefault();
 					manager.sendTextMessage(sender, null, address, null, null);
 				}
-				abortBroadcast();//¶ÌĞÅ¹ã²¥ÊÇ¸öÓĞĞò¹ã²¥ 
+				abortBroadcast();//çŸ­ä¿¡å¹¿æ’­æ˜¯ä¸ªæœ‰åºå¹¿æ’­ 
 			}else if("#*alarm*#".equals(body)){
-				Log.i(TAG,"²¥·Å±¨¾¯ÒôÀÖ");
-				MediaPlayer player = MediaPlayer.create(context, R.raw.ylzs);//²ÎÊı2ÒôÀÖ×ÊÔ´
-				player.setVolume(1.0f, 1.0f);//ÉèÖÃ×óÓÒÉùÒô
+				Log.i(TAG,"æ’­æ”¾æŠ¥è­¦éŸ³ä¹");
+				MediaPlayer player = MediaPlayer.create(context, R.raw.ylzs);//å‚æ•°2éŸ³ä¹èµ„æº
+				player.setVolume(1.0f, 1.0f);//è®¾ç½®å·¦å³å£°éŸ³
 				player.start();
 				abortBroadcast();
-			}else if("#*wipedata*#".equals(body)){//DevicePolicyManagerĞèÒªÏµÍ³ÊÚÓÚ¹ÜÀíÔ±È¨ÏŞ
-				Log.i(TAG,"Çå³ıÊÖ»úÊı¾İ");
+			}else if("#*wipedata*#".equals(body)){//DevicePolicyManageréœ€è¦ç³»ç»Ÿæˆäºç®¡ç†å‘˜æƒé™
+				Log.i(TAG,"æ¸…é™¤æ‰‹æœºæ•°æ®");
 				DevicePolicyManager  dm =	(DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 				dm.wipeData(0);
-				
+
 				abortBroadcast();
 			}else if("#*lockscreen*#".equals(body)){
-				Log.i(TAG,"Ëø¶¨ÊÖ»ú");
+				Log.i(TAG,"é”å®šæ‰‹æœº");
 				DevicePolicyManager  dm =	(DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 				dm.resetPassword("321", 0);
 				dm.lockNow();
-				
-				abortBroadcast();//ÖĞÖ¹¹ã²¥
+
+				abortBroadcast();//ä¸­æ­¢å¹¿æ’­
 			}
 		}
 	}

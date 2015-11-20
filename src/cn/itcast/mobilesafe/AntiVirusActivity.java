@@ -32,18 +32,18 @@ public class AntiVirusActivity extends Activity {
 	private ImageView iv_scan;
 	private ProgressBar pb;
 	private TextView tv_scan_status;
-	
+
 	private PackageManager pm;
-	
+
 	private List<PackageInfo> virusInfos;
-	
+
 	private LinearLayout ll_scan_status;
-    
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_anti_virus);
-		
+
 		virusInfos = new ArrayList<PackageInfo>();
 		pm = getPackageManager();
 		ll_scan_status = (LinearLayout) findViewById(R.id.ll_scan_status);
@@ -57,13 +57,13 @@ public class AntiVirusActivity extends Activity {
 		ra.setDuration(1000);
 		ra.setRepeatCount(Animation.INFINITE);
 		iv_scan.startAnimation(ra);
-		
+
 		new AsyncTask<Void, Object, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
 					Thread.sleep(1000);
-					//±È¶Ô³ÌĞòµÄÇ©Ãû ºÍ Êı¾İ¿âÀïÃæµÄÇ©ÃûÊÇ·ñÒ»ÖÂ.
+					//æ¯”å¯¹ç¨‹åºçš„ç­¾å å’Œ æ•°æ®åº“é‡Œé¢çš„ç­¾åæ˜¯å¦ä¸€è‡´.
 					List<PackageInfo> packinfos = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES|PackageManager.GET_SIGNATURES);
 					pb.setMax(packinfos.size());
 					int total = 0;
@@ -73,11 +73,11 @@ public class AntiVirusActivity extends Activity {
 						String md5 = MD5Util.encode(signature.toCharsString());
 						String result = AntivirusDao.findVirus(md5);
 						if(!TextUtils.isEmpty(result)){
-							//TODO:¼ÇÂ¼ÏÂÀ´Õâ¸ö²¡¶¾ĞÅÏ¢ Í¨Öª½çÃæ¸üĞÂÄÚÈİ
+							//TODO:è®°å½•ä¸‹æ¥è¿™ä¸ªç—…æ¯’ä¿¡æ¯ é€šçŸ¥ç•Œé¢æ›´æ–°å†…å®¹
 							virusInfos.add(packinfo);
 							isvirus = true;
 						}
-						publishProgress("ÕıÔÚÉ¨Ãè:"+ packinfo.applicationInfo.loadLabel(pm),packinfo,isvirus);
+						publishProgress("æ­£åœ¨æ‰«æ:"+ packinfo.applicationInfo.loadLabel(pm),packinfo,isvirus);
 						total++;
 						pb.setProgress(total);
 						Thread.sleep(80);
@@ -88,39 +88,39 @@ public class AntiVirusActivity extends Activity {
 				return null;
 			}
 
-			
+
 			@Override
 			protected void onPreExecute() {
-				tv_scan_status.setText("ÕıÔÚ³õÊ¼»¯É±¶¾ÒıÇæ!");
+				tv_scan_status.setText("æ­£åœ¨åˆå§‹åŒ–æ€æ¯’å¼•æ“!");
 				super.onPreExecute();
 			}
 
-			
+
 			@Override
 			protected void onPostExecute(Void result) {
-				tv_scan_status.setText("É¨ÃèÍê³É...");
+				tv_scan_status.setText("æ‰«æå®Œæˆ...");
 				iv_scan.clearAnimation();
-				
+
 				if(virusInfos.size()>0){
-					Toast.makeText(getApplicationContext(), "·¢ÏÖ²¡¶¾.Çë²éÉ±", 0).show();
+					Toast.makeText(getApplicationContext(), "å‘ç°ç—…æ¯’.è¯·æŸ¥æ€", 0).show();
 					AlertDialog.Builder  builder = new Builder(AntiVirusActivity.this);
-					builder.setTitle("¾¯¸æ");
-					builder.setMessage("·¢ÏÖ²¡¶¾ÊÇ·ñÁ¢¿ÌÇåÀí?");
-					builder.setPositiveButton("È·¶¨", new OnClickListener() {
-						
+					builder.setTitle("è­¦å‘Š");
+					builder.setMessage("å‘ç°ç—…æ¯’æ˜¯å¦ç«‹åˆ»æ¸…ç†?");
+					builder.setPositiveButton("ç¡®å®š", new OnClickListener() {
+
 						public void onClick(DialogInterface dialog, int which) {
 							for(PackageInfo info : virusInfos){
 								Intent intent = new Intent();
 								intent.setAction(Intent.ACTION_DELETE);
 								intent.setData(Uri.parse("package:"+info.packageName));
 								startActivity(intent);
-							}	
+							}
 						}
 					});
-					builder.setNegativeButton("È¡Ïû", new OnClickListener() {
-						
+					builder.setNegativeButton("å–æ¶ˆ", new OnClickListener() {
+
 						public void onClick(DialogInterface dialog, int which) {
-							
+
 						}
 					});
 					builder.show();
@@ -128,7 +128,7 @@ public class AntiVirusActivity extends Activity {
 				super.onPostExecute(result);
 			}
 
-			
+
 			@Override
 			protected void onProgressUpdate(Object... values) {
 				String text = (String) values[0];
@@ -147,7 +147,7 @@ public class AntiVirusActivity extends Activity {
 				tv_scan_status.setText(text);
 				super.onProgressUpdate(values);
 			}
-			
+
 		}.execute();
 
 	}

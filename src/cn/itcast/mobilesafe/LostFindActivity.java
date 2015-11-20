@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 /**
- * ÊÖ»ú·ÀµÁ½çÃæ
+ * æ‰‹æœºé˜²ç›—ç•Œé¢
  * @author superboy
  *
  */
@@ -22,13 +22,13 @@ public class LostFindActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		sp = getSharedPreferences("config", MODE_PRIVATE);
 		setContentView(R.layout.activity_lost_find);
-		//°²È«ºÅÂëÉèÖÃ
+		//å®‰å…¨å·ç è®¾ç½®
 		tv_lostfind_number = (TextView) findViewById(R.id.tv_lostfind_number);
-		//·ÀµÁ±£»¤ÉèÖÃ×´Ì¬
+		//é˜²ç›—ä¿æŠ¤è®¾ç½®çŠ¶æ€
 		iv_lostfind_status = (ImageView) findViewById(R.id.iv_lostfind_status);
-	
+
 		if(isSetup()){
-			//ÏÔÊ¾ÏêÏ¸ÅäÖÃ½çÃæ
+			//æ˜¾ç¤ºè¯¦ç»†é…ç½®ç•Œé¢
 			tv_lostfind_number.setText(sp.getString("safenumber", ""));
 			boolean isprotecting = sp.getBoolean("isprotecting", false);
 			if(isprotecting){
@@ -37,7 +37,7 @@ public class LostFindActivity extends Activity {
 				iv_lostfind_status.setImageResource(R.drawable.unlock);
 			}
 		}else{
-			//¶¨ÏòÒ³Ãæµ½ÉèÖÃÏòµ¼½çÃæ.
+			//å®šå‘é¡µé¢åˆ°è®¾ç½®å‘å¯¼ç•Œé¢.
 			loadSetupUI();
 		}
 	}
@@ -49,18 +49,18 @@ public class LostFindActivity extends Activity {
 		startActivity(intent);
 		finish();
 	}
- 
-	
-	
+
+
+
 	/**
-	 * ÅĞ¶ÏÓÃ»§ÊÇ·ñ½øĞĞ¹ıÉèÖÃÏòµ¼
+	 * åˆ¤æ–­ç”¨æˆ·æ˜¯å¦è¿›è¡Œè¿‡è®¾ç½®å‘å¯¼
 	 * @return
 	 */
 	private boolean isSetup(){
 		return sp.getBoolean("setup", false);
 	}
 	/**
-	 * ÖØĞÂÉèÖÃ
+	 * é‡æ–°è®¾ç½®
 	 * @param view
 	 */
 	public void reEntrySetup(View view){

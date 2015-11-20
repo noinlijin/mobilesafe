@@ -25,7 +25,7 @@ import android.widget.Toast;
 import cn.itcast.mobilesafe.db.dao.BlackNumberDao;
 import cn.itcast.mobilesafe.domain.BlackNumberBean;
 /**
- * Í¨Ñ¶ ÎÀÊ¿ 
+ * é€šè®¯ å«å£« 
  * @author superboy
  *
  */
@@ -36,13 +36,13 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 	private LinearLayout ll_loading;
 	private List<BlackNumberBean> blacknumberBeans;
 
-	// Ìø×ªµÄÒ³Âë
+	// è·³è½¬çš„é¡µç 
 	private EditText et_call_sms_pagenumber;
 
-	// Ò³Âë×´Ì¬
+	// é¡µç çŠ¶æ€
 	private TextView tv_call_sms_page_status;
 
-	// Ò»´Î×î¶à»ñÈ¡µÄÊı¾İ
+	// ä¸€æ¬¡æœ€å¤šè·å–çš„æ•°æ®
 	private static final int maxNumber = 25;
 	protected static final String TAG = "CallSmsSafeActivity";
 
@@ -54,7 +54,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 
 	private int currentpage = 1;
 	private int totalpage;
-	
+
 	private int selectItemPostion;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_call_sms_safe);
 		et_call_sms_pagenumber = (EditText) findViewById(R.id.et_call_sms_pagenumber);
 		tv_call_sms_page_status = (TextView) findViewById(R.id.tv_call_sms_page_status);
-		
+
 		iv_add = (ImageView) findViewById(R.id.iv_call_sms_safe_icon);
 		iv_add.setOnClickListener(this);
 
@@ -71,7 +71,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 
 		dao = new BlackNumberDao(this);
 		totalpage = dao.getTotalPage(maxNumber);
-		tv_call_sms_page_status.setText("µ±Ç°Ò³/×ÜÒ³Âë:" + currentpage + "/"
+		tv_call_sms_page_status.setText("å½“å‰é¡µ/æ€»é¡µç :" + currentpage + "/"
 				+ totalpage);
 		fillData();
 	}
@@ -82,7 +82,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 			@Override
 			protected void onPreExecute() {
 				isloading = true;
-				ll_loading.setVisibility(View.VISIBLE);//ÏÔÊ¾¼ÓÔØ¿ò
+				ll_loading.setVisibility(View.VISIBLE);//æ˜¾ç¤ºåŠ è½½æ¡†
 				super.onPreExecute();
 			}
 
@@ -94,16 +94,16 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 					adapter = new CallSmsAdapter();
 					lv_call_sms_safe.setAdapter(adapter);
 				} else {
-					// Í¨ÖªÊı¾İÊÊÅäÆ÷Êı¾İ·¢ÉúÁË¸Ä±ä.
+					// é€šçŸ¥æ•°æ®é€‚é…å™¨æ•°æ®å‘ç”Ÿäº†æ”¹å˜.
 					adapter.notifyDataSetChanged();
 				}
 				isloading = false;
-				tv_call_sms_page_status.setText("µ±Ç°Ò³/×ÜÒ³Âë:" + currentpage + "/"
+				tv_call_sms_page_status.setText("å½“å‰é¡µ/æ€»é¡µç :" + currentpage + "/"
 						+ totalpage);
 			}
 
 			protected Void doInBackground(Void... params) {
-                try {
+				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -112,7 +112,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 
 				return null;
 			}
-		}.execute();//±ØĞë µ÷ÓÃ Õâ¸ö·½·¨ 
+		}.execute();//å¿…é¡» è°ƒç”¨ è¿™ä¸ªæ–¹æ³• 
 	}
 	/**
 	 * CallSmsAdapter
@@ -138,17 +138,17 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			// Log.i(TAG,"getview:"+position);
 			View view;
-			// ÓÃÀ´±£´æÄÇĞ©view¶ÔÏóÀïÃæ¿Ø¼şµÄÒıÓÃ.
+			// ç”¨æ¥ä¿å­˜é‚£äº›viewå¯¹è±¡é‡Œé¢æ§ä»¶çš„å¼•ç”¨.
 			ViewHolder holder;
-			// 1.¸´ÓÃ»º´æµÄview¶ÔÏó ÓÅ»¯listview ¼õÉÙ²¼¾ÖÎÄ¼ş->viewµÄ²Ù×÷´ÎÊı.
+			// 1.å¤ç”¨ç¼“å­˜çš„viewå¯¹è±¡ ä¼˜åŒ–listview å‡å°‘å¸ƒå±€æ–‡ä»¶->viewçš„æ“ä½œæ¬¡æ•°.
 			if (convertView != null && convertView instanceof RelativeLayout) {
 				view = convertView;
-				Log.i(TAG, "¸´ÓÃ  old view :" + position);
+				Log.i(TAG, "å¤ç”¨  old view :" + position);
 				holder = (ViewHolder) view.getTag();
 			} else {
 				view = View.inflate(getApplicationContext(),
 						R.layout.list_item_call_sms, null);
-				Log.i(TAG, "´´½¨ĞÂµÄ view :" + position);
+				Log.i(TAG, "åˆ›å»ºæ–°çš„ view :" + position);
 				holder = new ViewHolder();
 				holder.tv_mode = (TextView) view
 						.findViewById(R.id.tv_call_sms_item_mode);
@@ -157,7 +157,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 				holder.iv = (ImageView) view
 						.findViewById(R.id.iv_call_sms_item_delete);
 				holder.iv_edit = (ImageView)view.findViewById(R.id.iv_call_sms_item_edit);
-				// 2.½øÒ»²½ÓÅ»¯listview ¼õÉÙÀïÃæ¿Ø¼şµÄ²éÕÒ´ÎÊı
+				// 2.è¿›ä¸€æ­¥ä¼˜åŒ–listview å‡å°‘é‡Œé¢æ§ä»¶çš„æŸ¥æ‰¾æ¬¡æ•°
 				view.setTag(holder);
 			}
 
@@ -165,29 +165,29 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 
 			String mode = bean.getMode();
 			final String number = bean.getNumber();
-			holder.iv.setOnClickListener(new OnClickListener() {// É¾³ıºÚÃûµ¥ µÄ²Ù×÷
+			holder.iv.setOnClickListener(new OnClickListener() {// åˆ é™¤é»‘åå• çš„æ“ä½œ
 				public void onClick(View v) {
-					Log.i(TAG, "É¾³ı" + number);
+					Log.i(TAG, "åˆ é™¤" + number);
 					dao.delete(number);
 					blacknumberBeans.remove(position);
-					adapter.notifyDataSetChanged();//Í¨ÖªÊÊÅäÆ÷¸üĞÂ±ä»¯ 
+					adapter.notifyDataSetChanged();//é€šçŸ¥é€‚é…å™¨æ›´æ–°å˜åŒ– 
 				}
 			});
 			holder.iv_edit.setOnClickListener(new OnClickListener() {
-				
+
 				public void onClick(View v) {
-					//°ÑÔÚÁĞ±íÖĞµÄÎ»ÖÃÉèÖÃ½øÀ´
+					//æŠŠåœ¨åˆ—è¡¨ä¸­çš„ä½ç½®è®¾ç½®è¿›æ¥
 					selectItemPostion = position;
 					showEditNumberDialog();
 				}
 			});
 			holder.tv_number.setText(number);
 			if ("1".equals(mode)) {
-				holder.tv_mode.setText("Ö»À¹½Øµç»°");
+				holder.tv_mode.setText("åªæ‹¦æˆªç”µè¯");
 			} else if ("2".equals(mode)) {
-				holder.tv_mode.setText("Ö»À¹½Ø¶ÌĞÅ");
+				holder.tv_mode.setText("åªæ‹¦æˆªçŸ­ä¿¡");
 			} else {
-				holder.tv_mode.setText("µç»°¶ÌĞÅÈ«²¿À¹½Ø");
+				holder.tv_mode.setText("ç”µè¯çŸ­ä¿¡å…¨éƒ¨æ‹¦æˆª");
 			}
 
 			return view;
@@ -206,86 +206,86 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 		String pagenumber = et_call_sms_pagenumber.getText().toString().trim();
 		int num = Integer.parseInt(pagenumber);
 		if (num <= 0) {
-			Toast.makeText(getApplicationContext(), "Ò³ÂëÊı²»ºÏ·¨", 0).show();
+			Toast.makeText(getApplicationContext(), "é¡µç æ•°ä¸åˆæ³•", 0).show();
 			return;
 		}
 		if (num > totalpage) {
-			Toast.makeText(getApplicationContext(), "Ò³Âë²»´æÔÚ", 0).show();
+			Toast.makeText(getApplicationContext(), "é¡µç ä¸å­˜åœ¨", 0).show();
 			return;
 		}
 		if (num == currentpage) {
-			Toast.makeText(getApplicationContext(), "ÔÚµ±Ç°Ò³", 0).show();
+			Toast.makeText(getApplicationContext(), "åœ¨å½“å‰é¡µ", 0).show();
 			return;
 		}
 		currentpage = num;
-		// 1 Ò³ Êı¾İ 0~24 (1-1)*maxnumber ~ 1* maxnumber-1
-		// 2Ò² 25~49 (2-1)*maxnumber ~ 2* maxnumber-1
+		// 1 é¡µ æ•°æ® 0~24 (1-1)*maxnumber ~ 1* maxnumber-1
+		// 2ä¹Ÿ 25~49 (2-1)*maxnumber ~ 2* maxnumber-1
 		startIndex = (num - 1) * maxNumber;
 		fillData();
 	}
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_call_sms_safe_icon:
-			showAddNumberDialog();
-			break;
-			
-		case R.id.bt_edit_blacknumber_cancle:
-			dialog.dismiss();
-			break;
-			
-		case R.id.bt_edit_blacknumber_ok:
-			
-			BlackNumberBean bean = blacknumberBeans.get(selectItemPostion);
-			String newmode =null;
-			if(cb_edit_blacknumber_phone.isChecked()&&cb_edit_blacknumber_sms.isChecked()){
-				newmode = "0";
-			}else if(cb_edit_blacknumber_phone.isChecked()){
-				newmode = "1";
-			}else if(cb_edit_blacknumber_sms.isChecked()){
-				newmode = "2";
-			}else{
-				Toast.makeText(this, "ÇëÉèÖÃÀ¹½ØÄ£Ê½", 0).show();
-				return;
-			}
-			dao.update(newmode, bean.getNumber());
-			bean.setMode(newmode);
-			adapter.notifyDataSetChanged();
-			dialog.dismiss();
-			break;
-		case R.id.bt_add_blacknumber_cancle:
-			dialog.dismiss();
-			break;
-		case R.id.bt_add_blacknumber_ok:
-			String number = et_number.getText().toString().trim();
-			String mode =null;
-			if(cb_add_blacknumber_phone.isChecked()&&cb_add_blacknumber_sms.isChecked()){
-				mode = "0";
-			}else if(cb_add_blacknumber_phone.isChecked()){
-				mode = "1";
-			}else if(cb_add_blacknumber_sms.isChecked()){
-				mode = "2";
-			}else{
-				Toast.makeText(this, "ÇëÉèÖÃÀ¹½ØÄ£Ê½", 0).show();
-				return;
-			}
-			if(TextUtils.isEmpty(number)){
-				Toast.makeText(this, "ÇëÉèÖÃµç»°ºÅÂë", 0).show();
-				return ;
-			}
-			//¼Óµ½Êı¾İ¿â
-			dao.add(number, mode);
-			currentpage = 1;
-			startIndex = 0;
-			fillData();
-			dialog.dismiss();
-			break;
+			case R.id.iv_call_sms_safe_icon:
+				showAddNumberDialog();
+				break;
+
+			case R.id.bt_edit_blacknumber_cancle:
+				dialog.dismiss();
+				break;
+
+			case R.id.bt_edit_blacknumber_ok:
+
+				BlackNumberBean bean = blacknumberBeans.get(selectItemPostion);
+				String newmode =null;
+				if(cb_edit_blacknumber_phone.isChecked()&&cb_edit_blacknumber_sms.isChecked()){
+					newmode = "0";
+				}else if(cb_edit_blacknumber_phone.isChecked()){
+					newmode = "1";
+				}else if(cb_edit_blacknumber_sms.isChecked()){
+					newmode = "2";
+				}else{
+					Toast.makeText(this, "è¯·è®¾ç½®æ‹¦æˆªæ¨¡å¼", 0).show();
+					return;
+				}
+				dao.update(newmode, bean.getNumber());
+				bean.setMode(newmode);
+				adapter.notifyDataSetChanged();
+				dialog.dismiss();
+				break;
+			case R.id.bt_add_blacknumber_cancle:
+				dialog.dismiss();
+				break;
+			case R.id.bt_add_blacknumber_ok:
+				String number = et_number.getText().toString().trim();
+				String mode =null;
+				if(cb_add_blacknumber_phone.isChecked()&&cb_add_blacknumber_sms.isChecked()){
+					mode = "0";
+				}else if(cb_add_blacknumber_phone.isChecked()){
+					mode = "1";
+				}else if(cb_add_blacknumber_sms.isChecked()){
+					mode = "2";
+				}else{
+					Toast.makeText(this, "è¯·è®¾ç½®æ‹¦æˆªæ¨¡å¼", 0).show();
+					return;
+				}
+				if(TextUtils.isEmpty(number)){
+					Toast.makeText(this, "è¯·è®¾ç½®ç”µè¯å·ç ", 0).show();
+					return ;
+				}
+				//åŠ åˆ°æ•°æ®åº“
+				dao.add(number, mode);
+				currentpage = 1;
+				startIndex = 0;
+				fillData();
+				dialog.dismiss();
+				break;
 		}
 
 	}
 
 	/**
-	 * ÏÔÊ¾Ìí¼Ó¶Ô»°¿ò
+	 * æ˜¾ç¤ºæ·»åŠ å¯¹è¯æ¡†
 	 */
 	private EditText et_number;
 	private Button bt_ok;
@@ -293,7 +293,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 	private AlertDialog dialog;
 	private CheckBox cb_add_blacknumber_phone;
 	private CheckBox cb_add_blacknumber_sms;
-	
+
 
 	private void showAddNumberDialog() {
 		AlertDialog.Builder builder = new Builder(this);
@@ -310,8 +310,8 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 		dialog.setView(view, 0, 0, 0, 0);
 		dialog.show();
 	}
-	
-	
+
+
 	private CheckBox cb_edit_blacknumber_phone;
 	private CheckBox cb_edit_blacknumber_sms;
 	private Button bt_edit_ok;
@@ -328,8 +328,8 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 		bt_edit_ok = (Button) view.findViewById(R.id.bt_edit_blacknumber_ok);
 		cb_edit_blacknumber_phone = (CheckBox)view.findViewById(R.id.cb_edit_blacknumber_phone);
 		cb_edit_blacknumber_sms = (CheckBox)view.findViewById(R.id.cb_edit_blacknumber_sms);
-		
-		//Êı¾İ»ØÏÔ 0 È«²¿À¹½Ø 1µç»°À¹½Ø 2¶ÌĞÅÀ¹½Ø
+
+		//æ•°æ®å›æ˜¾ 0 å…¨éƒ¨æ‹¦æˆª 1ç”µè¯æ‹¦æˆª 2çŸ­ä¿¡æ‹¦æˆª
 		String mode = bean.getMode();
 		if("0".equals(mode)){
 			cb_edit_blacknumber_phone.setChecked(true);
@@ -339,7 +339,7 @@ public class CallSmsSafeActivity extends Activity implements OnClickListener {
 		}else if("2".equals(mode)){
 			cb_edit_blacknumber_sms.setChecked(true);
 		}
-		
+
 		bt_edit_ok.setOnClickListener(this);
 		bt_edit_cancle.setOnClickListener(this);
 		dialog.setView(view, 0, 0, 0, 0);

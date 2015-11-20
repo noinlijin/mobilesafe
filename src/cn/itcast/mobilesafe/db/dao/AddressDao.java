@@ -4,21 +4,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * ªÒ»° ÷ª˙∫≈¬ÎπÈ ÙµÿµƒDao
- * 
+ * Ëé∑ÂèñÊâãÊú∫Âè∑Á†ÅÂΩíÂ±ûÂú∞ÁöÑDao
+ *
  * @author Administrator
- * 
+ *
  */
 public class AddressDao {
 	public static String getAddress(String number) {
-		// »Áπ˚∫≈¬Î√ª”–≤È—ØµΩ æÕ∑µªÿµ±«∞∫≈¬Î
+		// Â¶ÇÊûúÂè∑Á†ÅÊ≤°ÊúâÊü•ËØ¢Âà∞ Â∞±ËøîÂõûÂΩìÂâçÂè∑Á†Å
 		String address = number;
-		// 1.¥Úø™ ˝æ›ø‚
+		// 1.ÊâìÂºÄÊï∞ÊçÆÂ∫ì
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				"/data/data/cn.itcast.mobilesafe/files/address.db", null,
 				SQLiteDatabase.OPEN_READONLY);
-		//  ◊œ»≈–∂œ number «∑Ò «“ª∏ˆ ÷ª˙∫≈¬Î.
-		// ≥§∂»11Œª 1ø™Õ∑ 3458 9Œªµƒ ˝◊÷.
+		// È¶ñÂÖàÂà§Êñ≠ numberÊòØÂê¶ÊòØ‰∏Ä‰∏™ÊâãÊú∫Âè∑Á†Å.
+		// ÈïøÂ∫¶11‰Ωç 1ÂºÄÂ§¥ 3458 9‰ΩçÁöÑÊï∞Â≠ó.
 		if (number.matches("^1[3458]\\d{9}$")) {
 			Cursor cursor = db
 					.rawQuery(
@@ -29,51 +29,51 @@ public class AddressDao {
 			}
 			cursor.close();
 
-		} else {// ∑« ÷ª˙∫≈¬Î
+		} else {// ÈùûÊâãÊú∫Âè∑Á†Å
 			switch (number.length()) {
-			case 3:
-				address = "ΩÙº±µÁª∞";
-				break;
-			case 4:
-				address = "ƒ£ƒ‚∆˜";
-				break;
-			case 5:
-				address = "Ãÿ ‚µÁª∞";
-				break;
+				case 3:
+					address = "Á¥ßÊÄ•ÁîµËØù";
+					break;
+				case 4:
+					address = "Ê®°ÊãüÂô®";
+					break;
+				case 5:
+					address = "ÁâπÊÆäÁîµËØù";
+					break;
 
-			case 7:
-				address = "±æµÿµÁª∞";
-				break;
-			case 8:
-				address = "±æµÿµÁª∞";
-				break;
-			default://«∞3Œª ªÚ4Œª ≤ªª·÷ÿ∏¥
-				if (number.length() >= 10 && number.startsWith("0")) {
-					Cursor cursor = db.rawQuery(
-							"select location from data2 where area = ?",
-							new String[] { number.substring(1, 3) });
-					if (cursor.moveToFirst()) {
-						String location = cursor.getString(0);
-						location = location.replace("µÁ–≈", "");
-						location = location.replace("“∆∂Ø", "");
-						location = location.replace("¡™Õ®", "");
-						address = location;
+				case 7:
+					address = "Êú¨Âú∞ÁîµËØù";
+					break;
+				case 8:
+					address = "Êú¨Âú∞ÁîµËØù";
+					break;
+				default://Ââç3‰Ωç Êàñ4‰Ωç ‰∏ç‰ºöÈáçÂ§ç
+					if (number.length() >= 10 && number.startsWith("0")) {
+						Cursor cursor = db.rawQuery(
+								"select location from data2 where area = ?",
+								new String[] { number.substring(1, 3) });
+						if (cursor.moveToFirst()) {
+							String location = cursor.getString(0);
+							location = location.replace("Áîµ‰ø°", "");
+							location = location.replace("ÁßªÂä®", "");
+							location = location.replace("ËÅîÈÄö", "");
+							address = location;
+						}
+						cursor.close();
+						cursor = db.rawQuery(
+								"select location from data2 where area = ?",
+								new String[] { number.substring(1, 4) });
+						if (cursor.moveToFirst()) {
+							String location = cursor.getString(0);
+							location = location.replace("Áîµ‰ø°", "");
+							location = location.replace("ÁßªÂä®", "");
+							location = location.replace("ËÅîÈÄö", "");
+							address = location;
+						}
+						cursor.close();
 					}
-					cursor.close();
-					cursor = db.rawQuery(
-							"select location from data2 where area = ?",
-							new String[] { number.substring(1, 4) });
-					if (cursor.moveToFirst()) {
-						String location = cursor.getString(0);
-						location = location.replace("µÁ–≈", "");
-						location = location.replace("“∆∂Ø", "");
-						location = location.replace("¡™Õ®", "");
-						address = location;
-					}
-					cursor.close();
-				}
 
-				break;
+					break;
 			}
 
 		}

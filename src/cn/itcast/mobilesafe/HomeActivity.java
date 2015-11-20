@@ -19,29 +19,29 @@ import android.widget.Toast;
 import cn.itcast.mobilesafe.adapter.HomeAdapter;
 import cn.itcast.mobilesafe.utils.MD5Util;
 /**
- * HomeActivity Ê×Ò³Ãæ  GridView ÈûÊı¾İ ²¢Ìí¼Óµã»÷ÊÂ¼ş
+ * HomeActivity é¦–é¡µé¢  GridView å¡æ•°æ® å¹¶æ·»åŠ ç‚¹å‡»äº‹ä»¶
  * @author superboy
  *
  */
 public class HomeActivity extends Activity implements OnClickListener {
 	private GridView gv_main;
 	private SharedPreferences sp;
-	
-	//µÚÒ»´Î½øÈë¶Ô»°¿ò×é¼şµÄ³õÊ¼»¯
+
+	//ç¬¬ä¸€æ¬¡è¿›å…¥å¯¹è¯æ¡†ç»„ä»¶çš„åˆå§‹åŒ–
 	private EditText et_first_pwd;
 	private EditText et_first_pwd_confirm;
 	private Button bt_first_ok;
 	private Button bt_first_cancle;
-	
-	
-	//µÚ¶ş´Î½øÈë¶Ô»°¿ò×é¼şµÄ³õÊ¼»¯
+
+
+	//ç¬¬äºŒæ¬¡è¿›å…¥å¯¹è¯æ¡†ç»„ä»¶çš„åˆå§‹åŒ–
 	private EditText et_normal_pwd;
 	private Button bt_normal_ok;
 	private Button bt_normal_cancle;
-	
+
 	private AlertDialog dialog;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,81 +49,81 @@ public class HomeActivity extends Activity implements OnClickListener {
 		gv_main = (GridView) findViewById(R.id.gv_main);
 		sp = getSharedPreferences("config", MODE_PRIVATE);
 		gv_main.setAdapter(new HomeAdapter(this));
-		
-		
+
+
 		gv_main.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+									int position, long id) {
 				Intent intent;
 				switch (position) {
-				case 0:
-					loadLostProtectedUI();//ÊÖ»ú·ÀµÁ
-					
-					break;
-				case 1:
-					intent = new Intent(HomeActivity.this,CallSmsSafeActivity.class);
-					startActivity(intent);
-					
-					break;
-				case 2:
-					intent = new Intent(HomeActivity.this,AppManagerActivity2.class);
-					startActivity(intent);
-					
-					break;
-				case 3:
-					intent = new Intent(HomeActivity.this,TaskManagerActivity.class);
-					startActivity(intent);
-					
-					break;
-				case 4:
-					intent = new Intent(HomeActivity.this,TrafficManagerActivity.class);
-					startActivity(intent);
-					
-					break;
-				case 5:
-					intent = new Intent(HomeActivity.this,AntiVirusActivity.class);
-					startActivity(intent);
-					
-					break;
-				case 6:
-					intent = new Intent(HomeActivity.this,SystemOptActivity.class);
-					startActivity(intent);
-					
-					break;
-				case 7:
-					intent = new Intent(HomeActivity.this,AtoolsActivity.class);
-					startActivity(intent);
-					break;
-				case 8://ÉèÖÃÖĞĞÄ
-					intent = new Intent(HomeActivity.this,SettingCenterActivity.class);
-					startActivity(intent);
-					break;
+					case 0:
+						loadLostProtectedUI();//æ‰‹æœºé˜²ç›—
 
-				
+						break;
+					case 1:
+						intent = new Intent(HomeActivity.this,CallSmsSafeActivity.class);
+						startActivity(intent);
+
+						break;
+					case 2:
+						intent = new Intent(HomeActivity.this,AppManagerActivity2.class);
+						startActivity(intent);
+
+						break;
+					case 3:
+						intent = new Intent(HomeActivity.this,TaskManagerActivity.class);
+						startActivity(intent);
+
+						break;
+					case 4:
+						intent = new Intent(HomeActivity.this,TrafficManagerActivity.class);
+						startActivity(intent);
+
+						break;
+					case 5:
+						intent = new Intent(HomeActivity.this,AntiVirusActivity.class);
+						startActivity(intent);
+
+						break;
+					case 6:
+						intent = new Intent(HomeActivity.this,SystemOptActivity.class);
+						startActivity(intent);
+
+						break;
+					case 7:
+						intent = new Intent(HomeActivity.this,AtoolsActivity.class);
+						startActivity(intent);
+						break;
+					case 8://è®¾ç½®ä¸­å¿ƒ
+						intent = new Intent(HomeActivity.this,SettingCenterActivity.class);
+						startActivity(intent);
+						break;
+
+
 				}
-				
-				
+
+
 			}
 		});
 	}
 	/**
-	 * ½øÈëÊÖ»ú·ÀµÁµÄUI
+	 * è¿›å…¥æ‰‹æœºé˜²ç›—çš„UI
 	 */
 	protected void loadLostProtectedUI() {
-     	//ÅĞ¶ÏÓÃ»§ÊÇ·ñÉèÖÃ¹ıÃÜÂë.
+		//åˆ¤æ–­ç”¨æˆ·æ˜¯å¦è®¾ç½®è¿‡å¯†ç .
 		if(isSetupPWD()){
-			//Õı³£½øÈëµÄ¶Ô»°¿ò
+			//æ­£å¸¸è¿›å…¥çš„å¯¹è¯æ¡†
 			showNormalEntryDialog();
 		}else{
-			//ÉèÖÃÃÜÂë¶Ô»°¿ò
+			//è®¾ç½®å¯†ç å¯¹è¯æ¡†
 			showFirstEntryDialog();
 		}
-		
+
 	}
 
 	/**
-	 * ¼ì²éÊÇ·ñÉèÖÃ¹ıÃÜÂë
+	 * æ£€æŸ¥æ˜¯å¦è®¾ç½®è¿‡å¯†ç 
 	 * @return
 	 */
 	private boolean isSetupPWD(){
@@ -134,92 +134,92 @@ public class HomeActivity extends Activity implements OnClickListener {
 			return true;
 		}
 	}
-	
-	
+
+
 	/**
-	 * µÚÒ»´Î½øÈë¶Ô»°¿ò
+	 * ç¬¬ä¸€æ¬¡è¿›å…¥å¯¹è¯æ¡†
 	 */
 	private void showFirstEntryDialog() {
 		AlertDialog.Builder builder = new Builder(this);
-		
+
 		View view = View.inflate(this, R.layout.dialog_first_entry, null);
 		et_first_pwd = (EditText) view.findViewById(R.id.et_first_pwd);
 		et_first_pwd_confirm = (EditText) view.findViewById(R.id.et_first_pwd_confirm);
 		bt_first_ok = (Button)view.findViewById(R.id.bt_first_ok);
 		bt_first_cancle = (Button)view.findViewById(R.id.bt_first_cancle);
-		
+
 		bt_first_ok.setOnClickListener(this);
 		bt_first_cancle.setOnClickListener(this);
-		
-		dialog = builder.create();//Ïû³ı¶Ô»°¿òµÄºÚ±ß
+
+		dialog = builder.create();//æ¶ˆé™¤å¯¹è¯æ¡†çš„é»‘è¾¹
 		dialog.setView(view, 0, 0, 0, 0);
 		dialog.show();
 	}
 	/**
-	 * Õı³£½øÈë¶Ô»°¿ò
+	 * æ­£å¸¸è¿›å…¥å¯¹è¯æ¡†
 	 */
 	private void showNormalEntryDialog() {
 		AlertDialog.Builder builder = new Builder(this);
-		
+
 		View view = View.inflate(this, R.layout.dialog_normal_entry, null);
 		et_normal_pwd = (EditText) view.findViewById(R.id.et_normal_pwd);
 		bt_normal_ok = (Button)view.findViewById(R.id.bt_normal_ok);
 		bt_normal_cancle = (Button)view.findViewById(R.id.bt_normal_cancle);
-		
+
 		bt_normal_ok.setOnClickListener(this);
 		bt_normal_cancle.setOnClickListener(this);
-		
+
 		dialog = builder.create();
-		dialog.setView(view, 0, 0, 0, 0);//È¥µôºÚÉ«±ß¿ò
+		dialog.setView(view, 0, 0, 0, 0);//å»æ‰é»‘è‰²è¾¹æ¡†
 		dialog.show();
-		
+
 	}
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.bt_first_cancle:
-			dialog.dismiss();
-			break;
-
-		case R.id.bt_first_ok:
-			String pwd = et_first_pwd.getText().toString().trim();
-			String pwd_confirm = et_first_pwd_confirm.getText().toString().trim();
-			
-			if(TextUtils.isEmpty(pwd)||TextUtils.isEmpty(pwd_confirm)){
-				Toast.makeText(this, "ÃÜÂë²»ÄÜÎª¿Õ", 0).show();//LENGTH_SHORT = 0; LENGTH_LONG = 1;
-				return ;
-			}
-			if(pwd.equals(pwd_confirm)){
-				Editor editor = sp.edit();
-				editor.putString("password", MD5Util.encode(pwd));
-				editor.commit();
-				dialog.dismiss();//¹Ø±Õ¶Ô»°¿ò
-			}else {
-				Toast.makeText(this, "Á½´ÎÃÜÂë²»Ò»ÖÂ", 0).show();
-				return;
-			}
-			break;
-		case R.id.bt_normal_cancle:
-			dialog.dismiss();
-			break;
-		case R.id.bt_normal_ok:
-			String enterdpwd = et_normal_pwd.getText().toString().trim();
-			
-			if(TextUtils.isEmpty(enterdpwd)){
-				Toast.makeText(this, "ÃÜÂë²»ÄÜÎª¿Õ", 0).show();
-				return;
-			}
-			String savedpwd = sp.getString("password", "");
-			if((MD5Util.encode(enterdpwd)).equals(savedpwd)){
+			case R.id.bt_first_cancle:
 				dialog.dismiss();
-				//½øÈë½çÃæ
-				Intent intent = new Intent(this,LostFindActivity.class);
-				startActivity(intent);
-			}else{
-				Toast.makeText(this, "ÃÜÂë²»ÕıÈ·", 0).show();
-				return;
-			}
-			break;
+				break;
+
+			case R.id.bt_first_ok:
+				String pwd = et_first_pwd.getText().toString().trim();
+				String pwd_confirm = et_first_pwd_confirm.getText().toString().trim();
+
+				if(TextUtils.isEmpty(pwd)||TextUtils.isEmpty(pwd_confirm)){
+					Toast.makeText(this, "å¯†ç ä¸èƒ½ä¸ºç©º", 0).show();//LENGTH_SHORT = 0; LENGTH_LONG = 1;
+					return ;
+				}
+				if(pwd.equals(pwd_confirm)){
+					Editor editor = sp.edit();
+					editor.putString("password", MD5Util.encode(pwd));
+					editor.commit();
+					dialog.dismiss();//å…³é—­å¯¹è¯æ¡†
+				}else {
+					Toast.makeText(this, "ä¸¤æ¬¡å¯†ç ä¸ä¸€è‡´", 0).show();
+					return;
+				}
+				break;
+			case R.id.bt_normal_cancle:
+				dialog.dismiss();
+				break;
+			case R.id.bt_normal_ok:
+				String enterdpwd = et_normal_pwd.getText().toString().trim();
+
+				if(TextUtils.isEmpty(enterdpwd)){
+					Toast.makeText(this, "å¯†ç ä¸èƒ½ä¸ºç©º", 0).show();
+					return;
+				}
+				String savedpwd = sp.getString("password", "");
+				if((MD5Util.encode(enterdpwd)).equals(savedpwd)){
+					dialog.dismiss();
+					//è¿›å…¥ç•Œé¢
+					Intent intent = new Intent(this,LostFindActivity.class);
+					startActivity(intent);
+				}else{
+					Toast.makeText(this, "å¯†ç ä¸æ­£ç¡®", 0).show();
+					return;
+				}
+				break;
 		}
-		
+
 	}
 }

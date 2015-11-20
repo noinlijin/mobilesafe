@@ -46,10 +46,10 @@ public class CleanStartupActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
-		
+
+
 		new AsyncTask<Void, Void, Void>() {
 
 			@Override
@@ -73,7 +73,7 @@ public class CleanStartupActivity extends Activity {
 
 		}.execute();
 	}
-	
+
 	private class MyAdapter extends BaseAdapter{
 
 		public int getCount() {
@@ -97,6 +97,6 @@ public class CleanStartupActivity extends Activity {
 			tv.setText(appinfos.get(position).getName());
 			return tv;
 		}
-		
+
 	}
 }

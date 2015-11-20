@@ -11,14 +11,14 @@ import android.graphics.drawable.Drawable;
 import cn.itcast.mobilesafe.domain.AppInfo;
 
 /**
- * »ñÈ¡ËùÓĞµÄ°²×°ÔÚÊÖ»úÉÏµÄ³ÌĞòĞÅÏ¢
+ * è·å–æ‰€æœ‰çš„å®‰è£…åœ¨æ‰‹æœºä¸Šçš„ç¨‹åºä¿¡æ¯
  * @author Administrator
  *
  */
 public class AppInfoProvider {
 
 	public static List<AppInfo> getAppInfos(Context context){
-		//1.»ñÈ¡ËùÓĞµÄ°²×°ÔÚÊÖ»úÉÏµÄ³ÌĞò.
+		//1.è·å–æ‰€æœ‰çš„å®‰è£…åœ¨æ‰‹æœºä¸Šçš„ç¨‹åº.
 		PackageManager pm = context.getPackageManager();
 		List<PackageInfo>  packinfos =	pm.getInstalledPackages(0);
 		List<AppInfo> appInfos = new ArrayList<AppInfo>();
@@ -28,13 +28,13 @@ public class AppInfoProvider {
 			appinfo.setPackname(packname);
 			String version = packinfo.versionName;
 			appinfo.setVersion(version);
-			
+
 			Drawable icon = packinfo.applicationInfo.loadIcon(pm);
 			appinfo.setIcon(icon);
 			String name = packinfo.applicationInfo.loadLabel(pm).toString();
 			appinfo.setName(name);
 			if((packinfo.applicationInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) !=0){
-				//°²×°ÔÚsd¿¨
+				//å®‰è£…åœ¨sdå¡
 				appinfo.setInrom(false);
 			}else{
 				appinfo.setInrom(true);

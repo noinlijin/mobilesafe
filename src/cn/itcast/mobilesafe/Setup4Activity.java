@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 /**
- * ÊÖ»ú·ÀµÁÉèÖÃÏòµ¼4
+ * æ‰‹æœºé˜²ç›—è®¾ç½®å‘å¯¼4
  * @author superboy
  *
  */
@@ -23,27 +23,27 @@ public class Setup4Activity extends BaseSetupActivity {
 	}
 
 	public void setupView() {
-		
+
 		boolean isprotecting = sp.getBoolean("isprotecting", false);
 		if(isprotecting){
 			cb_setup4_status.setChecked(true);
-			cb_setup4_status.setText("·ÀµÁ±£»¤ÒÑ¾­¿ªÆô");
+			cb_setup4_status.setText("é˜²ç›—ä¿æŠ¤å·²ç»å¼€å¯");
 		}else{
 			cb_setup4_status.setChecked(false);
-			cb_setup4_status.setText("·ÀµÁ±£»¤Ã»ÓĞ¿ªÆô");
+			cb_setup4_status.setText("é˜²ç›—ä¿æŠ¤æ²¡æœ‰å¼€å¯");
 		}
 		cb_setup4_status
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {//buttonView´ú±íµ±Ç°checkbox
+												 boolean isChecked) {//buttonViewä»£è¡¨å½“å‰checkbox
 						Editor editor = sp.edit();
 						if(isChecked){
 							editor.putBoolean("isprotecting", true);
-							cb_setup4_status.setText("·ÀµÁ±£»¤ÒÑ¾­¿ªÆô");
+							cb_setup4_status.setText("é˜²ç›—ä¿æŠ¤å·²ç»å¼€å¯");
 						}else{
 							editor.putBoolean("isprotecting", false);
-							cb_setup4_status.setText("·ÀµÁ±£»¤Ã»ÓĞ¿ªÆô");
+							cb_setup4_status.setText("é˜²ç›—ä¿æŠ¤æ²¡æœ‰å¼€å¯");
 						}
 						editor.commit();
 					}
@@ -54,7 +54,7 @@ public class Setup4Activity extends BaseSetupActivity {
 		openActivity(LostFindActivity.class);
 		overridePendingTransition(R.anim.tran_shownext_in,
 				R.anim.tran_shownext_out);
-		
+
 		Editor editor = sp.edit();
 		editor.putBoolean("setup", true);
 		editor.commit();
@@ -65,14 +65,14 @@ public class Setup4Activity extends BaseSetupActivity {
 		overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
 	}
 	/**
-	 * ¿ªÆôÓ¦ÓÃ³ÌĞòµÄ³¬¼¶¹ÜÀíÔ±È¨ÏŞ
+	 * å¼€å¯åº”ç”¨ç¨‹åºçš„è¶…çº§ç®¡ç†å‘˜æƒé™
 	 * @param view
 	 */
 	public void activeDeviceAdmin(View view){
-		  Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-    	  ComponentName mDeviceAdminSample = new ComponentName(this, MyAdmin.class);
-          intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
-                 mDeviceAdminSample);
-          startActivity(intent);
+		Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+		ComponentName mDeviceAdminSample = new ComponentName(this, MyAdmin.class);
+		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
+				mDeviceAdminSample);
+		startActivity(intent);
 	}
 }

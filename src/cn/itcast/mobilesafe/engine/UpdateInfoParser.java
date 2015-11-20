@@ -11,10 +11,10 @@ import cn.itcast.mobilesafe.domain.UpdateInfo;
 public class UpdateInfoParser {
 
 	/**
-	 * ½âÎö·şÎñÆ÷·µ»ØµÄÊäÈëÁ÷
-	 * 
+	 * è§£ææœåŠ¡å™¨è¿”å›çš„è¾“å…¥æµ
+	 *
 	 * @param is
-	 * @return ¸üĞÂĞÅÏ¢ Èç¹û·µ»ØÎª¿Õ ´ú±í½âÎöµÄÊ±ºò³öÏÖÁËÒì³£
+	 * @return æ›´æ–°ä¿¡æ¯ å¦‚æœè¿”å›ä¸ºç©º ä»£è¡¨è§£æçš„æ—¶å€™å‡ºç°äº†å¼‚å¸¸
 	 */
 	public static UpdateInfo getUpdateInfo(InputStream is) {
 		XmlPullParser parser = Xml.newPullParser();
@@ -26,15 +26,15 @@ public class UpdateInfoParser {
 			while (type != XmlPullParser.END_DOCUMENT) {
 
 				switch (type) {
-				case XmlPullParser.START_TAG:
-					if ("version".equals(parser.getName())) {
-						info.setVersion(parser.nextText());
-					} else if ("description".equals(parser.getName())) {
-						info.setDescription(parser.nextText());
-					} else if ("path".equals(parser.getName())) {
-						info.setPath(parser.nextText());
-					}
-					break;
+					case XmlPullParser.START_TAG:
+						if ("version".equals(parser.getName())) {
+							info.setVersion(parser.nextText());
+						} else if ("description".equals(parser.getName())) {
+							info.setDescription(parser.nextText());
+						} else if ("path".equals(parser.getName())) {
+							info.setPath(parser.nextText());
+						}
+						break;
 				}
 				type = parser.next();
 			}

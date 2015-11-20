@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 /**
- * Ëã¶¨Òåcn.itcast.mobilesafe.ui.SettingView
+ * ç®—å®šä¹‰cn.itcast.mobilesafe.ui.SettingView
  * @author superboy
  *
  */
@@ -24,36 +24,36 @@ public class SettingView extends RelativeLayout {
 	}
 
 
-//ÎŞ¹¹Ôìº¯Êı  xmlÒıÓÃ»á±¨´í 
+	//æ— æ„é€ å‡½æ•°  xmlå¼•ç”¨ä¼šæŠ¥é”™
 	public SettingView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		inflateView(context);
-		TypedArray  a = context.obtainStyledAttributes(attrs, R.styleable.setting_view);//obtainStyledAttributesÖ®ºóÒ»¶¨Òªµ÷ÓÃ recycle
+		TypedArray  a = context.obtainStyledAttributes(attrs, R.styleable.setting_view);//obtainStyledAttributesä¹‹åä¸€å®šè¦è°ƒç”¨ recycle
 		String title = a.getString(R.styleable.setting_view_title);
 		String content = a.getString(R.styleable.setting_view_content);
 		tv_title.setText(title);
 		tv_content.setText(content);
-		//¼ÇµÃÇåÀíÊı¾İ
+		//è®°å¾—æ¸…ç†æ•°æ®
 		a.recycle();
 	}
-	
+
 	private void inflateView(Context context){
 		View view = View.inflate(context, R.layout.ui_setting_view, this);
-		//ÔÚ´úÂëÀïÃæÕÒµ½²¼¾ÖÎÄ¼şµÄÅäÖÃĞÅÏ¢. ĞŞ¸Äview¶ÔÏóÀïÃæµÄÄÚÈİ
+		//åœ¨ä»£ç é‡Œé¢æ‰¾åˆ°å¸ƒå±€æ–‡ä»¶çš„é…ç½®ä¿¡æ¯. ä¿®æ”¹viewå¯¹è±¡é‡Œé¢çš„å†…å®¹
 		tv_title = (TextView) view.findViewById(R.id.tv_setting_view_title);
 		tv_content = (TextView) view.findViewById(R.id.tv_setting_view_content);
 		cb_setting_view_status = (CheckBox)view.findViewById(R.id.cb_setting_view_status);
 	}
-	
+
 	/**
-	 * ÅĞ¶Ïµ±Ç°settingviewÊÇ·ñ±»Ñ¡ÖĞ
+	 * åˆ¤æ–­å½“å‰settingviewæ˜¯å¦è¢«é€‰ä¸­
 	 * @return
 	 */
 	public boolean isChecked(){
 		return cb_setting_view_status.isChecked();
 	}
 	/**
-	 * ¸ü¸ÄsettingviewµÄ¹´Ñ¡×´Ì¬.
+	 * æ›´æ”¹settingviewçš„å‹¾é€‰çŠ¶æ€.
 	 * @param checked
 	 */
 	public void setChecked(boolean checked){
